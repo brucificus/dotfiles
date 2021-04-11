@@ -17,9 +17,13 @@
     ~/.jupyter/jupyter_notebook_config.py: jupyter/jupyter_notebook_config.py
     ~/.jupyter/nbconfig/notebook.json: jupyter/notebook.json
     ~/.pythonrc:
+    ~/.config/powershell/Microsoft.PowerShell_profile.ps1: powershell/profile.ps1
     ~/.shell:
     ~/.zsh:
     ~/.zshrc:
+    ~/bin/:
+      glob: true
+      path: bin/*
 
 - shell:
   - git submodule sync --recursive
