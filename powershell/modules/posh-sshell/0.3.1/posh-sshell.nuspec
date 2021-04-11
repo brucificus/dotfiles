@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>posh-sshell</id>
+    <version>0.3.1</version>
+    <authors>Jeremy Skinner, Keith Dahlby, Mark Embling and contributors</authors>
+    <owners>Jeremy Skinner, Keith Dahlby, Mark Embling and contributors</owners>
+    <licenseUrl>https://github.com/dahlbyk/posh-sshell/blob/v0.3.1/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/dahlbyk/posh-sshell</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Provides integration with ssh-agent and pageant from within Powershell</description>
+    <releaseNotes>https://github.com/dahlbyk/posh-sshell/blob/v0.3.1/CHANGELOG.md</releaseNotes>
+    <copyright>(c) 2010-2018 Jeremy Skinner, Keith Dahlby, Mark Embling and contributors</copyright>
+    <tags>ssh openssh open-ssh putty pageant PSEdition_Core PSModule PSIncludes_Function PSFunction_Get-SshAgent PSFunction_Start-SshAgent PSFunction_Stop-SshAgent PSFunction_Add-SshKey PSFunction_Get-SshPath PSFunction_Add-PoshSshellToProfile PSFunction_Get-SshConfig PSFunction_Connect-Ssh PSFunction_Add-SshConnection PSFunction_Remove-SshConnection PSFunction_Add-SshAlias PSCommand_Get-SshAgent PSCommand_Start-SshAgent PSCommand_Stop-SshAgent PSCommand_Add-SshKey PSCommand_Get-SshPath PSCommand_Add-PoshSshellToProfile PSCommand_Get-SshConfig PSCommand_Connect-Ssh PSCommand_Add-SshConnection PSCommand_Remove-SshConnection PSCommand_Add-SshAlias</tags>
+  </metadata>
+</package>
