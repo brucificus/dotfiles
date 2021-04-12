@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=true
 
@@ -6,4 +8,3 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
 # Python startup file
 export PYTHONSTARTUP=$HOME/.pythonrc
-

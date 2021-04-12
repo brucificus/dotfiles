@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 Param(
     [Parameter(Mandatory = $true,
             ValueFromPipeline = $true,
@@ -39,7 +41,7 @@ Begin {
     }
 }
 
-Process {   
+Process {
     foreach ($pathItem in $Path) {
         [string[]] $gitParameters = $BaselineGitParameters
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # External plugins (initialized after)
 
 # Syntax highlighting
