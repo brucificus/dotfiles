@@ -20,9 +20,9 @@ function ResolvePathWithPossibleExtension([string] $path, [string] $extension)
 [string] $pathWithoutExtension = ResolvePathWithPossibleExtension -path $path -extension ""
 
 if (Test-Path $pathAsScriptModule -ErrorAction SilentlyContinue) {
-    Import-Module -Name $pathAsScriptModule
+    Import-Module -Name (Resolve-Path $pathAsScriptModule) -DisableNameChecking
 } elseif (Test-Path $pathAsAssemblyModule -ErrorAction SilentlyContinue) {
-    Import-Module -Assembly $pathAsAssemblyModule
+    Import-Module -Assembly (Resolve-Path $pathAsAssemblyModule) -DisableNameChecking
 } elseif (Test-Path $pathAsScript -ErrorAction SilentlyContinue) {
     . "$pathAsScript"
 } elseif (Test-Path $pathWithoutExtension -ErrorAction SilentlyContinue) {
