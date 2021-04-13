@@ -1,6 +1,8 @@
 $ErrorActionPreference = "Continue"
 
-$Env:PSModulePath = "~\.dotfiles\powershell\modules;$($Env:PSModulePath)"
+[string] $sep = [System.IO.Path]::PathSeparator
+
+$Env:PSModulePath = "~/.dotfiles/powershell/modules$($sep)$($Env:PSModulePath)"
 
 Import-Module -Name oh-my-posh
 Import-Module -Name posh-git
