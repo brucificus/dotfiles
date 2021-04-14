@@ -97,7 +97,6 @@ nonascii() {
 }
 
 # Fetch pull request
-
 fpr() {
     if ! git rev-parse --git-dir > /dev/null 2>&1; then
         echo "error: fpr must be executed from within a git repository"
@@ -127,7 +126,6 @@ fpr() {
 }
 
 # Serve current directory
-
 serve() {
     ruby -run -e httpd . -p "${1:-8080}"
 }
