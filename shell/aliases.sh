@@ -144,7 +144,11 @@ alias peek='tee >(cat 1>&2)'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 SetPoshPromptPortably() {
-    if command -v oh-my-posh &> /dev/null
+    if command -v oh-my-posh-wsl &> /dev/null
+    then
+        local poshshell="$(oh-my-posh-wsl --print-shell)"
+        eval "$(oh-my-posh-wsl --init --shell "${poshshell}" --config "${1}")"
+    elif command -v oh-my-posh &> /dev/null
     then
         local poshshell="$(oh-my-posh --print-shell)"
 
