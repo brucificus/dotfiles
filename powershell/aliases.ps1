@@ -1,7 +1,18 @@
 # Update dotfiles
 function dfu() {
-    Set-Location ~/.dotfiles && git pull --ff-only && ./install.ps1 -q
-    Set-Location ~/.dotfiles_local && git pull --ff-only && ./install.ps1 -q
+    Push-Location ~/.dotfiles
+    try {
+        git pull --ff-only && ./install.ps1 -q
+    } finally {
+        Pop-Location
+    }
+
+    Set-Location ~/.dotfiles_local
+    try {
+        git pull --ff-only && ./install.ps1 -q
+    } finally {
+        Pop-Location
+    }
 }
 
 # cd to git root directory
