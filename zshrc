@@ -28,6 +28,7 @@ source ~/.shell/aliases.sh
 
 # Custom prompt
 source ~/.zsh/prompt.zsh
+SetPoshPromptPortably ~/.dotfiles/theme.omp.yaml
 
 # External plugins (initialized after)
 source ~/.zsh/plugins_after.zsh

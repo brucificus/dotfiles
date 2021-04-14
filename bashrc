@@ -25,6 +25,7 @@ source ~/.shell/aliases.sh
 
 # Custom prompt
 source ~/.bash/prompt.bash
+SetPoshPromptPortably ~/.dotfiles/theme.omp.yaml
 
 # Plugins
 source ~/.bash/plugins.bash

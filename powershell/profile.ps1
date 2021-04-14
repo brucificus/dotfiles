@@ -10,6 +10,6 @@ Import-Module -Name terminal-icons
 
 . "~/.dotfiles/powershell/aliases.ps1"
 
-Set-PoshPrompt -Theme powerlevel10k_classic
+Set-PoshPromptPortably -themePath "~/.dotfiles/theme.omp.yaml"
 
-~\bin\Import-OptionallyExtantScriptOrModule.ps1 -path "~\.config\powershell\profile_local"
+~/bin/Import-OptionallyExtantScriptOrModule.ps1 -path "~/.config/powershell/profile_local"

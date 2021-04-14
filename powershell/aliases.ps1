@@ -13,3 +13,11 @@ function cdgr() {
 function mcd([string] $location) {
     mkdir $location | Set-Location
 }
+
+function Set-PoshPromptPortably([string] $themePath) {
+    if (Get-Command "oh-my-posh" -ErrorAction SilentlyContinue) {
+        Invoke-Expression (oh-my-posh --init --shell pwsh --config $themePath)
+    } else {
+        Set-PoshPrompt -Theme $themePath
+    }
+}
