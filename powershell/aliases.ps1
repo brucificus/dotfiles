@@ -26,10 +26,10 @@ function mcd([string] $location) {
 }
 
 function Set-PoshPromptPortably([string] $themePath) {
-    if (Get-Command "oh-my-posh-wsl" -ErrorAction SilentlyContinue) {
+    if ($IsLinux -and (Get-Command "oh-my-posh-wsl" -ErrorAction SilentlyContinue)) {
         Invoke-Expression (oh-my-posh-wsl --init --shell pwsh --config $themePath)
     }
-    if (Get-Command "oh-my-posh" -ErrorAction SilentlyContinue) {
+    elseif (Get-Command "oh-my-posh" -ErrorAction SilentlyContinue) {
         Invoke-Expression (oh-my-posh --init --shell pwsh --config $themePath)
     } else {
         Set-PoshPrompt -Theme $themePath
