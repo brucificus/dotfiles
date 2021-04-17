@@ -6,13 +6,6 @@ function dfu() {
     } finally {
         Pop-Location
     }
-
-    Set-Location ~/.dotfiles_local
-    try {
-        git pull --ff-only && ./install.ps1 -q
-    } finally {
-        Pop-Location
-    }
 }
 
 # cd to git root directory

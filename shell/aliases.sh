@@ -20,7 +20,6 @@ alias gag='git exec ag'
 dfu() {
     (
         cd ~/.dotfiles && git pull --ff-only && ./install.sh -q
-        cd ~/.dotfiles_local && git pull --ff-only && ./install.sh -q
     )
 }
 
