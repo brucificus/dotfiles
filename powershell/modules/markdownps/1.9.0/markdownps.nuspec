@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>MarkdownPS</id>
+    <version>1.9.0</version>
+    <authors>Alex Sarafian</authors>
+    <owners>Unknown</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/Sarafian/MarkdownPS/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Sarafian/MarkdownPS/</projectUrl>
+    <iconUrl>https://github.com/dcurtis/markdown-mark/blob/master/png/66x40-solid.png</iconUrl>
+    <description>A module to help render Markdown from powershell</description>
+    <releaseNotes>https://github.com/Sarafian/MarkdownPS/blob/master/CHANGELOG.md</releaseNotes>
+    <copyright>(c) Alex Sarafian. All rights reserved.</copyright>
+    <tags>Markdown Tools PSModule PSIncludes_Cmdlet PSCmdlet_New-MDCharacterStyle PSCmdlet_New-MDCode PSCmdlet_New-MDHeader PSCmdlet_New-MDImage PSCmdlet_New-MDInlineCode PSCmdlet_New-MDLink PSCmdlet_New-MDList PSCmdlet_New-MDParagraph PSCmdlet_New-MDQuote PSCmdlet_New-MDTable PSIncludes_Function PSFunction_New-MDCharacterStyle PSFunction_New-MDCode PSFunction_New-MDHeader PSFunction_New-MDImage PSFunction_New-MDInlineCode PSFunction_New-MDLink PSFunction_New-MDList PSFunction_New-MDParagraph PSFunction_New-MDQuote PSFunction_New-MDTable PSCommand_New-MDCharacterStyle PSCommand_New-MDCode PSCommand_New-MDHeader PSCommand_New-MDImage PSCommand_New-MDInlineCode PSCommand_New-MDLink PSCommand_New-MDList PSCommand_New-MDParagraph PSCommand_New-MDQuote PSCommand_New-MDTable</tags>
+  </metadata>
+</package>
