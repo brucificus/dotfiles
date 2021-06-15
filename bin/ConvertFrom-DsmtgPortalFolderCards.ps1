@@ -10,11 +10,4 @@ param(
 return `
     $inputObjects `
     | Expand-Property data,folderCards `
-    | Select-Object -property quantity,cardName,expansionCode,expansionName,printing,friendlyId `
-    | Group-Object -property cardName `
-    | ForEach-Object { `
-            [pscustomobject]@{ `
-                "Quantity" = (($_.Group | % { [int]$_.quantity } | Measure-Object -Sum)).Sum; `
-                "Name" = $_.Name `
-            } `
-        }
+    | Select-Object -property quantity,cardName,expansionCode,expansionName,printing,friendlyId
