@@ -4,6 +4,8 @@ $ErrorActionPreference = "Continue"
 
 $Env:PSModulePath = "~/.dotfiles/powershell/modules$($sep)$($Env:PSModulePath)"
 
+. "~/.dotfiles/powershell/Initialize-PSReadLine.ps1"
+
 Import-Module -Name oh-my-posh
 Import-Module -Name posh-git
 Import-Module -Name terminal-icons
