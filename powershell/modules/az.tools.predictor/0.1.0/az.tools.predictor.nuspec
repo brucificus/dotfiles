@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Az.Tools.Predictor</id>
+    <version>0.1.0</version>
+    <authors>Microsoft Corporation</authors>
+    <owners>Microsoft Corporation</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://aka.ms/azps-license</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-powershell</projectUrl>
+    <description>Microsoft Azure PowerShell - Module providing recommendations to PSReadLine v2.2.0 or above for cmdlets comprised in the Az module - This module is compatible with PowerShell 7.1 or above.
+
+The module needs to be imported manually via
+Import-Module Az.Tools.Predictor
+
+Enable plugins via
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+
+Switch the output format of suggestions to list view via
+Set-PSReadLineOption -PredictionViewStyle ListView
+
+For more information on Az Predictor, please visit the following: https://aka.ms/azpredictordocs</description>
+    <releaseNotes>* first preview release</releaseNotes>
+    <copyright>Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Azure PowerShell Prediction PSModule</tags>
+  </metadata>
+</package>
