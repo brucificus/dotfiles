@@ -1,8 +1,8 @@
 Import-Module -Name PSReadLine
 
-[bool] $PSReadLineSupportsOptionPredictionSupport = ($null -ne $(Get-PSReadLineOption).PredictionSource)
+[bool] $PSReadLineSupportsOptionPredictionSource = ($null -ne $(Get-PSReadLineOption).PredictionSource)
 
-if ($PSReadLineSupportsOptionPredictionSupport) {
+if ($PSReadLineSupportsOptionPredictionSource) {
     [bool] $AzureCliAvailable = [bool](Get-Command az -ErrorAction SilentlyContinue)
     [bool] $MachineIsUsedForAzureDevelopment = $AzureCliAvailable
 
@@ -13,5 +13,9 @@ if ($PSReadLineSupportsOptionPredictionSupport) {
         Set-PSReadLineOption -PredictionSource History
     }
 
-    Set-PSReadLineOption -PredictionViewStyle InlineView
+    [bool] $PSReadLineSupportsOptionPredictionViewStyle = ($null -ne $(Get-PSReadLineOption).PredictionViewStyle)
+
+    if ($PSReadLineSupportsOptionPredictionViewStyle) {
+        Set-PSReadLineOption -PredictionViewStyle InlineView
+    }
 }
