@@ -92,3 +92,38 @@ function Format-GitRepository {
         }
     }
 }
+
+function New-VisualStudioSolution {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, ParameterSetName="FilePath", Position=0)]
+        [string] $FilePath
+    )
+    Begin {
+        [string] $extension = [System.IO.Path]::GetExtension($FilePath)
+        if ($extension -ne ".sln") {
+            $FilePath = $FilePath + ".sln"
+        }
+
+        if ([string]::IsNullOrWhiteSpace($LiteralPath)) {
+            $LiteralPath = $PWD.Path
+        }
+    }
+    Process {
+        [string] $content = "
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Global
+`tGlobalSection(SolutionProperties) = preSolution
+`t`tHideSolutionNode = FALSE
+`tEndGlobalSection
+`tGlobalSection(ExtensibilityGlobals) = postSolution
+`t`tSolutionGuid = {$((new-guid).ToString().ToUpper())}
+`tEndGlobalSection
+EndGlobal
+".Trim()
+        $content | Out-File -FilePath $FilePath -NoNewline
+    }
+}
