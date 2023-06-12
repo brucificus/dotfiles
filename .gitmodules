@@ -2,3 +2,18 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
+	branch = cb8b677
+	ignore = dirty
+[submodule "oh-my-zsh-custom-plugins/zsh-syntax-highlighting"]
+	path = oh-my-zsh-custom-plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+	branch = tags/0.7.1
+	ignore = dirty
+[submodule "oh-my-zsh-custom-plugins/zsh-autosuggestions"]
+	path = oh-my-zsh-custom-plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+	branch = tags/v0.7.0
+	ignore = dirty
