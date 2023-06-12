@@ -3,7 +3,7 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config', '~/.oh-my-zsh/custom/plugins']
+- clean: ['~', '~/.config/powershell/profile.ps1', '~/.oh-my-zsh/custom/plugins']
 
 - link:
     ~/.bash_profile:
