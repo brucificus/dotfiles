@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Use colors in coreutils utilities output
-alias ls='ls --color=auto'
+alias ls='ls --color=auto --almost-all --group-directories-first --human-readable -g --file-type'
 alias grep='grep --color'
 
 # ls aliases
@@ -141,16 +141,3 @@ alias peek='tee >(cat 1>&2)'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-SetPoshPromptPortably() {
-    if command -v oh-my-posh-wsl &> /dev/null
-    then
-        local poshshell="$(oh-my-posh-wsl --print-shell)"
-        eval "$(oh-my-posh-wsl --init --shell "${poshshell}" --config "${1}")"
-    elif command -v oh-my-posh &> /dev/null
-    then
-        local poshshell="$(oh-my-posh --print-shell)"
-
-        eval "$(oh-my-posh --init --shell "${poshshell}" --config "${1}")"
-    fi
-}

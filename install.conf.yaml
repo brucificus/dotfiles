@@ -16,6 +16,10 @@
     ~/.ipython/profile_default/startup/disable_warnings.py: ipython/disable_warnings.py
     ~/.jupyter/jupyter_notebook_config.py: jupyter/jupyter_notebook_config.py
     ~/.jupyter/nbconfig/notebook.json: jupyter/notebook.json
+    ~/.oh-my-zsh:
+    ~/.oh-my-zsh/custom/plugins:
+      glob: true
+      path: oh-my-zsh-custom-plugins/*
     ~/.pythonrc:
     ~/.config/powershell/Microsoft.PowerShell_profile.ps1: powershell/profile.ps1
     ~/.shell:

@@ -1,3 +1,6 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Functions
 source ~/.shell/functions.sh
 
@@ -28,10 +31,12 @@ source ~/.shell/aliases.sh
 
 # Custom prompt
 source ~/.zsh/prompt.zsh
-SetPoshPromptPortably ~/.dotfiles/theme.omp.yaml
 
 # External plugins (initialized after)
 source ~/.zsh/plugins_after.zsh
+
+# Editor
+source ~/.shell/editor.sh
 
 # Allow local customizations in the ~/.shell_local_after file
 if [ -f ~/.shell_local_after ]; then

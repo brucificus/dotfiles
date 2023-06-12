@@ -25,10 +25,12 @@ source ~/.shell/aliases.sh
 
 # Custom prompt
 source ~/.bash/prompt.bash
-SetPoshPromptPortably ~/.dotfiles/theme.omp.yaml
 
 # Plugins
 source ~/.bash/plugins.bash
+
+# Editor
+source ~/.shell/editor.sh
 
 # Allow local customizations in the ~/.shell_local_after file
 if [ -f ~/.shell_local_after ]; then
