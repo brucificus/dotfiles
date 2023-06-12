@@ -3,7 +3,7 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config']
+- clean: ['~', '~/.config', '~/.oh-my-zsh/custom/plugins']
 
 - link:
     ~/.bash_profile:
@@ -20,8 +20,8 @@
     ~/.oh-my-zsh/custom/plugins:
       glob: true
       path: oh-my-zsh-custom-plugins/*
+    ~/.config/powershell/profile.ps1: config/powershell/profile.ps1
     ~/.pythonrc:
-    ~/.config/powershell/Microsoft.PowerShell_profile.ps1: powershell/profile.ps1
     ~/.shell:
     ~/.zsh:
     ~/.zshrc:
