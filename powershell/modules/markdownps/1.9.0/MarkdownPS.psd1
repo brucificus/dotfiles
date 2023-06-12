@@ -12,7 +12,7 @@
 RootModule = 'MarkdownPS.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.9.0'
+ModuleVersion = '1.9'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,13 +69,13 @@ Description = 'A module to help render Markdown from powershell'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'New-MDCharacterStyle', 'New-MDCode', 'New-MDHeader', 'New-MDImage',
-               'New-MDInlineCode', 'New-MDLink', 'New-MDList', 'New-MDParagraph',
+FunctionsToExport = 'New-MDCharacterStyle', 'New-MDCode', 'New-MDHeader', 'New-MDImage', 
+               'New-MDInlineCode', 'New-MDLink', 'New-MDList', 'New-MDParagraph', 
                'New-MDQuote', 'New-MDTable'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = 'New-MDCharacterStyle', 'New-MDCode', 'New-MDHeader', 'New-MDImage',
-               'New-MDInlineCode', 'New-MDLink', 'New-MDList', 'New-MDParagraph',
+CmdletsToExport = 'New-MDCharacterStyle', 'New-MDCode', 'New-MDHeader', 'New-MDImage', 
+               'New-MDInlineCode', 'New-MDLink', 'New-MDList', 'New-MDParagraph', 
                'New-MDQuote', 'New-MDTable'
 
 # Variables to export from this module
@@ -99,7 +99,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('Markdown', 'Tools')
+        Tags = 'Markdown', 'Tools'
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/Sarafian/MarkdownPS/blob/master/LICENSE'
