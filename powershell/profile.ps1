@@ -2,16 +2,17 @@ $ErrorActionPreference = "Continue"
 
 [string] $sep = [System.IO.Path]::PathSeparator
 
-$Env:PSModulePath = "~/.dotfiles/powershell/modules$($sep)$($Env:PSModulePath)"
+$Env:PSModulePath = "$PSScriptRoot/../modules$($sep)$($Env:PSModulePath)"
 
-. "~/.dotfiles/powershell/Initialize-PSReadLine.ps1"
+. $PSScriptRoot/Initialize-PSReadLine.ps1
 
-Import-Module -Name oh-my-posh
+Import-Module -Name graphical
+Import-Module -Name posh-sshell
 Import-Module -Name posh-git
 Import-Module -Name terminal-icons
 
-. "~/.dotfiles/powershell/aliases.ps1"
+. $PSScriptRoot/aliases.ps1
 
-Set-PoshPromptPortably -themePath "~/.dotfiles/theme.omp.yaml"
+Set-PoshPromptPortably -themePath "$PSScriptRoot/../theme.omp.yaml"
 
-~/bin/Import-OptionallyExtantScriptOrModule.ps1 -path "~/.config/powershell/profile_local"
+&"$PSScriptRoot/../bin/Import-OptionallyExtantScriptOrModule.ps1" -path "~/.config/powershell/profile_local"
