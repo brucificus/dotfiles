@@ -22,7 +22,7 @@ function Test-Elevation() {
     }
 }
 
-# Reads a dotenv file as a stream of key-value pairs.
+# Reads a dotenv file as a stream of name-value pairs.
 function Read-DotEnv() {
     [CmdletBinding()]
     param(
@@ -33,7 +33,7 @@ function Read-DotEnv() {
         foreach ($line in (Get-Content -LiteralPath $FilePath)) {
             [int] $splitAt = $line.IndexOf('=')
             if ($splitAt -gt -1) {
-                [string] $key = $line.Substring(0, $splitAt)
+                [string] $name = $line.Substring(0, $splitAt)
                 [string] $value = $line.Substring($splitAt+1)
                 
                 [string] $valueTrimmed = $value.Trim()
@@ -41,51 +41,49 @@ function Read-DotEnv() {
                     $value = $valueTrimmed.Substring(1, $valueTrimmed.Length-2)
                 }
 
-                [System.Collections.Generic.KeyValuePair[string,string]] $kvp = [System.Collections.Generic.KeyValuePair[string,string]]::new($key, $value)
-                Write-Output $kvp
+                [System.Collections.DictionaryEntry] $de = [System.Collections.DictionaryEntry]::new($name, $value)
+                Write-Output $de
             }
         }
     }
 }
 
-# Sets an environment variable, requiring explicit specification of scope.
-# Can accept pipeline of objects with properties `Key` and `Value`.
-function Set-Env() {
+# Gets matching environment variables, requires explicit specification of scope.
+# Outputs one or more objects with properties `Name` and `Value`.
+function Get-EnvVar() {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKAV", Position=0)]
-        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeAnyName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeSpecificName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeNameLike", Position=0)]
         [switch] $Machine,
 
-        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKAV", Position=0)]
-        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeAnyName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeSpecificName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeNameLike", Position=0)]
         [switch] $Process,
 
-        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKAV", Position=0)]
-        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeAnyName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeSpecificName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeNameLike", Position=0)]
         [switch] $User,
 
-        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKAV", Position=0)]
-        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueAnyName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueSpecificName", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueNameLike", Position=0)]
         [System.EnvironmentVariableTarget] $Scope,
 
-        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKAV", Position=1, ValueFromPipelineByPropertyName=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKAV", Position=1, ValueFromPipelineByPropertyName=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKAV", Position=1, ValueFromPipelineByPropertyName=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKAV", Position=1, ValueFromPipelineByPropertyName=$true)]
-        [string] $Key,
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeSpecificName", Position=1)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeSpecificName", Position=1)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeSpecificName", Position=1)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueSpecificName", Position=1)]
+        [string] $Name,
 
-        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKAV", Position=2, ValueFromPipelineByPropertyName=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKAV", Position=2, ValueFromPipelineByPropertyName=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKAV", Position=2, ValueFromPipelineByPropertyName=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKAV", Position=2, ValueFromPipelineByPropertyName=$true)]
-        [object] $Value,
-
-        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKVP", Position=1, ValueFromPipeline=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKVP", Position=1, ValueFromPipeline=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKVP", Position=1, ValueFromPipeline=$true)]
-        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKVP", Position=1, ValueFromPipeline=$true)]
-        [System.Collections.Generic.KeyValuePair[string, object]] $KVP
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeNameLike", Position=1)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeNameLike", Position=1)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeNameLike", Position=1)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueNameLike", Position=1)]
+        [string] $NameLike
     )
     Begin {
         if ($Machine -and $Machine.IsPresent) {
@@ -97,23 +95,115 @@ function Set-Env() {
         }
 
         if (-not [System.EnvironmentVariableTarget]::IsDefined($Scope)) {
-            Write-Error "Unrecognized EnvironmentVariableTarget: $Scope"
+            Write-Error "Unrecognized EnvironmentVariableTarget '$Scope'"
+        }
+    }
+    Process {
+        if ($Name) {
+            [string] $value = [System.Environment]::GetEnvironmentVariable($Name, $Scope)
+            if ($null -eq $value) {
+                # Intentionally left blank.
+            } else {
+                [System.Collections.DictionaryEntry] $de = [System.Collections.DictionaryEntry]::new($Name, $value)
+                Write-Output $de
+            }
+        } else {
+            [System.Collections.DictionaryEntry[]] $allEnvItems = Get-ChildItem Env:
+            foreach ($de in $allEnvItems) {
+                if ($NameLike -and ($de.Name -notlike $NameLike)) {
+                    continue
+                }
+                if ($null -eq [System.Environment]::GetEnvironmentVariable($de.Name, $Scope)) {
+                    continue
+                } else {
+                    Write-Output $de
+                }
+            }
+        }
+    }
+}
+
+# Sets an environment variable, requiring explicit specification of scope.
+# Can accept pipeline of objects with properties `Name` and `Value`.
+function Set-EnvVar() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeNAV", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeDE", Position=0)]
+        [switch] $Machine,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeNAV", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeDE", Position=0)]
+        [switch] $Process,
+
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeNAV", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeDE", Position=0)]
+        [switch] $User,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueNAV", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKVP", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueDE", Position=0)]
+        [System.EnvironmentVariableTarget] $Scope,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeNAV", Position=1, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeNAV", Position=1, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeNAV", Position=1, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueNAV", Position=1, ValueFromPipelineByPropertyName=$true)]
+        [string] $Name,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeNAV", Position=2, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeNAV", Position=2, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeNAV", Position=2, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueNAV", Position=2, ValueFromPipelineByPropertyName=$true)]
+        [object] $Value,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeKVP", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeKVP", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeKVP", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueKVP", Position=1, ValueFromPipeline=$true)]
+        [System.Collections.Generic.KeyValuePair[string, object]] $KVP,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeDE", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeDE", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeDE", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueDE", Position=1, ValueFromPipeline=$true)]
+        [System.Collections.DictionaryEntry] $Entry
+    )
+    Begin {
+        if ($Machine -and $Machine.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Machine
+        } elseif ($Process -and $Process.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Process
+        } elseif ($User -and $User.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::User
+        }
+
+        if (-not [System.EnvironmentVariableTarget]::IsDefined($Scope)) {
+            Write-Error "Unrecognized EnvironmentVariableTarget '$Scope'"
         }
 
         if ($IsWindows -and ($Scope -ne [System.EnvironmentVariableTarget]::Process)) {
-            [bool] $isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+            [bool] $isElevated = Test-Elevation
             if (-not $isElevated) {
-                Write-Error "Elevated session required for EnvironmentVariableTarget: $Scope"
+                Write-Error "Elevated session required for updating environment variables with scope '$Scope'"
             }
         }
 
         if ($KVP) {
-            $Key = $KVP.Key
+            $Name = $KVP.Key
             $Value = $KVP.Value
+        }
+
+        if ($Entry) {
+            $Name = $Entry.Name
+            $Value = $Entry.Value
         }
     }
     Process {
-        [System.Environment]::SetEnvironmentVariable($Key, $Value, $Scope)
+        [System.Environment]::SetEnvironmentVariable($Name, $Value, $Scope)
     }
 }
 
@@ -121,4 +211,5 @@ function Set-Env() {
 Export-ModuleMember -Function "Measure-EnvVarChanges"
 Export-ModuleMember -Function "Test-Elevation"
 Export-ModuleMember -Function "Read-DotEnv"
-Export-ModuleMember -Function "Set-Env"
+Export-ModuleMember -Function "Get-EnvVar"
+Export-ModuleMember -Function "Set-EnvVar"
