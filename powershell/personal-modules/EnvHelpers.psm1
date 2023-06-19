@@ -207,9 +207,165 @@ function Set-EnvVar() {
     }
 }
 
+function Get-EnvPathItem() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=0)]
+        [switch] $Machine,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=0)]
+        [switch] $Process,
+
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=0)]
+        [switch] $User,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=0)]
+        [System.EnvironmentVariableTarget] $Scope
+    )
+    Begin {
+        if ($Machine -and $Machine.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Machine
+        } elseif ($Process -and $Process.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Process
+        } elseif ($User -and $User.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::User
+        }
+
+        if (-not [System.EnvironmentVariableTarget]::IsDefined($Scope)) {
+            Write-Error "Unrecognized EnvironmentVariableTarget '$Scope'"
+        }
+    }
+    Process {
+        [string] $extantPath = (Get-EnvVar -Scope $Scope -Name 'PATH').Value
+        [string[]] $pathItems = $extantPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::None)
+        
+        foreach ($pathItem in $pathItems) {
+            Write-Output $pathItem
+        }
+    }
+}
+
+function Add-EnvPathItem() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=0)]
+        [switch] $Machine,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=0)]
+        [switch] $Process,
+
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=0)]
+        [switch] $User,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=0)]
+        [System.EnvironmentVariableTarget] $Scope,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=1, ValueFromPipeline=$true)]
+        [object] $Value,
+
+        [Parameter(Mandatory=$false, ParameterSetName="MachineScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$false, ParameterSetName="ProcessScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$false, ParameterSetName="UserScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$false, ParameterSetName="ScopeValueForValue", Position=1, ValueFromPipeline=$true)]
+        [switch] $Prepend
+    )
+    Begin {
+        if ($Machine -and $Machine.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Machine
+        } elseif ($Process -and $Process.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Process
+        } elseif ($User -and $User.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::User
+        }
+
+        if (-not [System.EnvironmentVariableTarget]::IsDefined($Scope)) {
+            Write-Error "Unrecognized EnvironmentVariableTarget '$Scope'"
+        }
+
+        if ($IsWindows -and ($Scope -ne [System.EnvironmentVariableTarget]::Process)) {
+            [bool] $isElevated = Test-Elevation
+            if (-not $isElevated) {
+                Write-Error "Elevated session required for EnvironmentVariableTarget '$Scope'"
+            }
+        }
+    }
+    Process {
+        [string] $extantPath = (Get-EnvVar -Scope $Scope -Name 'PATH').Value
+        [string[]] $pathItems = $extantPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::None)
+        
+        $pathItems = $pathItems | Where-Object { $_ -ne $Value }
+        if ($Prepend -and $Prepend.IsPresent) {
+            $pathItems = @(,$Value) + $pathItems
+        } else {
+            $pathItems = $pathItems + @(,$Value)
+        }
+        
+        [string] $newPathValue = $pathItems -join [System.IO.Path]::PathSeparator
+        Set-Env -Scope $Scope -Name 'PATH' -Value $newPathValue
+    }
+}
+
+function Remove-EnvPathItem() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=0)]
+        [switch] $Machine,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=0)]
+        [switch] $Process,
+
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=0)]
+        [switch] $User,
+
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=0)]
+        [System.EnvironmentVariableTarget] $Scope,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=1, ValueFromPipeline=$true)]
+        [object] $Value
+    )
+    Begin {
+        if ($Machine -and $Machine.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Machine
+        } elseif ($Process -and $Process.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::Process
+        } elseif ($User -and $User.IsPresent) {
+            $Scope = [System.EnvironmentVariableTarget]::User
+        }
+
+        if (-not [System.EnvironmentVariableTarget]::IsDefined($Scope)) {
+            Write-Error "Unrecognized EnvironmentVariableTarget '$Scope'"
+        }
+
+        if ($IsWindows -and ($Scope -ne [System.EnvironmentVariableTarget]::Process)) {
+            [bool] $isElevated = Test-Elevation
+            if (-not $isElevated) {
+                Write-Error "Elevated session required for EnvironmentVariableTarget '$Scope'"
+            }
+        }
+    }
+    Process {
+        [string] $extantPath = (Get-EnvVar -Scope $Scope -Name 'PATH').Value
+        [string[]] $pathItems = $extantPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::None)
+        
+        $pathItems = $pathItems | Where-Object { $_ -ne $Value }
+        
+        [string] $newPathValue = $pathItems -join [System.IO.Path]::PathSeparator
+        Set-Env -Scope $Scope -Name 'PATH' -Value $newPathValue
+    }
+}
+
 
 Export-ModuleMember -Function "Measure-EnvVarChanges"
 Export-ModuleMember -Function "Test-Elevation"
 Export-ModuleMember -Function "Read-DotEnv"
 Export-ModuleMember -Function "Get-EnvVar"
 Export-ModuleMember -Function "Set-EnvVar"
+Export-ModuleMember -Function "Get-EnvPathItem"
+Export-ModuleMember -Function "Add-EnvPathItem"
+Export-ModuleMember -Function "Remove-EnvPathItem"
