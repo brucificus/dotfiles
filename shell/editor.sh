@@ -8,7 +8,15 @@ export NEOVIM=$(command -v nvim)
 export VIM=$(command -v vim)
 export VI=$(command -v vi)
 
+NANO_HELP=$(nano -h)
 NANO_ARGS=(--stateflags --linenumbers --noconvert --minibar)
+for i in "${NANO_ARGS[@]}"
+do
+    NANO_HAS_PARAM=$(echo "$NANO_HELP" | grep -e "$i" -)
+    if [ -z "$NANO_HAS_PARAM" ]; then
+        NANO_ARGS=( "${NANO_ARGS[@]/$i}" )
+    fi
+done
 if [ "$NANO" != "" ] && [ "$SSH_CONNECTION" = "" ]; then
     # If nano exists and we aren't in an SSH connection, let's try to use a mouse.
     NANO_ARGS=(${NANO_ARGS[*]} --mouse)
@@ -75,11 +83,23 @@ VIEWERB_CAT_ARGS=(${VIEWER_CAT_ARGS[*]} --show-all)
 
 view() {
     if [ "$BATCAT" != "" ]; then
-        batcat "${VIEWER_BATCAT_ARGS[*]}" "$@"
+        if [ "${VIEWER_BATCAT_ARGS[*]}" != "" ]; then
+            batcat "${VIEWER_BATCAT_ARGS[*]}" "$@"
+        else
+            batcat "$@"
+        fi
     elif [ "$NANO" != "" ]; then
-        nano "${VIEWER_NANO_ARGS[*]}" "$@"
+        if [ "${VIEWER_NANO_ARGS[*]}" != "" ]; then
+            nano "${VIEWER_NANO_ARGS[*]}" "$@"
+        else
+            nano "$@"
+        fi
     else
-        cat "${VIEWER_CAT_ARGS[*]}" "$@"
+        if [ "${VIEWER_CAT_ARGS[*]}" != "" ]; then
+            cat "${VIEWER_CAT_ARGS[*]}" "$@"
+        else
+            cat "$@"
+        fi
     fi
 }
 
@@ -90,11 +110,23 @@ view() {
 
 viewb() {
     if [ "$BATCAT" != "" ]; then
-        batcat "${VIEWERB_BATCAT_ARGS[*]}" "$@"
+        if [ "${VIEWERB_BATCAT_ARGS[*]}" != "" ]; then
+            batcat "${VIEWERB_BATCAT_ARGS[*]}" "$@"
+        else
+            batcat "$@"
+        fi
     # We don't use nano to view binary files because it doesn't have an option to show all special characters.
     elif [ "$HEXDUMP" != "" ]; then
-        hexdump "${VIEWERB_HEXDUMP_ARGS[*]}" "$@"
+        if [ "${VIEWERB_HEXDUMP_ARGS[*]}" != "" ]; then
+            hexdump "${VIEWERB_HEXDUMP_ARGS[*]}" "$@"
+        else
+            hexdump "$@"
+        fi
     else
-        cat "${VIEWERB_CAT_ARGS[*]}" "$@"
+        if [ "${VIEWERB_CAT_ARGS[*]}" != "" ]; then
+            cat "${VIEWERB_CAT_ARGS[*]}" "$@"
+        else
+            cat "$@"
+        fi
     fi
 }
