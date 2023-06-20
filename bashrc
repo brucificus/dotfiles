@@ -25,11 +25,11 @@ source ~/.shell/external.sh
 # Aliases
 source ~/.shell/aliases.sh
 
-# Custom prompt
-source ~/.bash/prompt.bash
-
 # Plugins
 source ~/.bash/plugins.bash
+
+# Custom prompt
+source ~/.bash/prompt.bash
 
 # Editor
 source ~/.shell/editor.sh

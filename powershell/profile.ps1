@@ -1,8 +1,10 @@
 $ErrorActionPreference = "Continue"
 
+if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+
+
 [string] $sep = [System.IO.Path]::PathSeparator
 $Env:PSModulePath = "$PSScriptRoot/modules$($sep)$($Env:PSModulePath)"
-
 
 Import-Module -Name graphical
 Import-Module -Name posh-sshell

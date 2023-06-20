@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-# Intentionally left blank
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path bash)"
