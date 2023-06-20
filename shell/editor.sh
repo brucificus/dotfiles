@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Preferred editor, with fallbacks, varying based on session context.
 
 export VSCODE=$(command -v code)
@@ -23,23 +25,23 @@ edit() {
     fi
 
     if [ "$VSCODE" != "" ] && [ "$SSH_CONNECTION" = "" ]; then
-        code ${VSCODE_ARGS[*]} $@
+        code ${VSCODE_ARGS[*]} "$@"
     elif [ "$NANO" != "" ]; then
         # If nano exists, let's use it.
         # We don't pass in $NANO_ARGS because we've included it in the alias above.
-        nano $@
+        nano "$@"
     elif [ "$NEOVIM" != "" ]; then
         # If neovim exists, let's use it.
-        nvim $@
+        nvim "$@"
     elif [ "$VIM" != "" ]; then
         # If vim exists, let's use it.
-        vim $@
+        vim "$@"
     elif [ "$VI" != "" ]; then
         # If vi exists, let's use it.
-        vi $@
+        vi "$@"
     else
         # Fallback to something every system probably has.
-        ed $@
+        ed "$@"
     fi
 }
 
@@ -49,9 +51,9 @@ export EDITOR="edit"
 # Prepare to setup viewers.
 export BAT_THEME="Visual Studio Dark+"
 export BATCAT=$(command -v batcat)
-if [ $BATCAT = "" ]; then
+if [ "$BATCAT" = "" ]; then
     export BATCAT=$(command -v bat)
-    if [ $BATCAT != "" ]; then
+    if [ "$BATCAT" != "" ]; then
         alias batcat="bat"
     fi
 else
@@ -73,11 +75,11 @@ VIEWERB_CAT_ARGS=(${VIEWER_CAT_ARGS[*]} --show-all)
 
 view() {
     if [ "$BATCAT" != "" ]; then
-        batcat ${VIEWER_BATCAT_ARGS[*]} $@
+        batcat "${VIEWER_BATCAT_ARGS[*]}" "$@"
     elif [ "$NANO" != "" ]; then
-        nano ${VIEWER_NANO_ARGS[*]} $@
+        nano "${VIEWER_NANO_ARGS[*]}" "$@"
     else
-        cat ${VIEWER_CAT_ARGS[*]} $@
+        cat "${VIEWER_CAT_ARGS[*]}" "$@"
     fi
 }
 
@@ -88,11 +90,11 @@ view() {
 
 viewb() {
     if [ "$BATCAT" != "" ]; then
-        batcat ${VIEWERB_BATCAT_ARGS[*]} $@
+        batcat "${VIEWERB_BATCAT_ARGS[*]}" "$@"
     # We don't use nano to view binary files because it doesn't have an option to show all special characters.
     elif [ "$HEXDUMP" != "" ]; then
-        hexdump ${VIEWERB_HEXDUMP_ARGS[*]} $@
+        hexdump "${VIEWERB_HEXDUMP_ARGS[*]}" "$@"
     else
-        cat ${VIEWERB_CAT_ARGS[*]} $@
+        cat "${VIEWERB_CAT_ARGS[*]}" "$@"
     fi
 }

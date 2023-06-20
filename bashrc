@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Functions
 source ~/.shell/functions.sh
 

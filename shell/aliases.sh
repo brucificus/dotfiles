@@ -4,7 +4,7 @@
 alias ls='ls --color=auto --almost-all --group-directories-first --human-readable -g --file-type'
 alias grep='grep --color'
 
-# ls aliases
+# some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
