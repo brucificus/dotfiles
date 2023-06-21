@@ -11,10 +11,10 @@ if (-not (Test-Path $GITBASH_NANO -ErrorAction SilentlyContinue)) {
 }
 
 $NANO_ARGS = [System.Collections.ArrayList]@('--stateflags', '--linenumbers', '--noconvert', '--minibar', '--mouse', '--magic', '--positionlog', '--indicator')
-if ($WINDOWS) {
+if ($IsWindows) {
     $NANO_ARGS.Add('--noconvert')
 }
-if ($LINUX) {
+if ($IsLinux) {
     $NANO_ARGS.Add('--unix')
 }
 
@@ -78,13 +78,13 @@ if ($VSCODE -and $Env:VSCODE_GIT_IPC_HANDLE) {
     }
     Set-EnvVar -Process -Name EDITOR -Value "vi"
 } else {
-    if ($WINDOWS -and (Get-Command -ErrorAction SilentlyContinue notepad)) {
+    if ($IsWindows -and (Get-Command -ErrorAction SilentlyContinue notepad)) {
         # If we are on Windows, let's fall back to notepad.
         function edit {
             notepad $args
         }
         Set-EnvVar -Process -Name EDITOR -Value "notepad"
-    } elseif ($LINUX) {
+    } elseif ($IsLinux) {
         # If we are on Linux, let's fall back to ed.
         function edit {
             ed $args
