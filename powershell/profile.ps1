@@ -17,6 +17,7 @@ Import-Module -Name powertype
 
 Import-Module -Name $PSScriptRoot\personal-modules\DotfilesHelpers.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\EnvHelpers.psm1 -DisableNameChecking
+Import-Module -Name $PSScriptRoot\personal-modules\PythonHelpers.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\EditorHelpers.psm1 -DisableNameChecking
 if (Get-Command git -ErrorAction 'SilentlyContinue') {
     Import-Module -Name $PSScriptRoot\personal-modules\GitHelpers.psm1 -DisableNameChecking
