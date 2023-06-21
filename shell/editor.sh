@@ -9,7 +9,7 @@ export VIM=$(command -v vim)
 export VI=$(command -v vi)
 
 NANO_HELP=$(nano -h)
-NANO_ARGS=(--stateflags --linenumbers --noconvert --minibar)
+NANO_ARGS=(--stateflags --linenumbers --noconvert --minibar --magic --positionlog --indicator)
 for i in "${NANO_ARGS[@]}"
 do
     NANO_HAS_PARAM=$(echo "$NANO_HELP" | grep -e "$i" -)

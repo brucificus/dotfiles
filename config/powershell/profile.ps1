@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 Push-Location ~/.dotfiles/powershell
 
 try {
-    ./profile.ps1
+    . ./profile.ps1
 } finally {
     Pop-Location
 }
