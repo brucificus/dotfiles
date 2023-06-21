@@ -4,7 +4,15 @@ Import-Module -Name PSReadLine
 
 if ($PSReadLineSupportsOptionPredictionSource) {
 
-    Set-PSReadLineOption -PredictionSource History
+    if ([Microsoft.PowerShell.PredictionSource]::HistoryAndPlugin) {
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    } else {
+        Set-PSReadLineOption -PredictionSource History
+    }
+
+    if (Get-Command Enable-PowerType -ErrorAction SilentlyContinue) {
+        Enable-PowerType
+    }
 
     [bool] $PSReadLineSupportsOptionPredictionViewStyle = ($null -ne $(Get-PSReadLineOption).PredictionViewStyle)
 

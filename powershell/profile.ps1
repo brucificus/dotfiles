@@ -12,6 +12,7 @@ if (Get-Command git -ErrorAction 'SilentlyContinue') {
     Import-Module -Name posh-git
 }
 Import-Module -Name terminal-icons
+Import-Module -Name powertype
 
 
 Import-Module -Name $PSScriptRoot\personal-modules\DotfilesHelpers.psm1 -DisableNameChecking
