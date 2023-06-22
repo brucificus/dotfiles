@@ -2,7 +2,12 @@
 
 # Removes $1 from $PATH.
 path_remove() {
-    PATH=$(echo -n "$PATH" | awk -v RS=: -v ORS=: "\$0 != \"$1\"" | sed 's/:$//')
+    PATH=$(printf '%s' "$PATH" | awk -v RS=: -v ORS=: "\$0 != \"$1\"" | sed 's/:$//')
+}
+
+# Removes matches of $1 from $PATH.
+path_removematch() {
+    PATH=$(printf '%s' "$PATH" | sed 's/:/\n/g' | grep -v "$1" | sed ':a; N; $!ba; s/\n/:/g')
 }
 
 # Concatenates $1 to the end of $PATH, removing it from elsewhere in $PATH if it exists already.
@@ -38,8 +43,8 @@ there() {
 SetPoshPromptPortably() {
     if command -v oh-my-posh &> /dev/null
     then
-        local poshshell="$(oh-my-posh get shell)"
-
+        poshshell="$(oh-my-posh get shell)"
         eval "$(oh-my-posh init "${poshshell}" --config "${1}")"
+        unset poshshell
     fi
 }

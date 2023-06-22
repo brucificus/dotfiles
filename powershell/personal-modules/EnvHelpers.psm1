@@ -35,7 +35,7 @@ function Read-DotEnv() {
             if ($splitAt -gt -1) {
                 [string] $name = $line.Substring(0, $splitAt)
                 [string] $value = $line.Substring($splitAt+1)
-                
+
                 [string] $valueTrimmed = $value.Trim()
                 if ($valueTrimmed.StartsWith('"') -and $valueTrimmed.EndsWith('"')) {
                     $value = $valueTrimmed.Substring(1, $valueTrimmed.Length-2)
@@ -238,7 +238,7 @@ function Get-EnvPathItem() {
     Process {
         [string] $extantPath = (Get-EnvVar -Scope $Scope -Name 'PATH').Value
         [string[]] $pathItems = $extantPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::None)
-        
+
         foreach ($pathItem in $pathItems) {
             Write-Output $pathItem
         }
@@ -295,16 +295,16 @@ function Add-EnvPathItem() {
     Process {
         [string] $extantPath = (Get-EnvVar -Scope $Scope -Name 'PATH').Value
         [string[]] $pathItems = $extantPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::None)
-        
+
         $pathItems = $pathItems | Where-Object { $_ -ne $Value }
         if ($Prepend -and $Prepend.IsPresent) {
             $pathItems = @(,$Value) + $pathItems
         } else {
             $pathItems = $pathItems + @(,$Value)
         }
-        
+
         [string] $newPathValue = $pathItems -join [System.IO.Path]::PathSeparator
-        Set-Env -Scope $Scope -Name 'PATH' -Value $newPathValue
+        Set-EnvVar -Scope $Scope -Name 'PATH' -Value $newPathValue
     }
 }
 
@@ -312,22 +312,42 @@ function Remove-EnvPathItem() {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValueLike", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValueMatch", Position=0)]
         [switch] $Machine,
 
         [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValueLike", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValueMatch", Position=0)]
         [switch] $Process,
 
         [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValueLike", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValueMatch", Position=0)]
         [switch] $User,
 
         [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValueLike", Position=0)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValueMatch", Position=0)]
         [System.EnvironmentVariableTarget] $Scope,
 
         [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValue", Position=1, ValueFromPipeline=$true)]
         [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValue", Position=1, ValueFromPipeline=$true)]
         [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValue", Position=1, ValueFromPipeline=$true)]
         [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValue", Position=1, ValueFromPipeline=$true)]
-        [object] $Value
+        [object] $Value,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValueLike", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValueLike", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValueLike", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValueLike", Position=1, ValueFromPipeline=$true)]
+        [object] $ValueLike,
+
+        [Parameter(Mandatory=$true, ParameterSetName="MachineScopeForValueMatch", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ProcessScopeForValueMatch", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="UserScopeForValueMatch", Position=1, ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true, ParameterSetName="ScopeValueForValueMatch", Position=1, ValueFromPipeline=$true)]
+        [object] $ValueMatch
     )
     Begin {
         if ($Machine -and $Machine.IsPresent) {
@@ -352,11 +372,17 @@ function Remove-EnvPathItem() {
     Process {
         [string] $extantPath = (Get-EnvVar -Scope $Scope -Name 'PATH').Value
         [string[]] $pathItems = $extantPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::None)
-        
-        $pathItems = $pathItems | Where-Object { $_ -ne $Value }
-        
+
+        if ($Value) {
+            $pathItems = $pathItems | Where-Object { $_ -ne $Value }
+        } elseif ($ValueLike) {
+            $pathItems = $pathItems | Where-Object { $_ -notlike $ValueLike }
+        } elseif ($ValueMatch) {
+            $pathItems = $pathItems | Where-Object { $_ -notmatch $ValueMatch }
+        }
+
         [string] $newPathValue = $pathItems -join [System.IO.Path]::PathSeparator
-        Set-Env -Scope $Scope -Name 'PATH' -Value $newPathValue
+        Set-EnvVar -Scope $Scope -Name 'PATH' -Value $newPathValue
     }
 }
 

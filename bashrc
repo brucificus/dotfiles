@@ -3,6 +3,9 @@
 # Functions
 source ~/.shell/functions.sh
 
+# Bootstrap
+source ~/.shell/bootstrap.sh
+
 # Allow local customizations in the ~/.shell_local_before file
 if [ -f ~/.shell_local_before ]; then
     source ~/.shell_local_before
@@ -13,14 +16,11 @@ if [ -f ~/.bashrc_local_before ]; then
     source ~/.bashrc_local_before
 fi
 
+# Detect Python
+source ~/.shell/python-detect.sh
+
 # Settings
 source ~/.bash/settings.bash
-
-# Bootstrap
-source ~/.shell/bootstrap.sh
-
-# External settings
-source ~/.shell/external.sh
 
 # Aliases
 source ~/.shell/aliases.sh

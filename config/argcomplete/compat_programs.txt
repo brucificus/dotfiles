@@ -1,0 +1,7 @@
+az
+cz
+localsql
+yq
+pytest
+tron
+tmuxp

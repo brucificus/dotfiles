@@ -58,3 +58,15 @@ fi
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 SetPoshPromptPortably ~/.dotfiles/theme.omp.yaml
+
+
+# If we're running in MINGW (e.g. Git Bash)…
+if [[ "$OSTYPE" == "msys" ]]; then
+    # …and if 'activate-global-python-argcomplete' is installed…
+    # See: https://github.com/kislyuk/argcomplete
+    if which activate-global-python-argcomplete > /dev/null; then
+        # …set the variable telling argcomplete to be compatible.
+        # See: https://github.com/kislyuk/argcomplete/tree/develop/contrib#git-bash-support
+        export ARGCOMPLETE_USE_TEMPFILES=1
+    fi
+fi

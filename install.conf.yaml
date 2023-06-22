@@ -8,6 +8,7 @@
 - link:
     ~/.bash_profile:
     ~/.bash:
+    ~/.bash_completion:
     ~/.bashrc:
     ~/.dotfiles: ''
     ~/.gitconfig:
@@ -24,6 +25,7 @@
     ~/.pythonrc:
     ~/.shell:
     ~/.zsh:
+    ~/.zshenv:
     ~/.zshrc:
     ~/bin/:
       glob: true

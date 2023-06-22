@@ -1,7 +1,9 @@
 $ErrorActionPreference = "Continue"
 
-if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+$env:HOME = $env:USERPROFILE
+$env:HOMEDRIVE =  [System.IO.Path]::GetPathRoot($env:USERPROFILE)
 
+if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
 
 [string] $sep = [System.IO.Path]::PathSeparator
 $Env:PSModulePath = "$PSScriptRoot/modules$($sep)$($Env:PSModulePath)"
@@ -17,7 +19,8 @@ Import-Module -Name powertype
 
 Import-Module -Name $PSScriptRoot\personal-modules\DotfilesHelpers.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\EnvHelpers.psm1 -DisableNameChecking
-Import-Module -Name $PSScriptRoot\personal-modules\PythonHelpers.psm1 -DisableNameChecking
+Import-Module -Name $PSScriptRoot\personal-modules\PythonDetect.psm1 -DisableNameChecking
+Import-Module -Name $PSScriptRoot\personal-modules\ArgcompleteInit.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\EditorHelpers.psm1 -DisableNameChecking
 if (Get-Command git -ErrorAction 'SilentlyContinue') {
     Import-Module -Name $PSScriptRoot\personal-modules\GitHelpers.psm1 -DisableNameChecking
