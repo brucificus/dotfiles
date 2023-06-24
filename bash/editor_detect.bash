@@ -1,0 +1,1 @@
+../shell/editor_detect.sh

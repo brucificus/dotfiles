@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+if [ -n "$SETTINGS_ZSH_INIT" ]; then
+    return
+fi
+SETTINGS_ZSH_INIT=1; export SETTINGS_ZSH_INIT
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 

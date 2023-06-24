@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+# shellcheck shell=sh
 
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/.dotfiles/bin"

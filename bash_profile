@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-source ~/.bashrc
+source ~/.bash/_profile.bash

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+# shellcheck shell=sh
 
 # Use colors in coreutils utilities output
 alias ls='ls --color=auto --almost-all --group-directories-first --human-readable -g --file-type'
@@ -37,46 +37,46 @@ alias cdgr='cd "$(git root)"'
 
 # Create a directory and cd into it
 mcd() {
-    mkdir "${1}" && cd "${1}"
+    mkdir "${1}" && (cd "${1}" || return)
 }
 
 # Jump to directory containing file
 jump() {
-    cd "$(dirname ${1})"
+    cd "$(dirname "${1}")" || return
 }
 
 # cd replacement for screen to track cwd (like tmux)
 scr_cd()
 {
-    builtin cd $1
+    builtin cd "$1" || return
     screen -X chdir "$PWD"
 }
 
-if [[ -n $STY ]]; then
+if [ -n "$STY" ]; then
     alias cd=scr_cd
 fi
 
 # Go up [n] directories
 up()
 {
-    local cdir="$(pwd)"
-    if [[ "${1}" == "" ]]; then
+    cdir="$(pwd)"
+    if [ -z "$1" ]; then
         cdir="$(dirname "${cdir}")"
     elif ! [[ "${1}" =~ ^[0-9]+$ ]]; then
         echo "Error: argument must be a number"
-    elif ! [[ "${1}" -gt "0" ]]; then
+    elif ! [ "${1}" -gt 0 ]; then
         echo "Error: argument must be positive"
     else
         for ((i=0; i<${1}; i++)); do
-            local ncdir="$(dirname "${cdir}")"
-            if [[ "${cdir}" == "${ncdir}" ]]; then
+            ncdir="$(dirname "${cdir}")"
+            if [ "${cdir}" = "${ncdir}" ]; then
                 break
             else
                 cdir="${ncdir}"
             fi
         done
     fi
-    cd "${cdir}"
+    cd "${cdir}" || (unset cdir && return)
 }
 
 # Execute a command in a specific directory
@@ -100,23 +100,24 @@ fpr() {
     (
         cdgr
         if [ "$#" -eq 1 ]; then
-            local repo="${PWD##*/}"
-            local user="${1%%:*}"
-            local branch="${1#*:}"
+            repo="${PWD##*/}"
+            user="${1%%:*}"
+            branch="${1#*:}"
         elif [ "$#" -eq 2 ]; then
-            local repo="${PWD##*/}"
-            local user="${1}"
-            local branch="${2}"
+            repo="${PWD##*/}"
+            user="${1}"
+            branch="${2}"
         elif [ "$#" -eq 3 ]; then
-            local repo="${1}"
-            local user="${2}"
-            local branch="${3}"
+            repo="${1}"
+            user="${2}"
+            branch="${3}"
         else
             echo "Usage: fpr [repo] username branch"
             return 1
         fi
 
         git fetch "git@github.com:${user}/${repo}" "${branch}:${user}/${branch}"
+        unset repo user branch
     )
 }
 

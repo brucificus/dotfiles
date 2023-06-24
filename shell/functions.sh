@@ -1,4 +1,8 @@
-#!/usr/bin/env sh
+# shellcheck shell=sh
+
+naive_shell_replace() {
+    printf "%s" "${1//$2/$3}"
+}
 
 # Removes $1 from $PATH.
 path_remove() {
@@ -30,13 +34,13 @@ here() {
         loc=$(realpath ".")
     fi
     ln -sfn "${loc}" "$HOME/.shell.here"
-    echo "here -> $(readlink $HOME/.shell.here)"
+    echo "here -> $(readlink "$HOME/.shell.here")"
 }
 
 there="$HOME/.shell.here"
 
 there() {
-    cd "$(readlink "${there}")"
+    cd "$(readlink "${there}")" || return
 }
 
 # Initializes the oh-my-posh prompt to the profile $1 for the current shell.
@@ -45,6 +49,5 @@ SetPoshPromptPortably() {
     then
         poshshell="$(oh-my-posh get shell)"
         eval "$(oh-my-posh init "${poshshell}" --config "${1}")"
-        unset poshshell
     fi
 }
