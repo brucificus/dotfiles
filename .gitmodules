@@ -22,3 +22,9 @@
 	url = https://github.com/masonc15/wsl-notify-zsh.git
 	branch = 9f365dcef1c1ac75210607e6fe448b0334567d1e
 	ignore = dirty
+[submodule "oh-my-zsh-custom-plugins/zsh-256color"]
+	path = oh-my-zsh-custom-plugins/zsh-256color
+	url = https://github.com/chrissicool/zsh-256color.git
+	branch = 559fee48bb74b75cec8b9887f8f3e046f01d5d8f
+	ignore = dirty
+

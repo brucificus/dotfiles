@@ -70,4 +70,4 @@ if [ -n "$(whence code)" ]; then
     plugins+=(vscode)
 fi
 
-plugins+=(zsh-autosuggestions zsh-syntax-highlighting wsl-notify-zsh)
+plugins+=(zsh-autosuggestions zsh-syntax-highlighting wsl-notify-zsh zsh-256color)
