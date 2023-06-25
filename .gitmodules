@@ -17,3 +17,8 @@
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 	branch = tags/v0.7.0
 	ignore = dirty
+[submodule "oh-my-zsh-custom-plugins/wsl-notify-zsh"]
+	path = oh-my-zsh-custom-plugins/wsl-notify-zsh
+	url = https://github.com/masonc15/wsl-notify-zsh.git
+	branch = 9f365dcef1c1ac75210607e6fe448b0334567d1e
+	ignore = dirty

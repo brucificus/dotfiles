@@ -2,6 +2,11 @@
 
 # External plugins (initialized before)
 
+if [ -n "$ZSH_PLUGINS_INIT" ]; then
+    return
+fi
+ZSH_PLUGINS_INIT=1; export ZSH_PLUGINS_INIT
+
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
@@ -11,7 +16,7 @@
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colored-man-pages compleat copybuffer dirhistory dotenv emoji github gpg-agent jira sudo virtualenv zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(colored-man-pages compleat copybuffer dirhistory dotenv emoji github gpg-agent jira sudo virtualenv)
 
 if [ -n "$(whence git)" ]; then
     plugins+=(git)
@@ -64,3 +69,5 @@ fi
 if [ -n "$(whence code)" ]; then
     plugins+=(vscode)
 fi
+
+plugins+=(zsh-autosuggestions zsh-syntax-highlighting wsl-notify-zsh)
