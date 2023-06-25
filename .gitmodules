@@ -27,4 +27,8 @@
 	url = https://github.com/chrissicool/zsh-256color.git
 	branch = 559fee48bb74b75cec8b9887f8f3e046f01d5d8f
 	ignore = dirty
-
+[submodule "bash-it"]
+	path = bash-it
+	url = https://github.com/Bash-it/bash-it.git
+	branch = tags/v3.0.3
+	ignore = dirty

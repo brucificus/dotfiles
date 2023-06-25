@@ -30,6 +30,7 @@
     ~/bin/:
       glob: true
       path: bin/*
+    bash-it/profiles: bash-it-profiles
 
 - shell:
   - git submodule sync --recursive
