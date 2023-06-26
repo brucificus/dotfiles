@@ -12,6 +12,7 @@ cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-rm -rf bash-it/profiles/ > /dev/null 2>&1 || true
+[ -f shell/bash/bash-it/profiles/ ] && [ ! -L shell/bash/bash-it/profiles/ ] && rm -rf shell/bash/bash-it/profiles/ && rmdir shell/bash/bash-it/profiles/
+[ -f shell/zsh/oh-my-zsh/custom/plugins/ ] && [ ! -L shell/zsh/oh-my-zsh/custom/plugins/ ] && rm -rf shell/zsh/oh-my-zsh/custom/plugins/ && rmdir shell/zsh/oh-my-zsh/custom/plugins/
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"

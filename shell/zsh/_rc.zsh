@@ -1,12 +1,12 @@
 #!/usr/bin/env zsh
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}" )" &> /dev/null && pwd )
+local SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}" )" &> /dev/null && pwd )
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Functions
-source "$SCRIPT_DIR/functions_common.zsh"
+source "$SCRIPT_DIR/functions.zsh"
 
 # Bootstrap
 source "$SCRIPT_DIR/bootstrap.zsh"
@@ -31,7 +31,7 @@ source "$SCRIPT_DIR/python_detect.zsh"
 source "$SCRIPT_DIR/settings.zsh"
 
 # Aliases
-source "$SCRIPT_DIR/aliases_common.zsh"
+source "$SCRIPT_DIR/aliases.zsh"
 
 # Custom prompt
 source "$SCRIPT_DIR/prompt.zsh"

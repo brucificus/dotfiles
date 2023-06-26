@@ -41,7 +41,7 @@ case $- in
 esac
 
 # Path to the bash it configuration
-export BASH_IT="$SCRIPT_DIR/../bash-it"
+export BASH_IT="$SCRIPT_DIR/bash-it"
 
 # Lock and Load a custom theme file.
 # Leave empty to disable theming.

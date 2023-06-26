@@ -2,33 +2,33 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "oh-my-zsh"]
-	path = oh-my-zsh
+[submodule "shell/zsh/oh-my-zsh"]
+	path = shell/zsh/oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
 	branch = cb8b677
 	ignore = dirty
-[submodule "oh-my-zsh-custom-plugins/zsh-syntax-highlighting"]
-	path = oh-my-zsh-custom-plugins/zsh-syntax-highlighting
+[submodule "shell/zsh/oh-my-zsh-custom-plugins/zsh-syntax-highlighting"]
+	path = shell/zsh/oh-my-zsh-custom-plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 	branch = tags/0.7.1
 	ignore = dirty
-[submodule "oh-my-zsh-custom-plugins/zsh-autosuggestions"]
-	path = oh-my-zsh-custom-plugins/zsh-autosuggestions
+[submodule "shell/zsh/oh-my-zsh-custom-plugins/zsh-autosuggestions"]
+	path = shell/zsh/oh-my-zsh-custom-plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 	branch = tags/v0.7.0
 	ignore = dirty
-[submodule "oh-my-zsh-custom-plugins/wsl-notify-zsh"]
-	path = oh-my-zsh-custom-plugins/wsl-notify-zsh
+[submodule "shell/zsh/oh-my-zsh-custom-plugins/wsl-notify-zsh"]
+	path = shell/zsh/oh-my-zsh-custom-plugins/wsl-notify-zsh
 	url = https://github.com/masonc15/wsl-notify-zsh.git
 	branch = 9f365dcef1c1ac75210607e6fe448b0334567d1e
 	ignore = dirty
-[submodule "oh-my-zsh-custom-plugins/zsh-256color"]
-	path = oh-my-zsh-custom-plugins/zsh-256color
+[submodule "shell/zsh/oh-my-zsh-custom-plugins/zsh-256color"]
+	path = shell/zsh/oh-my-zsh-custom-plugins/zsh-256color
 	url = https://github.com/chrissicool/zsh-256color.git
 	branch = 559fee48bb74b75cec8b9887f8f3e046f01d5d8f
 	ignore = dirty
-[submodule "bash-it"]
-	path = bash-it
+[submodule "shell/bash/bash-it"]
+	path = shell/bash/bash-it
 	url = https://github.com/Bash-it/bash-it.git
 	branch = tags/v3.0.3
 	ignore = dirty

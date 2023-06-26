@@ -5,6 +5,8 @@ if [ -n "$SETTINGS_ZSH_INIT" ]; then
 fi
 SETTINGS_ZSH_INIT=1; export SETTINGS_ZSH_INIT
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}" )" &> /dev/null && pwd )
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -66,7 +68,7 @@ setopt autocd extendedglob
 # export LANG=en_US.UTF-8
 
 # Path to your oh-my-zsh installation.
-ZSH="$HOME/.oh-my-zsh"
+ZSH="$SCRIPT_DIR/oh-my-zsh"
 if [ -f "$ZSH/oh-my-zsh.sh" ]; then
     export ZSH
     source "$ZSH/oh-my-zsh.sh"

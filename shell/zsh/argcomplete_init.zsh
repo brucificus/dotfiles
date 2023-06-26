@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}" )" &> /dev/null && pwd )
+compat_programs_file="$SCRIPT_DIR/../../config/argcomplete/compat_programs.txt"
+
 
 if [ -z "$ARGCOMPLETE_INIT_ZSH" ]; then
     source "$SCRIPT_DIR/settings.zsh"
@@ -38,7 +40,6 @@ if [ "$ARGCOMPLETE_INIT_ZSH" -lt 1 ]; then
     fi
 
     # Next we load up a list of programs that we want to *expressly* register with argcomplete. From a file.
-    compat_programs_file="$SCRIPT_DIR/../config/argcomplete/compat_programs.txt"
     argcomplete_programs=()
     while read -r line; do
         argcomplete_programs+=("$line")

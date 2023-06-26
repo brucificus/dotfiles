@@ -6,7 +6,6 @@ if [ -n "$PLUGINS_BASH_INIT" ]; then
 fi
 PLUGINS_BASH_INIT=1; export PLUGINS_BASH_INIT
 
-
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path bash)"
 
 

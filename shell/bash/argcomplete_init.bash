@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+compat_programs_file="$SCRIPT_DIR/../../config/argcomplete/compat_programs.txt"
+
 
 if [ -z "$ARGCOMPLETE_INIT_BASH" ]; then
     source "$SCRIPT_DIR/settings.bash"
@@ -38,7 +40,6 @@ if [ "$ARGCOMPLETE_INIT_BASH" -lt 1 ]; then
     fi
 
     # Next we load up a list of programs that we want to *expressly* register with argcomplete.
-    compat_programs_file="$SCRIPT_DIR/../config/argcomplete/compat_programs.txt"
     readarray -t argcomplete_programs < "$compat_programs_file"
 
     # Call the argcomplete per-program registration script for each of the programs that we have.

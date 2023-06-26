@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Functions
-source "$SCRIPT_DIR/functions_common.bash"
+source "$SCRIPT_DIR/functions.bash"
 
 # Bootstrap
 source "$SCRIPT_DIR/bootstrap.bash"
@@ -25,7 +25,7 @@ source "$SCRIPT_DIR/python_detect.bash"
 source "$SCRIPT_DIR/settings.bash"
 
 # Aliases
-source "$SCRIPT_DIR/aliases_common.bash"
+source "$SCRIPT_DIR/aliases.bash"
 
 # Plugins
 source "$SCRIPT_DIR/plugins.bash"

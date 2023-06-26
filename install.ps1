@@ -6,11 +6,20 @@ $DOTBOT_DIR = "dotbot"
 $DOTBOT_BIN = "bin/dotbot"
 $BASEDIR = $PSScriptRoot
 
+function Test-ReparsePoint([string]$path) {
+    $file = Get-Item $path -Force -ea SilentlyContinue
+    return [bool]($file.Attributes -band [IO.FileAttributes]::ReparsePoint)
+}
+
 Set-Location $BASEDIR
 git -C $DOTBOT_DIR submodule sync --quiet --recursive
 git submodule update --init --recursive $DOTBOT_DIR
 
-rmdir -Force $PSScriptRoot/bash-it/profiles/ | Out-Null
+folders_to_relink = @(
+    "$PSScriptRoot/shell/bash/bash-it/profiles/"
+    "$PSScriptRoot/shell/zsh/oh-my-zsh/custom/plugins/"
+)
+folders_to_relink | Where-Object { -not (Test-ReparsePoint $_) } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 
 foreach ($PYTHON in ('python', 'python3', 'python2')) {
     # Python redirects to Microsoft Store in Windows 10 when not installed

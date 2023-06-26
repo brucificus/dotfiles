@@ -4,7 +4,7 @@ SCRIPT="${BASH_SOURCE[0]:-$0}"
 SCRIPT_DIR=$( cd -- "$( dirname -- "$SCRIPT" )" &> /dev/null && pwd )
 SCRIPT_EXT="${SCRIPT##*.}"
 
-source "$SCRIPT_DIR/functions_common.$SCRIPT_EXT"
+source "$SCRIPT_DIR/functions.$SCRIPT_EXT"
 
 # Find the python3 executable, make sure it isn't the Windows one from within WSL.
 if [ -z "$PYTHON3" ]; then

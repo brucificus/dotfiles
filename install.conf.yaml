@@ -3,34 +3,28 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config/powershell/profile.ps1', '~/.oh-my-zsh/custom/plugins']
+- clean: ['~', '~/.bash', '~/.zsh', '~/.oh-my-zsh', '~/.config/powershell/profile.ps1', '~/.oh-my-zsh/custom/plugins']
 
 - link:
-    ~/.bash_profile:
-    ~/.bash:
-    ~/.bash_completion:
-    ~/.bashrc:
     ~/.dotfiles: ''
+    ~/.bash_profile: shell/bash_profile
+    ~/.bash_completion: shell/bash_completion
+    ~/.bashrc: shell/bashrc
+    ~/.pythonrc:
+    ~/.zshenv: shell/zshenv
+    ~/.zshrc: shell/zshrc
     ~/.gitconfig:
     ~/.ipython/profile_default/ipython_config.py: ipython/ipython_config.py
     ~/.ipython/profile_default/ipython_kernel_config.py: ipython/ipython_kernel_config.py
     ~/.ipython/profile_default/startup/disable_warnings.py: ipython/disable_warnings.py
     ~/.jupyter/jupyter_notebook_config.py: jupyter/jupyter_notebook_config.py
     ~/.jupyter/nbconfig/notebook.json: jupyter/notebook.json
-    ~/.oh-my-zsh:
-    ~/.oh-my-zsh/custom/plugins:
-      glob: true
-      path: oh-my-zsh-custom-plugins/*
     ~/.config/powershell/profile.ps1: config/powershell/profile.ps1
-    ~/.pythonrc:
-    ~/.shell:
-    ~/.zsh:
-    ~/.zshenv:
-    ~/.zshrc:
     ~/bin/:
       glob: true
       path: bin/*
-    bash-it/profiles: bash-it-profiles
+    shell/bash/bash-it/profiles: shell/bash/bash-it-profiles
+    shell/zsh/oh-my-zsh/custom/plugins: shell/zsh/oh-my-zsh-custom-plugins
 
 - shell:
   - git submodule sync --recursive
