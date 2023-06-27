@@ -13,7 +13,6 @@ plugins edit-mode-vi
 plugins explain
 plugins extract
 plugins gif
-plugins history-eternal
 plugins history-search
 plugins history-substring-search
 plugins history
@@ -42,8 +41,6 @@ completion todo
 aliases bash-it
 aliases clipboard
 aliases curl
-aliases general
-aliases msys2
 aliases systemd
 aliases tmux
 aliases vim

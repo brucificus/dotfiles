@@ -6,20 +6,14 @@ if [ -n "$PLUGINS_BASH_INIT" ]; then
 fi
 PLUGINS_BASH_INIT=1; export PLUGINS_BASH_INIT
 
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path bash)"
 
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path bash)"
 
 #
 # bash-it enablement.
 # NOTE: The "normal" bash-it configuration was done back in ~/settings.bash.
 #       We've got some extra stuff here for controlling how bash-it is loaded.
 #
-
-# If not running interactively, don't continue.
-case $- in
-  *i*) ;;
-    *) return;;
-esac
 
 # Makes bash-it reload itself automatically after enabling or disabling aliases, plugins, and completions.
 export BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE=1

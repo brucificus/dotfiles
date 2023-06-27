@@ -1,5 +1,65 @@
 # shellcheck shell=sh
 
+# Checks for existence of a command.
+command_exists() {
+    if [ -n "$BASH_VERSION" ]; then
+        if type -t "$1" > /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        if whence -w "$1" > /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        echo "Unknown shell" >&2
+        return 1
+    fi
+}
+
+# Checks for existence of a binary.
+binary_exists() {
+    if [ -n "$BASH_VERSION" ]; then
+        if type -P "$1" > /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        if whence -p "$1" > /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        echo "Unknown shell" >&2
+        return 1
+    fi
+}
+
+# Checks for existence of registration of a completion for the given command.
+completion_exists() {
+    if [ -n "$BASH_VERSION" ]; then
+        if complete -p "$1" &> /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        if compctl -p "$1" &> /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        echo "Unknown shell" >&2
+        return 1
+    fi
+}
+
 naive_shell_replace() {
     printf "%s" "${1//$2/$3}"
 }
@@ -44,7 +104,7 @@ there() {
 }
 
 # Initializes the oh-my-posh prompt to the profile $1 for the current shell.
-SetPoshPromptPortably() {
+load_ohmyposh_theme() {
     if command -v oh-my-posh &> /dev/null
     then
         poshshell="$(oh-my-posh get shell)"

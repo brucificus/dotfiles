@@ -12,4 +12,4 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}" )" &> /dev/null && pw
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 COMPLETION_WAITING_DOTS="true"
 
-SetPoshPromptPortably "$SCRIPT_DIR/../../theme.omp.yaml"
+load_ohmyposh_theme "$SCRIPT_DIR/../../theme.omp.yaml"

@@ -10,7 +10,6 @@ ZSH_PLUGINS_INIT=1; export ZSH_PLUGINS_INIT
 
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -18,7 +17,7 @@ ZSH_PLUGINS_INIT=1; export ZSH_PLUGINS_INIT
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(colored-man-pages compleat copybuffer dirhistory dotenv emoji github gpg-agent jira sudo virtualenv)
 
-if [ -n "$(whence git)" ]; then
+if binary_exists git; then
     plugins+=(git)
 fi
 
@@ -27,11 +26,11 @@ if [ -n "$DOCKER" ] && [[ $DOCKER != /mnt/* ]]; then
     plugins+=(docker docker-compose)
 fi
 
-if [ -n "$(whence docker-machine)" ]; then
+if binary_exists docker-machine; then
     plugins+=(docker-machine)
 fi
 
-if [ -n "$(whence dotnet)" ]; then
+if binary_exists dotnet; then
     plugins+=(dotnet)
 fi
 
@@ -50,23 +49,23 @@ if [ -n "$NVM" ] && [[ "$NVM" != /mnt/* ]]; then
     plugins+=(nvm)
 fi
 
-if [ -n "$(whence pipenv)" ]; then
+if command_exists pipenv; then
     plugins+=(pipenv)
 fi
 
-if [ -n "$(whence kubectl)" ]; then
+if command_exists kubectl; then
     plugins+=(kubectl)
 fi
 
-if [ -n "$(whence kubectx)" ]; then
+if command_exists kubectx; then
     plugins+=(kubectx)
 fi
 
-if [ -n "$(whence minikube)" ]; then
+if command_exists minikube; then
     plugins+=(minikube)
 fi
 
-if [ -n "$(whence code)" ]; then
+if command_exists code; then
     plugins+=(vscode)
 fi
 
