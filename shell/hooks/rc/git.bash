@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck source-path=SCRIPTDIR/../../funcs
+# shellcheck source-path=SCRIPTDIR/../../vendor/bash-it/aliases/available
+# shellcheck source-path=SCRIPTDIR/../../vendor/bash-it/completion/available
+# shellcheck source-path=SCRIPTDIR/../../vendor/bash-it/plugins/available
 
 
 if command_exists git; then
