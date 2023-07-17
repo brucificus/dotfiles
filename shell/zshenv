@@ -2,10 +2,18 @@
 
 
 cd ~/.dotfiles/shell &> /dev/null || return 0
-local profile_hook_exit_code=0
+
+export PROFILE_STAGE
+PROFILE_STAGE="zsh➡️env"; profile_hook_exit_code=0
 source init.sh "zsh" "env" || profile_hook_exit_code=$?
-cd ~ &> /dev/null
-if [ ! $profile_hook_exit_code -eq 0 ]; then
+if [ "$profile_hook_exit_code" -ne 0 ]; then
+    cd ~ &> /dev/null
     echo "[zsh|env] Profile hook failed, returned code '$profile_hook_exit_code'. (zshenv)" >&2
+    unset profile_hook_exit_code
+    PROFILE_STAGE="zsh@env❌"
     return 0
+else
+    PROFILE_STAGE="zsh@env✅"
 fi
+
+cd ~ &> /dev/null
