@@ -1,0 +1,88 @@
+#!/usr/bin/env sh
+
+
+# ⚠️ Part of core "phook" functionality.
+#   - Be careful of circular dependencies.
+#   - Be careful of POSIX sh compatibility.
+
+strlist_popstart() {
+    strlist_var_name="$1"
+    strlist_separator="$2"
+    output_var_name="$3"
+    popped=''
+
+    if [ -z "$output_var_name" ]; then
+        unset strlist_var_name
+        unset strlist_separator
+        unset output_var_name
+        unset popped
+        return 2
+    fi
+
+    if [ -n "$BASH_VERSION" ]; then
+        # shellcheck disable=SC3045  # We're in a Bash-only block.
+        # shellcheck disable=SC3053  # We're in a Bash-only block.
+        if [ -z "${!strlist_var_name}" ]; then
+            printf -v "$output_var_name" "%s" ""
+
+            unset strlist_var_name
+            unset strlist_separator
+            unset output_var_name
+            unset popped
+            return 1
+        fi
+
+        # shellcheck disable=SC3010  # We're in a Bash-only block.
+        # shellcheck disable=SC3045  # We're in a Bash-only block.
+        # shellcheck disable=SC3053  # We're in a Bash-only block.
+        if [[ "${!strlist_var_name}" =~ .*${strlist_separator}.* ]]; then
+            popped="${!strlist_var_name%%"${strlist_separator}"*}"
+            printf -v "$strlist_var_name" "%s" "${!strlist_var_name#*"${strlist_separator}"}"
+            printf -v "$output_var_name" "%s" "$popped"
+        else
+            popped="${!strlist_var_name}"
+            printf -v "$strlist_var_name" "%s" ""
+            printf -v "$output_var_name" "%s" "$popped"
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        # shellcheck disable=SC2296  # We're in a ZSH-only block.
+        # shellcheck disable=SC3010  # We're in a ZSH-only block.
+        # shellcheck disable=SC3045  # We're in a ZSH-only block.
+        if [ -z "${(P)strlist_var_name}" ]; then
+            printf -v "$output_var_name" "%s" ""
+
+            unset strlist_var_name
+            unset strlist_separator
+            unset output_var_name
+            unset popped
+            return 1
+        fi
+
+        # shellcheck disable=SC2296  # We're in a ZSH-only block.
+        # shellcheck disable=SC3010  # We're in a ZSH-only block.
+        # shellcheck disable=SC3045  # We're in a ZSH-only block.
+        if [[ "${(P)strlist_var_name}" =~ .*${strlist_separator}.* ]]; then
+            popped="${(P)strlist_var_name%%"${strlist_separator}"*}"
+            printf -v "$strlist_var_name" "%s" "${(P)strlist_var_name#*"${strlist_separator}"}"
+            printf -v "$output_var_name" "%s" "$popped"
+        else
+            popped="${(P)strlist_var_name}"
+            printf -v "$strlist_var_name" "%s" ""
+            printf -v "$output_var_name" "%s" "$popped"
+        fi
+    else
+        echo "Unknown shell: '$SHELL'." >&2
+
+        unset strlist_var_name
+        unset strlist_separator
+        unset output_var_name
+        unset popped
+        return 1
+    fi
+
+    unset strlist_var_name
+    unset strlist_separator
+    unset output_var_name
+    unset popped
+    return 0
+}

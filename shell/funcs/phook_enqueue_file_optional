@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+
+# ⚠️ Part of core "phook" functionality.
+#   - Be careful of circular dependencies.
+#   - Be careful of POSIX sh compatibility.
+
+phook_enqueue_file_optional() {
+    if [ -z "$1" ]; then
+        return 2
+    fi
+    if [ -r "$1" ]; then
+        phook_enqueue_file "$1"
+    fi
+}

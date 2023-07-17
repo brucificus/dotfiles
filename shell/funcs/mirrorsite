@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+
+# Mirror a website
+mirrorsite() {
+    wget -m -k -K -E -e robots=off
+}

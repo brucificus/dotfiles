@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+
+# Fetch pull request
+gh_fetch_pr() {
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "error: gh_fetch_pr must be executed from within a git repository"
+        return 1
+    fi
+    (
+        cdgr
+        if [ "$#" -eq 1 ]; then
+            repo="${PWD##*/}"
+            user="${1%%:*}"
+            branch="${1#*:}"
+        elif [ "$#" -eq 2 ]; then
+            repo="${PWD##*/}"
+            user="${1}"
+            branch="${2}"
+        elif [ "$#" -eq 3 ]; then
+            repo="${1}"
+            user="${2}"
+            branch="${3}"
+        else
+            echo "Usage: fpr [repo] username branch"
+            return 1
+        fi
+
+        git fetch "git@github.com:${user}/${repo}" "${branch}:${user}/${branch}"
+        unset repo user branch
+    )
+}

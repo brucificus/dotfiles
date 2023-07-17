@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+
+# Intentionally left blank, b/c we want to use zlogin (which runs earlier, comparable to bash_profile).

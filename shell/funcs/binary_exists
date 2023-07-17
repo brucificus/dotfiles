@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+
+# Checks for existence of a binary.
+function binary_exists() {
+    # set -e
+
+    local find_binary_exit_code
+    find_binary "$1" > /dev/null 2>&1 || find_binary_exit_code=$?
+    return $find_binary_exit_code
+}

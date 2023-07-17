@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+
+
+# ⚠️ Part of core "phook" functionality.
+#   - Be careful of circular dependencies.
+#   - Be careful of POSIX sh compatibility.
+
+strlist_append() {
+    strlist_var_name="$1"
+    strlist_separator="$2"
+    value="$3"
+
+    if [ -z "$strlist_var_name" ] || [ -z "$strlist_separator" ]; then
+        unset strlist_var_name
+        unset strlist_separator
+        unset value
+        return 2
+    fi
+    
+    if [ -n "$BASH_VERSION" ]; then
+        # shellcheck disable=SC3045  # We're in a Bash-only block.
+        # shellcheck disable=SC3053  # We're in a Bash-only block.
+        if [ -n "${!strlist_var_name}" ]; then
+            printf -v "$strlist_var_name" "%s%s%s" "${!strlist_var_name}" "$strlist_separator" "$value"
+        else
+            printf -v "$strlist_var_name" "%s" "$value"
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        # shellcheck disable=SC2296  # We're in a ZSH-only block.
+        # shellcheck disable=SC3045  # We're in a ZSH-only block.
+        if [ -n "${(P)strlist_var_name}" ]; then
+            printf -v "$strlist_var_name" "%s%s%s" "${(P)strlist_var_name}" "$strlist_separator" "$value"
+        else
+            printf -v "$strlist_var_name" "%s" "$value"
+        fi
+    else
+        echo "Unknown shell: '$SHELL'." >&2
+
+        unset strlist_var_name
+        unset strlist_separator
+        unset value
+        return 1
+    fi
+
+    unset strlist_var_name
+    unset strlist_separator
+    unset value
+    return 0
+}

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+
+# from https://www.baeldung.com/linux/concatenate-strings-to-build-path
+_concatenate_paths() {
+    # set -e
+
+    local -r base_path="$1"
+    local -r sub_path="$2"
+
+    if [ -z "$base_path" ]; then
+        printf '%s' "$sub_path"
+        return 0
+    elif [ -z "$sub_path" ]; then
+        printf '%s' "$base_path"
+        return 0
+    elif [ "$sub_path" = '.' ]; then
+        printf '%s' "$base_path"
+        return 0
+    elif [ "$sub_path" = './' ]; then
+        printf '%s' "$base_path"
+        return 0
+    elif [[ "$sub_path" =~ ^/ ]]; then
+        printf '%s' "$sub_path"
+        return 0
+    elif [ "$base_path" = '.' ]; then
+        printf '%s' "$sub_path"
+        return 0
+    elif [ "$base_path" = './' ]; then
+        printf '%s' "$sub_path"
+        return 0
+    fi
+
+    local full_path="${base_path:+$base_path/}$sub_path"
+    printf '%s' "$full_path"
+}

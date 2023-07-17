@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+
+# ⚠️ Part of core "phook" functionality.
+#   - Be careful of circular dependencies.
+#   - Be careful of POSIX sh compatibility.
+
+phook_loader_pop() {
+    output_var_name="$1"
+    if [ -z "$output_var_name" ]; then
+        unset output_var_name
+        return 2
+    fi
+    if [ -z "$phook_loader_q" ]; then
+        printf -v "$output_var_name" "%s" ""
+        phook_loader_q_length=0
+
+        unset output_var_name
+        return 1
+    fi
+
+    phook_loader_q_length=$((phook_loader_q_length - 1))
+    strlist_popstart "phook_loader_q" "${phook_loader_q_separator:?}" "$output_var_name" || e=$?
+    unset output_var_name
+    return "${e:-0}"
+}

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+
+function _log_debug() {
+    # set -e
+
+    declare -i BMDSH_LOG_DEBUG_DEFAULT=0
+    local -r message="$1"
+    if [ "${BMDSH_LOG_DEBUG:-${BMDSH_LOG_DEBUG_DEFAULT}}" -eq 0 ]; then
+        return 0
+    else
+        echo -e "\e[1;30m[DEBUG]\e[0m $message" >&2
+    fi
+}

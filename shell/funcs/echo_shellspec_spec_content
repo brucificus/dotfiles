@@ -1,0 +1,237 @@
+#!/usr/bin/env bash
+
+
+function echo_shellspec_spec_content() {
+    # set -e
+
+    local -r nl=$'\n'
+    local -r usage="
+Usage: echo_shellspec_spec_content <shell> <sut_file_relative_path> [<sut_file_friendly_name> [file_kind]]
+
+Examples:
+    echo_shellspec_spec_content bash ../../funcs/binary_exists.bash \"binary_exists\"
+    echo_shellspec_spec_content zsh ../../funcs/binary_exists.zsh \"funcs/binary_exists.zsh\"
+    echo_shellspec_spec_content sh ../../funcs/binary_exists binary_exists \"function\"
+"
+
+    local basename_bin
+    basename_bin="$(find_binary "basename")"
+    local sed_bin
+    sed_bin="$(find_binary "sed")"
+
+    local -r shell="$($basename_bin "$1")"
+    local -r sut_file_relative_path="$2"
+    local -r sut_file_friendly_name="${3:-$(basename "$sut_file_relative_path")}"
+    local -r file_kind="${4:-$(file_kind "$sut_file_relative_path")}"
+
+    if [ "$#" -lt 2 ]; then
+        echo "Missing required arguments.${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$#" -gt 4 ]; then
+        echo "Too many arguments.${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$1" = "--help" ]; then
+        echo "$usage"
+        return 0
+    fi
+
+    declare function_file_template
+    read -r -d '' function_file_template <<'EOF'
+#!/usr/bin/env ##SHELL##
+eval "$(shellspec - -c) exit 1"
+# shellcheck shell=##SHELL##
+
+
+script_under_test="##SUT_FILE_RELATIVE_PATH##"
+Describe "##SUT_FILE_FRIENDLY_NAME##"
+
+    ScriptUnderTestDir="$(realpath "$(dirname "$script_under_test")")"
+    ScriptUnderTest="$(basename "$script_under_test")"
+
+    function ##INCLUSION_VERB_NAME##_Dependencies() {
+        : # TODO: 🔧 ##INCLUSION_VERB_NAME## those dependencies.
+    }
+
+    # (Use this from tests that are unsure if a script can even just be sourced.)
+    function cd_into_ScriptUnderTestDir() {
+        cd "$ScriptUnderTestDir" || return $?
+    }
+
+    # Test(s) that the subject file doesn't have any major structural/syntax issues.
+    Context "when sourced"
+        BeforeEach '##INCLUSION_VERB_NAME##_Dependencies'
+        BeforeEach 'cd_into_ScriptUnderTestDir'
+
+        Parameters
+            "##EXAMPLE_FUNCTION##"
+        End
+
+        Example "$1"
+            # This must use full path to script because, even though shellspec will run the script under the context
+            # established by Before* test setups, it does not respect them when evaluating `When run source`.
+            When run source "$ScriptUnderTestDir/$ScriptUnderTest"
+
+            The status should be success
+            The output should be blank
+            The function "$1" should be defined
+        End
+    End
+
+    # (Use this from tests that assume the subject file can be loaded without major problems.)
+    function ##INCLUSION_VERB_NAME##_ScriptUnderTest() {
+        set -e
+        cd_into_ScriptUnderTestDir
+        ##INCLUSION_VERB_SYNTAX## "$ScriptUnderTest"##INCLUSION_STMT_TRAILER##
+        set +e
+    }
+
+    # More detailed test(s) of the subject file's functionality.
+    Context "defines"
+        BeforeEach '##INCLUSION_VERB_NAME##_Dependencies'
+        BeforeEach '##INCLUSION_VERB_NAME##_ScriptUnderTest'
+
+        Describe "function '##EXAMPLE_FUNCTION##', which"
+            It "exists"
+                When call type "##EXAMPLE_FUNCTION##"
+
+                The status should be success
+                The output should include "$1 ##SHELL_FUNCTION_DESCRIPTOR##"
+            End
+        End # Describe "function '##EXAMPLE_FUNCTION##'""
+
+    End # Context "defines"
+End
+EOF
+
+    declare misc_file_template
+    read -r -d '' misc_file_template <<'EOF'
+#!/usr/bin/env ##SHELL##
+eval "$(shellspec - -c) exit 1"
+# shellcheck shell=##SHELL##
+
+
+script_under_test="##SUT_FILE_RELATIVE_PATH##"
+Describe "##SUT_FILE_FRIENDLY_NAME##"
+
+    ScriptUnderTestDir="$(realpath "$(dirname "$script_under_test")")"
+    ScriptUnderTest="$(basename "$script_under_test")"
+
+    function ##INCLUSION_VERB_NAME##_Dependencies() {
+        : # TODO: 🔧 ##INCLUSION_VERB_NAME## those dependencies.
+    }
+
+    # (Use this from tests that are unsure if a script can even just be sourced.)
+    function cd_into_ScriptUnderTestDir() {
+        cd "$ScriptUnderTestDir" || return $?
+    }
+
+    # Test(s) that the subject file doesn't have any major structural/syntax issues.
+    Context "when sourced"
+        BeforeEach '##INCLUSION_VERB_NAME##_Dependencies'
+        BeforeEach 'cd_into_ScriptUnderTestDir'
+
+        It "succeeds"
+            # This must use full path to script because, even though shellspec will run the script under the context
+            # established by Before* test setups, it does not respect them when evaluating `When run source`.
+            When run source "$ScriptUnderTestDir/$ScriptUnderTest"
+
+            The status should be success
+            The output should be blank
+        End
+    End
+
+    # (Use this from tests that assume the subject file can be loaded without major problems.)
+    function ##INCLUSION_VERB_NAME##_ScriptUnderTest() {
+        set -e
+        cd_into_ScriptUnderTestDir
+        ##INCLUSION_VERB_SYNTAX## "$ScriptUnderTest"##INCLUSION_STMT_TRAILER##
+        set +e
+    }
+
+    # More detailed test(s) of the subject file's functionality.
+    Context "defines"
+        BeforeEach '##INCLUSION_VERB_NAME##_Dependencies'
+        BeforeEach '##INCLUSION_VERB_NAME##_ScriptUnderTest'
+
+    End # Context "defines"
+End
+EOF
+
+    # Variables to populate:
+    # - "##SHELL##"
+    # - "##SUT_FILE_RELATIVE_PATH##"
+    # - "##SUT_FILE_FRIENDLY_NAME##"
+    # - "##INCLUSION_VERB_NAME##"
+    # - "##INCLUSION_VERB_SYNTAX##"
+    # - "##INCLUSION_STMT_TRAILER##"
+    # - "##EXAMPLE_FUNCTION##"
+    # - "##SHELL_FUNCTION_DESCRIPTOR##"
+
+    local shell_function_descriptor
+    local inclusion_verb_name
+    local inclusion_verb_syntax
+    local inclusion_stmt_trailer
+    case "$shell" in
+        bash)
+            shell_function_descriptor="is a function"
+            inclusion_verb_name="Include"
+            inclusion_verb_syntax="Include"
+            inclusion_stmt_trailer=''
+            ;;
+        zsh)
+            shell_function_descriptor="is a shell function"
+            inclusion_verb_name="source"
+            inclusion_verb_syntax="source"
+            inclusion_stmt_trailer="$(escape_regex " &> /dev/null" -sed_replacement_pattern '|')"
+            ;;
+        sh)
+            shell_function_descriptor="is a function"
+            inclusion_verb_name="source"
+            inclusion_verb_syntax="."
+            inclusion_stmt_trailer="$(escape_regex " &> /dev/null" -sed_replacement_pattern '|')"
+            ;;
+        *)
+            echo "Unsupported shell: '$shell'" >&2
+            return 2
+            ;;
+    esac
+
+    local -r example_function="$($basename_bin --suffix=".sh" "$($basename_bin --suffix=".$shell" "$sut_file_friendly_name")")"
+
+    local file_template_to_use
+    case "$file_kind" in
+        function)
+            file_template_to_use="$function_file_template"
+            ;;
+        *)
+            file_template_to_use="$misc_file_template"
+            ;;
+    esac
+    local file_content
+    local -i file_content_generation_exit_status=0
+    file_content="$(
+        echo "$file_template_to_use" \
+            | $sed_bin "s|##SHELL##|$shell|g" \
+            | $sed_bin "s|##SUT_FILE_RELATIVE_PATH##|$sut_file_relative_path|g" \
+            | $sed_bin "s|##SUT_FILE_FRIENDLY_NAME##|$sut_file_friendly_name|g" \
+            | $sed_bin "s|##INCLUSION_VERB_NAME##|$inclusion_verb_name|g" \
+            | $sed_bin "s|##INCLUSION_VERB_SYNTAX##|$inclusion_verb_syntax|g" \
+            | $sed_bin "s|##INCLUSION_STMT_TRAILER##|$inclusion_stmt_trailer|g" \
+            | $sed_bin "s|##EXAMPLE_FUNCTION##|$example_function|g" \
+            | $sed_bin "s|##SHELL_FUNCTION_DESCRIPTOR##|$shell_function_descriptor|g"
+    )" || file_content_generation_exit_status=$?
+
+    _log_debug "file_content_generation_exit_status: $file_content_generation_exit_status"
+    _log_debug "file_content: <<EOF${nl}${file_content}${nl}EOF"
+    if [ "$file_content_generation_exit_status" -ne 0 ]; then
+        echo "Failed to populate template for '$shell' shell." >&2
+        return $file_content_generation_exit_status
+    fi
+    if [ -z "$file_content" ] || [[ "$file_content" =~ \#\#([^#]*)\#\# ]] ; then
+        echo "Failed to populate template for '$shell' shell." >&2
+        return 1
+    fi
+    echo "$file_content"
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+
+# ⚠️ Part of core "phook" functionality.
+#   - Be careful of circular dependencies.
+#   - Be careful of POSIX sh compatibility.
+
+phook_enqueue_file() {
+    _phook_enqueue "$1"
+}

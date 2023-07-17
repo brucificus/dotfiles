@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-source ~/.dotfiles/shell/bash/_completion.bash
+
+# Intentionally left blank, b/c it's not guaranteed that it will run, and runs too early to be useful anyhow.
+

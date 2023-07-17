@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+
+function _has_glob() {
+    # set -e
+
+    if [ "$#" -lt 1 ]; then
+        echo "Missing required argument(s)." >&2
+        return 2
+    elif [ "$#" -eq 1 ]; then
+        if [[ "$1" =~ [*?\[] ]]; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        while [ "$#" -gt 0 ]; do
+            if [[ "$1" =~ [*?\[] ]]; then
+                return 0
+            fi
+            shift 1
+        done
+        return 1
+    fi
+}

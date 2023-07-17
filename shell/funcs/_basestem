@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+
+_basestem() {
+    set -e
+
+    local -r filename="$1"
+    local -r suffix="$2"
+
+    if [ "$#" -lt 1 ]; then
+        echo "Missing required argument(s)." >&2
+        return 2
+    elif [ "$#" -gt 2 ]; then
+        echo "Too many arguments." >&2
+        return 2
+    elif [ "$#" -eq 1 ]; then
+        suffix=''
+    fi
+
+    if [ -z "$filename" ]; then
+        echo "Empty filename." >&2
+        return 2
+    fi
+
+    local basename_bin
+    local dirname_bin
+    # if [ -z "$BASH_VERSION" ] && [ -z "$ZSH_VERSION" ]; then
+        basename_bin="$(find_binary "basename")"
+        dirname_bin="$(find_binary "dirname")"
+    # fi
+
+    local dirname_value
+    dirname_value="$($dirname_bin "$filename")"
+
+    local basename_value=''
+    if [ -n "$suffix" ]; then
+        # if [ -n "$BASH_VERSION" ]; then
+        #     basename_value="${filename%"$suffix"}"
+        # elif [ -n "$ZSH_VERSION" ]; then
+        #     basename_value="${filename:t%suffix}"
+        # else
+            basename_value="$($basename_bin --suffix="$suffix" "$filename")"
+        # fi
+    else
+        # if [ -n "$BASH_VERSION" ]; then
+        #     basename_value="${filename##*/}"
+        # elif [ -n "$ZSH_VERSION" ]; then
+        #     basename_value="${filename:t}"
+        # else
+            basename_value="$($basename_bin "$filename")"
+        # fi
+    fi
+    local -r basestem="$(_concatenate_paths "$dirname_value" "$basename_value")"
+    printf '%s' "$basestem"
+}

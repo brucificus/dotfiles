@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+
+function escape_regex() {
+    # set -e
+
+    local -r nl=$'\n'
+    local -r usage="
+Usage: escape_regex \"pattern\"
+ -or-  escape_regex \"pattern\" -sed_matcher_pattern [delimiter]
+ -or-  escape_regex \"pattern\" -sed_replacement_pattern [delimiter]
+"
+    if [ "$#" -lt 1 ]; then
+        echo "Missing required argument.${nl}${usage}" >&2
+        return 2
+    elif [ "$#" -gt 3 ]; then
+        echo "Too many arguments.${nl}${usage}" >&2
+        return 2
+    fi
+    local -r input="$1"
+    if [ -z "$input" ]; then
+        printf ''
+        return 0
+    fi
+    local mode_arg="$2"
+
+    local sed_bin
+    sed_bin="$(find_binary "sed")"
+
+    local sed_delimiter=''
+    local -i matcher_common=0
+    case "$mode_arg" in
+        -sed_matcher_pattern)
+            sed_delimiter="${3:-/}}"
+            matcher_common=1
+            ;;
+        -sed_replacement_pattern)
+            sed_delimiter="${3:-/}}"
+            matcher_common=0
+            ;;
+        '')
+            matcher_common=1
+            ;;
+        *)
+            echo "Invalid mode argument.${nl}${usage}" >&2
+            return 2
+            ;;
+    esac
+    local -a sed_args=()
+    sed_args+=(
+        '-e' 's/\\/\\\\/g'
+    )
+    if [ "$matcher_common" -eq 1 ]; then
+        sed_args+=( "-e" 's/[/]/\\\//g' )
+        sed_args+=( "-e" 's/[$]/\\$/g' )
+        sed_args+=( "-e" 's/\^/\\^/g' )
+        sed_args+=( "-e" 's/[[]/\\[/g' )
+        sed_args+=( "-e" 's/]/\\]/g' )
+        sed_args+=( "-e" 's/[.]/\\&/g' )
+        sed_args+=( "-e" 's/[?]/\\&/g' )
+        sed_args+=( "-e" 's/[+]/\\&/g' )
+        sed_args+=( "-e" 's/[*]/\\&/g' )
+        sed_args+=( "-e" 's/[(]/\\&/g' )
+        sed_args+=( "-e" 's/[)]/\\&/g' )
+        sed_args+=( "-e" 's/[{]/\\&/g' )
+        sed_args+=( "-e" 's/[}]/\\&/g' )
+        :
+    fi
+    if [ -n "$sed_delimiter" ]; then
+        local single_quote=$'\''
+        # Based on advice from https://unix.stackexchange.com/a/33005.
+        sed_args+=( "-e" 's/'"$single_quote"'/\\'"$single_quote"'/g' )
+        # TODO:
+        # if [ "$sed_delimiter" != '/' ]; then
+        #     sed_args+=( "-e" 's/['"$sed_delimiter"']/\\&/g' )
+        # fi
+        if [ "$mode_arg" = '-sed_replacement_pattern' ]; then
+            sed_args+=( "-e" 's/[&]/\\&/g' )
+        fi
+    else
+        sed_args+=( "-e" 's/[|]/\\&/g' )
+    fi
+
+    printf '%s' "$input" | $sed_bin "${sed_args[@]}"
+}

@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+
+
+# Takes a path and a pattern and normalizes them such that the output path is the longest non-globbing prefix of the concatenated inputs and the output pattern is the remaining portion of the concatenated inputs.
+function _normalize_path_pattern_pair() {
+    # set -e
+
+    local -r start_path="$1"
+    local -r start_pattern="$2"
+    local -r output_mode="${3:-"-print"}"
+
+    local output_separator
+    case "$output_mode" in
+        "-print")
+            output_separator=$'\n'
+            ;;
+        "-print0")
+            output_separator=$'\0'
+            ;;
+        *)
+            printf 'Invalid output mode: %s\n' "$output_mode" >&2
+            return 1
+            ;;
+    esac
+
+    local dirname_bin
+    local basename_bin
+    local cut_bin
+    if [ -z "$BASH_VERSION" ] && [ -z "$ZSH_VERSION" ]; then
+        dirname_bin="$(find_binary "dirname")"
+        basename_bin="$(find_binary "basename")"
+        cut_bin="$(find_binary "cut")"
+    fi
+
+    local result_path="$start_path"
+    local result_pattern="$start_pattern"
+    local chunk_to_move=''
+
+    # Move parts from the end of the path to the beginning of the pattern until the path doesn't contain globs.
+    while [ "$result_path" != '.' ] && _has_glob "$result_path"; do
+        if [ -n "$BASH_VERSION" ]; then
+            chunk_to_move="${result_path##*/}"
+            result_path="${result_path%/*}"
+        elif [ -n "$ZSH_VERSION" ]; then
+            chunk_to_move="${result_path:t}"
+            result_path="${result_path:h}"
+        else
+            chunk_to_move="$($basename_bin "$result_path")"
+            result_path="$($dirname_bin "$result_path")"
+        fi
+        result_pattern="$(_concatenate_paths "$chunk_to_move" "$result_pattern")"
+    done
+
+    # Move non-globs from the beginning of the pattern to the end of the path.
+    while [[ "$result_pattern" =~ '/' ]]; do
+        if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+            chunk_to_move="${result_pattern%%/*}"
+        else
+            chunk_to_move="$(printf '%s' "$result_pattern" | $cut_bin -d'/' -f1)"
+        fi
+        if _has_glob "$chunk_to_move"; then
+            break
+        fi
+        if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+            result_pattern="${result_pattern#*/}"
+        else
+            result_pattern="$(printf '%s' "$result_pattern" | $cut_bin -d'/' -f2-)"
+        fi
+        result_path="$(_concatenate_paths "$result_path" "$chunk_to_move")"
+    done
+
+    # If the pattern starts with './', remove it.
+    if [[ "$result_pattern" =~ ^./ ]]; then
+        result_path="$(_concatenate_paths "$result_path" "./")"
+        result_pattern="${result_pattern:2}"
+    fi
+
+    # Make sure the pattern always has something in it.
+    if [ -z "$result_pattern" ]; then
+        if [ -n "$BASH_VERSION" ]; then
+            result_pattern="${result_path##*/}"
+            result_path="${result_path%/*}"
+        elif [ -n "$ZSH_VERSION" ]; then
+            result_pattern="${result_path:t}"
+            result_path="${result_path:h}"
+        else
+            result_pattern="$($basename_bin "$result_path")"
+            result_path="$($dirname_bin "$result_path")"
+        fi
+    fi
+
+    printf '%s' "$result_path"
+    printf '%s' "$output_separator"
+    printf '%s' "$result_pattern"
+    printf '%s' "$output_separator"
+}

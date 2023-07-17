@@ -2,33 +2,77 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "shell/zsh/oh-my-zsh"]
-	path = shell/zsh/oh-my-zsh
+[submodule "shell/vendor/oh-my-zsh"]
+	path = shell/vendor/oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
 	branch = cb8b677
 	ignore = dirty
-[submodule "shell/zsh/oh-my-zsh-custom-plugins/zsh-syntax-highlighting"]
-	path = shell/zsh/oh-my-zsh-custom-plugins/zsh-syntax-highlighting
+[submodule "zsh-users--zsh-syntax-highlighting"]
+	path = shell/vendor/zsh-custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 	branch = tags/0.7.1
 	ignore = dirty
-[submodule "shell/zsh/oh-my-zsh-custom-plugins/zsh-autosuggestions"]
-	path = shell/zsh/oh-my-zsh-custom-plugins/zsh-autosuggestions
+[submodule "zsh-users--zsh-autosuggestions"]
+	path = shell/vendor/zsh-custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 	branch = tags/v0.7.0
 	ignore = dirty
-[submodule "shell/zsh/oh-my-zsh-custom-plugins/wsl-notify-zsh"]
-	path = shell/zsh/oh-my-zsh-custom-plugins/wsl-notify-zsh
+[submodule "masonc15--wsl-notify-zsh"]
+	path = shell/vendor/zsh-custom/plugins/wsl-notify-zsh
 	url = https://github.com/masonc15/wsl-notify-zsh.git
 	branch = 9f365dcef1c1ac75210607e6fe448b0334567d1e
 	ignore = dirty
-[submodule "shell/zsh/oh-my-zsh-custom-plugins/zsh-256color"]
-	path = shell/zsh/oh-my-zsh-custom-plugins/zsh-256color
+[submodule "chrissicool--zsh-256color"]
+	path = shell/vendor/zsh-custom/plugins/zsh-256color
 	url = https://github.com/chrissicool/zsh-256color.git
 	branch = 559fee48bb74b75cec8b9887f8f3e046f01d5d8f
 	ignore = dirty
-[submodule "shell/bash/bash-it"]
-	path = shell/bash/bash-it
+[submodule "bash-it"]
+	path = shell/vendor/bash-it
 	url = https://github.com/Bash-it/bash-it.git
 	branch = tags/v3.0.3
 	ignore = dirty
+[submodule "zpm-zsh--colors"]
+	path = shell/vendor/zsh-custom/plugins/colors
+    branch = c4332c574930e61abc7ad009d664b4e76b0fcffa
+	url = https://github.com/zpm-zsh/colors.git
+[submodule "romkatv--zsh-defer"]
+	path = shell/vendor/zsh-custom/plugins/zsh-defer
+    branch = 57a6650ff262f577278275ddf11139673e01e471
+	url = https://github.com/romkatv/zsh-defer.git
+[submodule "davidde--git"]
+	path = shell/vendor/zsh-custom/plugins/git
+    branch = b60e5e36c65f76a29eeacbfb7f5de1cd00c86115
+	url = https://github.com/davidde/git.git
+[submodule "gerges-zz--oh-my-zsh-jira-plus"]
+	path = shell/vendor/zsh-custom/plugins/jira+
+    branch = 50677edfbd6dc7918f07b6327b51191eab0023d5
+	url = https://github.com/gerges-zz/oh-my-zsh-jira-plus.git
+[submodule "reegnz--jq-zsh-plugin"]
+	path = shell/vendor/zsh-custom/plugins/jq-zsh-plugin
+    branch = e61804e35a593ada9c4d23ee5c957d08974ac382
+	url = https://github.com/reegnz/jq-zsh-plugin.git
+[submodule "MichaelAquilina--zsh-you-should-use"]
+	path = shell/vendor/zsh-custom/plugins/zsh-you-should-use
+    branch = 1f9cb008076d4f2011d5f814dfbcfbece94a99e0
+	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
+[submodule "lukechilds--zsh-better-npm-completion"]
+	path = shell/vendor/zsh-custom/plugins/zsh-better-npm-completion
+    branch = 47e5987ca422de43784f9d76311d764f82af2717
+	url = https://github.com/lukechilds/zsh-better-npm-completion.git
+[submodule "g-plane--zsh-yarn-autocompletions"]
+	path = shell/vendor/zsh-custom/plugins/zsh-yarn-autocompletions
+    branch = 12e282950d592f32648b980c9edcdf1fd4eefb28
+	url = https://github.com/g-plane/zsh-yarn-autocompletions.git
+[submodule "unixorn--git-extra-commands"]
+	path = shell/vendor/zsh-custom/plugins/git-extra-commands
+    branch = e65d87754bde47ad32825537ae48228344e4fa78
+	url = https://github.com/unixorn/git-extra-commands.git
+[submodule "lukechilds--zsh-nvm"]
+	path = shell/vendor/zsh-custom/plugins/zsh-nvm
+    branch = 745291dcf20686ec421935f1c3f8f3a2918dd106
+	url = https://github.com/lukechilds/zsh-nvm.git
+[submodule "wfxr--forgit"]
+	path = shell/vendor/zsh-custom/plugins/forgit
+    branch = f1ac9e3f7f1cfb5eb7cea02bfcaa56eb25ddbcbc
+	url = https://github.com/wfxr/forgit.git

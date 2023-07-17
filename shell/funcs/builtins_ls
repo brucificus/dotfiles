@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+
+function builtins_ls() {
+    # set -e
+
+    if [ -n "$BASH_VERSION" ] && command_exists compgen; then
+        compgen -b
+    elif [ -n "$ZSH_VERSION" ] && command_exists compgen; then
+        compgen -b
+    elif [ -n "$ZSH_VERSION" ] && typeset "builtins" &> /dev/null; then
+        print -roC1 -- ${(k)builtins}
+    else
+        echo "Unknown shell: '$SHELL'." >&2
+        return 127
+    fi
+}

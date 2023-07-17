@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+
+function find_relative_scripts() {
+    # set -e
+
+    local -r usage="
+Usage: find_relative_scripts <directory> [expressions…] [actions…]
+ -or-  find_relative_scripts \"<pattern>\" [expressions…] [actions…]
+
+Where:
+ - directory is the relative path to a directory to search for scripts.
+ - pattern is a relatively-pathed glob pattern to search for scripts.
+ - expressions are 'find' expressions.
+ - actions are 'find' actions.
+   (Except for -printf and -fprintf, which are not supported.)
+
+
+Examples:
+    find_relative_scripts ./ -print0
+    find_relative_scripts \"*\"
+    find_relative_scripts_DEPTH_MAX=2 find_relative_scripts \"*\"
+"
+
+    local -r nl=$'\n'
+    if [ $# -lt 1 ]; then
+        echo "Missing required argument.${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$1" = "--help" ]; then
+        echo "$usage"
+        return 0
+    fi
+    local -r pattern="$1"
+    if [ -z "$pattern" ]; then
+        echo "Missing required argument.${nl}${usage}" >&2
+        return 2
+    fi
+    if [[ "$pattern" =~ ^/ ]]; then
+        echo "Absolute paths are not supported.${nl}${usage}" >&2
+        return 2
+    fi
+
+    local extra_find_args=()
+    shift 1 && extra_find_args+=("$@")
+    local -i output_arg_index=-1
+    # Check the extra arguments for errors.
+    local -i extra_find_args_length="${#extra_find_args[@]}"
+    local -i arg_index
+    local arg
+    for arg_index in $(seq 0 $extra_find_args_length); do
+        if [[ $arg_index -eq 0 ]]; then
+            continue
+        fi
+        # This will get false-positives for a find *expression* argument containing one of these output action specifiers, but that's a pretty unlikely scenario.
+        arg="${extra_find_args[$arg_index]}"
+        if [ "$arg" = '-printf' ] || [ "$arg" = '-fprintf' ]; then
+            echo "Formatted output arguments are not supported.${nl}${usage}" >&2
+            return 2
+        fi
+        if [ "$arg" = '-print' ] || [ "$arg" = '-print0' ] || [ "$arg" = '-fprint' ] || [ "$arg" = '-fprint0' ]; then
+            if [ "$output_arg_index" -gt -1 ]; then
+                echo "Cannot specify multiple output arguments.${nl}${usage}" >&2
+                return 2
+            fi
+            output_arg_index="$arg_index"
+        fi
+    done
+
+    script_extension_patterns=(
+        "*"
+        "*.*sh"
+    )
+    find_args+=(
+        "("
+            -type "f,l"
+            -or
+            -xtype "f,l"
+        ")"
+        -and
+        "("
+            -not
+            "(" -type d -or -xtype d ")"
+        ")"
+        -and
+        "("
+    )
+    for script_extension_pattern in "${script_extension_patterns[@]}"; do
+        find_args+=(
+            -name "$script_extension_pattern"
+            -or
+        )
+    done
+    find_args+=(
+        -executable
+        ")"
+    )
+    find_args+=("${extra_find_args[@]}")
+
+    find_relative_scripts_DEPTH_MAX="${find_relative_scripts_DEPTH_MAX:--1}"
+
+    find_relative_DEPTH_MAX="$find_relative_scripts_DEPTH_MAX" find_relative "$pattern" "${find_args[@]}"
+}

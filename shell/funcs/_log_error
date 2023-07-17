@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+function _log_error() {
+    # set -e
+
+    declare -i BMDSH_LOG_ERROR_DEFAULT=1
+    declare -i BMDSH_TERMINATE_ON_ERROR_DEFAULT=0
+    local -r message="$1"
+    if [ "${BMDSH_LOG_ERROR:-${BMDSH_LOG_ERROR_DEFAULT}}" -eq 0 ]; then
+        return 0
+    else
+        echo -e "\e[1;31m[ERROR]\e[0m $message" >&2
+        if [ "${BMDSH_TERMINATE_ON_ERROR:-${BMDSH_TERMINATE_ON_ERROR_DEFAULT}}" -eq 1 ]; then
+            return 1
+        fi
+    fi
+}

@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+
+# Taken and modified from: https://github.com/ohmyzsh/ohmyzsh/blob/36f1055eeea0f455676381539fcb3e6e0a4da731/plugins/autojump/autojump.plugin.zsh
+find_autojump() {
+    set -e
+
+    autojump_paths=(
+        "$HOME"/.autojump/etc/profile.d/autojump.zsh             # manual installation
+        "$HOME"/.autojump/share/autojump/autojump.zsh            # manual installation
+        "$HOME"/.nix-profile/etc/profile.d/autojump.sh           # NixOS installation
+        /run/current-system/sw/share/autojump/autojump.zsh       # NixOS installation
+        /usr/share/autojump/autojump.zsh                         # Debian and Ubuntu package
+        /etc/profile.d/autojump.zsh                              # manual installation
+        /etc/profile.d/autojump.sh                               # Gentoo installation
+        /usr/local/share/autojump/autojump.zsh                   # FreeBSD installation
+        /usr/pkg/share/autojump/autojump.zsh                     # NetBSD installation
+        /opt/local/etc/profile.d/autojump.sh                     # macOS with MacPorts
+        /usr/local/etc/profile.d/autojump.sh                     # macOS with Homebrew (default)
+        /opt/homebrew/etc/profile.d/autojump.sh                  # macOS with Homebrew (default on M1 macs)
+        /etc/profiles/per-user/"$USER"/etc/profile.d/autojump.sh # macOS Nix, Home Manager and flakes
+    )
+
+    for file in "${autojump_paths[@]}"; do
+        if [[ -f "$file" ]]; then
+            printf '%s' "$file"
+
+            unset autojump_paths
+            unset file
+            return 0
+        fi
+    done
+    unset autojump_paths
+
+    if command_exists dpkg; then
+        if dpkg -s autojump &> /dev/null; then
+            file="$(dpkg-query -S autojump.sh | cut -d' ' -f2)"
+            printf '%s' "$file"
+
+            unset file
+            return 0
+        fi
+    fi
+
+    if [ ! "$found" ] && command_exists pacman; then
+        if pacman -Q autojump &> /dev/null; then
+            file="$(pacman -Ql autojump | grep autojump.sh | cut -d' ' -f2)"
+            printf '%s' "$file"
+
+            unset file
+            return 0
+        fi
+    fi
+
+    # if no path found, try Homebrew
+    if [ -d "$BASH_IT_HOMEBREW_PREFIX" ] || command_exists brew; then
+        brew_prefix="${BASH_IT_HOMEBREW_PREFIX:-$(brew --prefix 2> /dev/null)}" || return $?
+
+        file="$brew_prefix"/etc/profile.d/autojump.sh
+        unset brew_prefix
+        if [[ -f "$file" ]]; then
+            printf '%s' "$file"
+
+            unset file
+            return 0
+        fi
+    fi
+
+    unset file
+    return 1
+}

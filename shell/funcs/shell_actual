@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+
+shell_actual() {
+    ps -p $$ -o comm=   
+}

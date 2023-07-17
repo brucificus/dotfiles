@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+function _pip3() {
+    # set -e
+
+    _python3 "$PIP3" "$@"
+}

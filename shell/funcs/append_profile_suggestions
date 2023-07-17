@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+
+append_profile_suggestions() {
+    new_suggestion="$1"
+
+    if [ -z "$new_suggestion" ]; then
+        unset new_suggestion
+        return 2
+    fi
+
+    if [ -z "$PROFILE_SUGGESTIONS" ]; then
+        PROFILE_SUGGESTIONS="$new_suggestion"
+    else
+        PROFILE_SUGGESTIONS="$(echo "$PROFILE_SUGGESTIONS" && echo "$new_suggestion")"
+    fi
+    return 0
+}

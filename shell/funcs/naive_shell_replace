@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+function naive_shell_replace() {
+    # set -e
+
+    printf "%s" "${1//$2/$3}"
+}

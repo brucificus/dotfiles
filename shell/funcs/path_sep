@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+function path_sep() {
+    # set -e
+
+    printf '%s' ":"
+}

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+# Removes $1 from $PATH.
+function path_remove() {
+    # set -e
+
+    local -r item="$1"
+
+    local awk_bin
+    awk_bin="$(find_binary "awk")"
+    local sed_bin
+    sed_bin="$(find_binary "sed")"
+
+    p="$(path_sep)"
+    PATH=$(printf '%s' "$PATH" | $awk_bin -v RS="$p" -v ORS="$p" "\$0 != \"$item\"" | $sed_bin 's/'"$p"'$//')
+    export PATH
+}

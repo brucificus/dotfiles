@@ -1,1 +1,0 @@
-../sh/python_detect.sh

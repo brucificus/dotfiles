@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+
+
+function find_relative() {
+    # set -e
+
+    local -r nl=$'\n'
+    local -r usage="
+Usage: find_relative <directory> [expressions…] [actions…]
+ -or-  find_relative \"<pattern>\" [expressions…] [actions…]
+
+Where:
+ - directory is the relative path to a directory to search for files.
+ - pattern is a relatively-pathed glob pattern to search for files.
+ - expressions are 'find' expressions.
+ - actions are 'find' actions.
+   (Except for -printf and -fprintf, which are not supported.)
+
+
+Examples:
+    find_relative ./ -print0
+    find_relative \"*.png\" -fprint
+    find_relative_DEPTH_MAX=2 find_relative \"*\"
+"
+
+    if [ "$#" -lt 1 ]; then
+        echo "Missing required argument.${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$1" = "--help" ]; then
+        echo "$usage"
+        return 0
+    fi
+    local pattern="$1"
+    if [ -z "$pattern" ]; then
+        echo "Missing required argument.${nl}${usage}" >&2
+        return 2
+    fi
+    if [[ "$pattern" =~ ^/ ]]; then
+        echo "Absolute paths are not supported.${nl}${usage}" >&2
+        return 2
+    fi
+
+    local -a extra_find_args
+    shift 1 && extra_find_args=("$@")
+    local -i output_arg_index=-1
+    # Check the extra arguments for errors.
+    local -i extra_find_args_length="${#extra_find_args[@]}"
+    local -i arg_index
+    local arg
+    for arg_index in $(seq 0 $extra_find_args_length); do
+        if [[ $arg_index -eq 0 ]]; then
+            continue
+        fi
+        # This will get false-positives for a find *expression* argument containing one of these output action specifiers, but that's a pretty unlikely scenario.
+        arg="${extra_find_args[$arg_index]}"
+        if [ "$arg" = '-printf' ] || [ "$arg" = '-fprintf' ]; then
+            echo "Formatted output arguments are not supported.${nl}${usage}" >&2
+            return 2
+        fi
+        if [ "$arg" = '-print' ] || [ "$arg" = '-print0' ] || [ "$arg" = '-fprint' ] || [ "$arg" = '-fprint0' ]; then
+            if [ "$output_arg_index" -gt -1 ]; then
+                echo "Cannot specify multiple output arguments.${nl}${usage}" >&2
+                return 2
+            fi
+            output_arg_index="$arg_index"
+        fi
+    done
+
+    local head_bin
+    local tail_bin
+    # if [ -z "$BASH_VERSION" ]; then
+        head_bin="$(find_binary "head")"
+        tail_bin="$(find_binary "tail")"
+    # fi
+    local find_bin
+    find_bin="$(find_binary "find")"
+
+    local start_dir='.'
+
+    local normalized_path_pattern_pair
+    normalized_path_pattern_pair="$(_normalize_path_pattern_pair "$start_dir" "$pattern")"
+    # if [ -n "$BASH_VERSION" ]; then
+    #     start_dir="${normalized_path_pattern_pair%%$'\n'*}"
+    #     pattern="${normalized_path_pattern_pair#*$'\n'}"
+    #     pattern="${pattern%"${pattern##*$'\n'}"}"
+    # else
+        start_dir="$(printf '%s' "$normalized_path_pattern_pair" | $head_bin -n1)"
+        pattern="$(printf '%s' "$normalized_path_pattern_pair" | $tail_bin -n1)"
+    # fi
+    start_dir="${start_dir:-.}"
+
+    local -a find_args=("$start_dir")
+
+    local -r l_find_relative_DEPTH_MAX="${find_relative_DEPTH_MAX:--1}"
+    if [ "$l_find_relative_DEPTH_MAX" -gt -1 ]; then
+        find_args+=(
+            -maxdepth "$l_find_relative_DEPTH_MAX"
+        )
+    fi
+
+    if [ -n "$pattern" ]; then
+        if [[ "$pattern" =~ / ]]; then
+            # When the pattern contains a directory seperator, we need to match on the wholename of candidates.
+            find_args+=(
+                -wholename "$pattern"
+            )
+        else
+            # When the pattern does not contain a directory separator, we only want to match on the basename of candidates.
+            find_args+=(
+                -name "$pattern"
+            )
+        fi
+    fi # When the pattern is completely empty, we don't want to use it for any matching.
+
+    if [ "$output_arg_index" -gt -1 ]; then
+        find_args+=(
+            "${extra_find_args[@]:0:($output_arg_index)}"
+        )
+
+        # Rewrite the output argument so that the output item has the relative path to the start_dir.
+        case "${extra_find_args[$output_arg_index]}" in
+            # Rewrite -print to be a -printf.
+            -print)
+                find_args+=("-printf")
+                find_args+=("${start_dir}/%P\\n")
+                find_args+=("${extra_find_args[@]:$output_arg_index+1}")
+                ;;
+
+            # Rewrite -print0 to be a -printf.
+            -print0)
+                find_args+=("-printf")
+                find_args+=("${start_dir}/%P\\0")
+                find_args+=("${extra_find_args[@]:$output_arg_index+1}")
+                ;;
+
+            # Rewrite -fprint to be an -fprintf.
+            # We have to be wary of the file parameter that follows -fprint.
+            -fprint)
+                find_args+=("-fprintf")
+                find_args+=("${extra_find_args[$output_arg_index+1]}")
+                find_args+=("${start_dir}/%P\\n")
+                find_args+=("${extra_find_args[@]:$output_arg_index+2}")
+                ;;
+
+            # Rewrite -fprint0 to be an -fprintf.
+            # We have to be wary of the file parameter that follows -fprint0.
+            -fprint0)
+                find_args+=("-fprintf")
+                find_args+=("${extra_find_args[$output_arg_index+1]}")
+                find_args+=("${start_dir}/%P\\0")
+                find_args+=("${extra_find_args[@]:$output_arg_index+2}")
+                ;;
+        esac
+    else
+        find_args+=("${extra_find_args[@]}")
+    fi
+
+    $find_bin "${find_args[@]}"
+}

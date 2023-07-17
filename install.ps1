@@ -16,8 +16,6 @@ git -C $DOTBOT_DIR submodule sync --quiet --recursive
 git submodule update --init --recursive $DOTBOT_DIR
 
 folders_to_relink = @(
-    "$PSScriptRoot/shell/bash/bash-it/profiles/"
-    "$PSScriptRoot/shell/zsh/oh-my-zsh/custom/plugins/"
 )
 folders_to_relink | Where-Object { -not (Test-ReparsePoint $_) } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 

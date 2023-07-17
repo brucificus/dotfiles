@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+
+# Checks for existence of registration of a completion for the given command.
+function completion_exists() {
+    # set -e
+
+    local -r completion_name="$1"
+
+    if [ -n "$BASH_VERSION" ]; then
+        if ! command_exists "complete"; then
+            echo "complete not found." >&2
+            return 127
+        fi
+        if complete -p "$completion_name" &> /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        if ! command_exists "compctl"; then
+            echo "compctl not found." >&2
+            return 127
+        fi
+        if compctl -p "$completion_name" &> /dev/null; then
+            return 0
+        else
+            return 1
+        fi
+    else
+        echo "Unknown shell: '$SHELL'." >&2
+        return 1
+    fi
+}

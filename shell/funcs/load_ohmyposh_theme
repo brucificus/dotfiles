@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+
+# Initializes the oh-my-posh prompt to the profile $1 for the current shell.
+function load_ohmyposh_theme() {
+    # set -e
+
+    if command_exists "oh-my-posh"; then
+        poshshell="$(oh-my-posh get shell)"
+        eval "$(oh-my-posh init "${poshshell}" --config "${1}")"
+    fi
+}

@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+
+
+function mk_bats() {
+    # set -e
+
+    local -r nl=$'\n'
+    local -r usage="
+Usage: mk_bats \"<source pattern>\" <destination directory>
+ -or-  mk_bats <source directory> <destination directory>
+
+Example:
+    mk_bats \"./*.sh\" ./
+"
+
+    if [ "$#" -lt 2 ]; then
+        echo "Missing required arguments.${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$#" -gt 2 ]; then
+        echo "Too many arguments. (Did you forget to quote a pattern?)${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$1" = "--help" ]; then
+        echo "$usage"
+        return 0
+    fi
+
+    local -r source_arg="$1"
+    local -r destination_arg="$2"
+    if [ ! -d "$destination_arg" ]; then
+        echo "Destination '$destination_arg' is not a directory.${nl}${nl}${usage}"
+        return 2
+    fi
+
+    local tr_bin
+    tr_bin="$(find_binary "tr")"
+    local basename_bin
+    basename_bin="$(find_binary "basename")"
+    local realpath_bin
+    realpath_bin="$(find_binary "realpath")"
+    local touch_bin
+    touch_bin="$(find_binary "touch")"
+    local ln_bin
+    ln_bin="$(find_binary "ln")"
+
+    local -i l_mk_bats_DEPTH_MAX="${mk_bats_DEPTH_MAX:--1}"
+    local source_files_text
+    find_relative_scripts_DEPTH_MAX=${l_mk_bats_DEPTH_MAX}; export find_relative_scripts_DEPTH_MAX
+    source_files_text=$(find_relative_scripts "$source_arg" -print0 | $tr_bin '\0' "$(path_sep)")
+
+    if [ -z "$source_files_text" ]; then
+        echo "No source files found.${nl}${nl}${usage}"
+        return 2
+    fi
+
+    local -a additional_target_shells=(
+        zsh
+    )
+
+    local -a source_files=()
+    local source_files=()
+    unset IFS; while read -d "$(path_sep)" -r line; do
+        source_files+=("$line")
+    done < <(printf '%s' "$source_files_text")
+    pushd "$destination_arg" &> /dev/null || return 2
+    local source_file_basename
+    local source_file_basename_noext
+    local source_file_basename_noext_bats
+    local destination_file
+    local inverse_path_to_source_file
+    local additional_destination_file
+    for source_file in "${source_files[@]}"; do
+        source_file_basename=$($basename_bin "$source_file")
+        source_file_basename_noext="${source_file_basename%.*}"
+        source_file_basename_noext_bats="${source_file_basename_noext}.bash.bats"
+        destination_file="${destination_arg}/${source_file_basename_noext_bats}"
+        inverse_path_to_source_file="$($realpath_bin --relative-to="$destination_arg" "$source_file")"
+
+        if [ -f "$destination_file" ]; then
+            _log_info "Skipping '$destination_file' (already exists)."
+            $touch_bin "$destination_file"
+        else
+            _log_info "Creating '$destination_file'."
+            $touch_bin "$destination_file"
+
+            bats_file_content="#!/usr/bin/env bats
+# shellcheck shell=bash
+
+
+TARGET_SHELL_BIN=\"\${BATS_TEST_FILENAME##*.}\"                # extract the extension
+TARGET_SHELL_BIN=\"\${BATS_TEST_FILENAME%.\$TARGET_SHELL_BIN}\" # remove the extension
+TARGET_SHELL_BIN=\"\${TARGET_SHELL_BIN##*.}\"                  # extract the shell name
+TARGET_SHELL_BIN=\"\${TARGET_SHELL_BIN,,}\"                    # convert to lowercase, add parameters
+TARGET_SHELL_ARGS=()
+
+setup() {
+    if [ \"\$TARGET_SHELL_BIN\" = \"bash\" ]; then
+        TARGET_SHELL_ARGS+=(\"--noprofile\" \"--norc\")
+    elif [ \"\$TARGET_SHELL_BIN\" = \"zsh\" ]; then
+        TARGET_SHELL_ARGS+=(\"--no-globalrcs\" \"--no-rcs\" \"--no-interactive\")
+    fi
+
+    run_target_shell=(\"\$TARGET_SHELL_BIN\" \"\${TARGET_SHELL_ARGS[@]}\")
+
+    sut_wholename=\"\$(dirname \$BATS_TEST_FILENAME)\"/$inverse_path_to_source_file
+    sut_dirname=\"\$(dirname \$sut_wholename)\"
+    sut_basename=\"\$(basename \$sut_wholename)\"
+
+    scripts_to_source=(
+        \"\$sut_wholename\"
+        # example: \"\$sut_dirname\"/some_other_file.sh
+    )
+
+    expected_functions=(
+        $source_file_basename_noext
+        # example: some_other_function
+    )
+
+    function directly_source() {
+        for script_file in \"\${scripts_to_source[@]}\"; do
+            script_file_dirname=\"\$(dirname \"\$script_file\")\"
+            script_file_basename=\"\$(basename \"\$script_file\")\"
+            pushd \"\$script_file_dirname\" &> /dev/null || return 2
+            source \"\$script_file_basename\" || return \$?
+            popd &> /dev/null || return 2
+        done
+    }
+
+    function create_subshell_cmd() {
+        local -r cmd=\"\$1\"
+        local -r nl=$'\n'
+        cmd_base=''
+        for script_to_source in \"\${scripts_to_source[@]}\"; do
+            script_to_source_dirname=\"\$(dirname \"\$script_to_source\")\"
+            script_to_source_basename=\"\$(basename \"\$script_to_source\")\"
+            cmd_base+=\"cd \\\"\$script_to_source_dirname\\\" &&\${nl}\"
+            cmd_base+=\"source \\\"\$script_to_source_basename\\\" &&\${nl}\"
+        done
+        result_cmd=\"\${cmd_base}\${cmd}\"
+        printf \"%s\" \"\$result_cmd\"
+    }
+}
+
+@test \"$source_file_basename_noext > in \$TARGET_SHELL_BIN > sourceable in subshell\" {
+    for expected_function in \"\${expected_functions[@]}\"; do
+        cmd=\"\$(create_subshell_cmd \"type \$expected_function\")\"
+
+        run \${run_target_shell[@]} -c \"\$cmd\"
+
+        echo \"\$output\"
+        [ \"\$status\" -eq 0 ]
+    done
+}
+
+@test \"$source_file_basename_noext > in \$TARGET_SHELL_BIN > exports into subshell\" {
+    if [ \"\$TARGET_SHELL_BIN\" != \"bash\" ]; then
+        skip \"Cross-shell function exports not possible.\"
+    fi
+
+    directly_source
+    [ \$? -eq 0 ]
+
+    for expected_function in \"\${expected_functions[@]}\"; do
+        export -f \$expected_function
+    done
+
+    for expected_function in \"\${expected_functions[@]}\"; do
+        run \${run_target_shell[@]} -c \"type \$expected_function\"
+        [ \"\$status\" -eq 0 ]
+    done
+}"
+            _log_info "Populating '$destination_file'."
+            echo "$bats_file_content" > "$destination_file"
+            echo "$destination_file"
+        fi
+
+        for additional_target_shell in "${additional_target_shells[@]}"; do
+            additional_destination_file="${destination_arg}/${source_file_basename_noext}.${additional_target_shell}.bats"
+            if [ -f "$additional_destination_file" ]; then
+                _log_info "Skipping '$additional_destination_file' (already exists)."
+                $touch_bin "$additional_destination_file"
+            else
+                _log_info "Creating link '$additional_destination_file'."
+                $ln_bin -s "$destination_file" "$additional_destination_file"
+                echo "$additional_destination_file"
+            fi
+        done
+    done
+    popd &> /dev/null || return 2
+}

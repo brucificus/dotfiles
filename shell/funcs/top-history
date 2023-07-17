@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+
+# from https://github.com/Bash-it/bash-it/blob/master/plugins/available/history.plugin.bash
+
+
+# Print the name and count of the most commonly run tools.
+function top-history() {
+	# - Make sure formatting doesn't interfer with our parsing
+	# - Use awk to count how many times the first command on each line has been called
+	# - Truncate to 10 lines
+	# - Print in column format
+	HISTTIMEFORMAT='' history \
+		| awk '{
+				a[$2]++
+			}END{
+				for(i in a)
+				printf("%s\t%s\n", a[i], i)
+			}' \
+		| sort --reverse --numeric-sort \
+		| head \
+		| column \
+			--table \
+			--table-columns 'Command Count,Command Name' \
+			--output-separator ' | '
+}

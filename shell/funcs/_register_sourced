@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+
+# Based on code from https://stackoverflow.com/a/70610357
+_register_sourced() {
+    # set -e
+
+    script="$1"
+    shift 1
+    varname=''
+    val=''
+
+    script="$(_concatenate_paths "$PWD" "$script")"
+
+    varname=$(printf '__REQUIRED__%s' "${script//[^[:alnum:]]/__}")
+    # loop over any arguments add to the varname
+    for arg in "$@"; do
+        varname=$(printf '%s__%s' "$varname" "${arg//[^[:alnum:]]/__}")
+    done
+
+    val=$(eval "printf '%s' \"\$$varname\"")
+    if [ -z "$val" ]; then
+        eval "$varname=1"
+
+        unset val
+        unset varname
+        unset script
+        return 0
+    else
+        unset val
+        unset varname
+        unset script
+        return 1
+    fi
+}
+
+_register_sourced "_concatenate_paths" || true
+_register_sourced "_register_sourced" || true

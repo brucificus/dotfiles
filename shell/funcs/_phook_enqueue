@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+
+_phook_enqueue() {
+    if [ -z "$1" ]; then
+        return 2
+    fi
+
+    if [ -z "$phook_loader_q" ]; then
+        phook_loader_q_length=1
+    else
+        phook_loader_q_length=$((phook_loader_q_length + 1))
+    fi
+    strlist_append "phook_loader_q" "${phook_loader_q_separator:?}" "$1"
+    return $?
+}

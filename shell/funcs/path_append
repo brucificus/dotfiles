@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+
+# Concatenates $1 to the end of $PATH, removing it from elsewhere in $PATH if it exists already.
+function path_append() {
+    # set -e
+
+    path_remove "$1"
+    PATH="${PATH:+"$PATH:"}$1"
+    export PATH
+}

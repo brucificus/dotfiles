@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+
+# ⚠️ Keep this dependency-free so we don't have to `cd` to use it.
+
+# Changes directories, but quietly.
+_try_cd_quietly() {
+    if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+        # shellcheck disable=3020  # We're in a Bash/ZSH-only block.
+        cd "$1" &> /dev/null || return $?
+    else
+        cd "$1" || return $?
+    fi
+    return 0
+}

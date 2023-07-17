@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+
+# Update dotfiles
+dotfiles_update() {
+    (
+        cd ~/.dotfiles && git pull --ff-only && ./install.sh -q
+    )
+}

@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+
+
+function mk_shellspec() {
+    set -e
+
+    local -r nl=$'\n'
+    local -r usage="
+Usage: mk_shellspec \"<source pattern>\" <destination directory>
+ -or-  mk_shellspec <source directory> <destination directory>
+
+Example:
+    mk_shellspec \"./*.sh\" ./
+"
+
+    if [ "$#" -lt 2 ]; then
+        echo "Missing required arguments.${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$#" -gt 2 ]; then
+        echo "Too many arguments. (Did you forget to quote a pattern?)${nl}${usage}" >&2
+        return 2
+    fi
+    if [ "$1" = "--help" ]; then
+        echo "$usage"
+        return 0
+    fi
+
+    local -r source_arg="$1"
+    local -r destination_arg="$2"
+    if [ ! -d "$destination_arg" ]; then
+        echo "Destination '$destination_arg' is not a directory.${nl}${nl}${usage}"
+        return 2
+    fi
+
+    local tr_bin
+    tr_bin="$(find_binary "tr")"
+    local basename_bin
+    basename_bin="$(find_binary "basename")"
+    local realpath_bin
+    realpath_bin="$(find_binary "realpath")"
+    local touch_bin
+    touch_bin="$(find_binary "touch")"
+    local dirname_bin
+    dirname_bin="$(find_binary "dirname")"
+
+    local -i l_mk_shellspec_DEPTH_MAX="${mk_shellspec_DEPTH_MAX:--1}"
+    local source_files_text
+    find_relative_scripts_DEPTH_MAX=${l_mk_shellspec_DEPTH_MAX}; export find_relative_scripts_DEPTH_MAX
+    source_files_text=$(find_relative_scripts "$source_arg" -print0 | $tr_bin '\0' "$(path_sep)")
+    unset find_relative_scripts_DEPTH_MAX
+
+    if [ -z "$source_files_text" ]; then
+        echo "No source files found.${nl}${nl}${usage}"
+        return 2
+    fi
+
+    local -a target_shells=(
+        sh
+        bash
+        zsh
+    )
+
+    local source_files=()
+    unset IFS; while read -d "$(path_sep)" -r line; do
+        source_files+=("$line")
+    done < <(printf '%s' "$source_files_text")
+    pushd "$destination_arg" &> /dev/null
+    local source_file_basename
+    local source_file_basename_noext
+    local target_shells=()
+    local source_file_resolved
+
+    local source_file_basename_noext_spec
+    local destination_file
+    local destination_dir_actual
+    local inverse_path_to_source_file
+    local destination_dir_resolved
+    local source_destination_common_base
+    local rebased_path_to_source_file
+    local inverse_path_to_common_base
+    local -i spec_file_content_creation_exit_status
+    local spec_file_content_creation_args=()
+
+    for source_file in "${source_files[@]}"; do
+        source_file_basename=$($basename_bin "$source_file")
+        source_file_basename_noext="${source_file_basename%.*}"
+
+        target_shells=()
+        # Add shells compatible with target file, based on its suffix.
+        case "$source_file_basename" in
+            *.sh)
+                target_shells+=(bash)
+                target_shells+=(zsh)
+                ;;
+            *.bash)
+                target_shells+=(bash)
+                ;;
+            *.zsh)
+                target_shells+=(zsh)
+                ;;
+            *)
+                target_shells+=(bash)
+                target_shells+=(zsh)
+                ;;
+        esac
+
+        source_file_resolved="$($realpath_bin --no-symlinks "$source_file")"
+
+        spec_file_content_creation_args=()
+        for target_shell in "${target_shells[@]}"; do
+            source_file_basename_noext_spec="${source_file_basename_noext}.spec"
+            destination_file="${destination_arg}/${source_file_basename_noext_spec}.${target_shell}"
+            destination_file="$($realpath_bin --relative-to="$PWD" "$destination_file")"
+            destination_dir_actual="$($dirname_bin "$destination_file")"
+            inverse_path_to_source_file="$($realpath_bin --relative-to="$destination_dir_actual" "$source_file")"
+            destination_dir_resolved="$($realpath_bin --no-symlinks "$destination_dir_actual")"
+            source_destination_common_base="$(longest_common_prefix "$source_file_resolved" "$destination_dir_resolved")"
+            rebased_path_to_source_file="$($realpath_bin --relative-base="$source_destination_common_base" "$source_file")"
+            inverse_path_to_common_base="$($realpath_bin --relative-to="$destination_dir_actual" "$source_destination_common_base")"
+
+            if [[ "$(basename "$destination_file")" =~ ^\._ ]]; then
+                # Make sure the destination file isn't hidden.
+                destination_file="$(dirname "$destination_file")/$(basename "$destination_file" | sed 's/^\.//')"
+            fi
+
+            if [ -f "$destination_file" ]; then
+                _log_info "Skipping '$destination_file' (already exists)."
+                $touch_bin "$destination_file"
+            else
+                file_kind=''
+                if [[ "$(basename "$destination_file")" =~ ^\._ ]]; then
+                    file_kind='sourced'
+                elif [[ "$source_file_resolved" =~ .*/funcs/.* ]]; then
+                    file_kind='function'
+                elif [[ "$source_file_resolved" =~ .*/hooks/.* ]]; then
+                    file_kind='sourced'
+                else
+                    file_kind='misc'
+                fi
+
+                spec_file_content_creation_args=(
+                    "$target_shell"
+                    "$inverse_path_to_source_file"
+                    "$rebased_path_to_source_file"
+                    "$file_kind"
+                )
+                _log_debug "Creating spec file content with args: ${spec_file_content_creation_args[*]}"
+                spec_file_content_creation_exit_status=0                
+               
+                spec_file_content=$(echo_shellspec_spec_content "${spec_file_content_creation_args[@]}") || spec_file_content_creation_exit_status=$?
+
+                if [ "$spec_file_content_creation_exit_status" -ne 0 ]; then
+                    echo "Failed to create spec file content." >&2
+                    return $spec_file_content_creation_exit_status
+                fi
+                if [ -z "$spec_file_content" ]; then
+                    echo "Failed to create spec file content." >&2
+                    return 1
+                fi
+
+                _log_info "Creating '$destination_file'."
+                $touch_bin "$destination_file"
+
+                _log_info "Populating '$destination_file'."
+                echo "$spec_file_content" > "$destination_file"
+                echo "$destination_file"
+            fi
+
+        done
+    done
+    popd &> /dev/null || return 2
+}

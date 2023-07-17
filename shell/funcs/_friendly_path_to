@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+
+function _friendly_path_to() {
+    local -r target="$1"
+
+    local realpath_bin
+    realpath_bin="$(find_binary "realpath")"
+
+    printf '%s' "$($realpath_bin --canonicalize-missing --relative-base="$PWD" --no-symlinks "$target")"
+}
