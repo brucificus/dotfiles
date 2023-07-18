@@ -24,9 +24,6 @@ setopt NO_MAIL_WARNING
 # Requires using `>|` or `>!` to truncate files and `>>|` or `>>!` to create files.
 setopt NO_CLOBBER
 
-# In case we need to manually set our language environment…
-LANG="${LANG:-en_US.UTF-8}"; export LANG
-
 
 # If we're in an interactive shell,
 if [[ $- == *i* ]]; then
