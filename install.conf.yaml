@@ -27,6 +27,3 @@
     ~/bin/:
       glob: true
       path: bin/*
-
-- shell:
-  - git submodule sync --recursive

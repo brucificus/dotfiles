@@ -12,8 +12,7 @@ function Test-ReparsePoint([string]$path) {
 }
 
 Set-Location $BASEDIR
-git -C $DOTBOT_DIR submodule sync --quiet --recursive
-git submodule update --init --recursive $DOTBOT_DIR
+git submodule update --quiet --init --force --checkout --depth 1 --recursive "${DOTBOT_DIR}"
 
 folders_to_relink = @(
 )
