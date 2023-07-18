@@ -34,9 +34,13 @@ if command_exists notify-send; then
         source "$BASHIT_PLUGINS_AVAILABLE"/cmd-returned-notify.plugin.bash  # https://github.com/Bash-it/bash-it/blob/master/plugins/available/cmd-returned-notify.plugin.bash
         source "$BASHIT_COMPLETIONS_AVAILABLE"/notify-send.completion.bash
     elif [ -n "$ZSH_VERSION" ]; then
-        plugins+=(
-            wsl-notify-zsh  # https://github.com/masonc15/wsl-notify-zsh
-        )
+        if command_exists bc; then
+            plugins+=(
+                wsl-notify-zsh  # https://github.com/masonc15/wsl-notify-zsh
+            )
+        else
+            append_profile_suggestions "# TODO: 🛎️ Install \`bc\`. See: https://ss64.com/bash/bc.html."
+        fi
     fi
 elif [ -z "$WSL_DISTRO_NAME" ]; then
     append_profile_suggestions "# TODO: 🛎️ Install \`notify-send\`. See: https://ss64.com/bash/notify-send.html."
