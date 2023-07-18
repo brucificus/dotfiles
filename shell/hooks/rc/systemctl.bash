@@ -13,7 +13,7 @@ elif [ -n "$ZSH_VERSION" ]; then
 fi
 
 
-if pidof systemd; then
+if pidof systemd > /dev/null 2>&1; then
     if [ -n "$BASH_VERSION" ]; then
         source "$BASHIT_ALIASES_AVAILABLE"/systemd.aliases.bash
     elif [ -n "$ZSH_VERSION" ]; then
