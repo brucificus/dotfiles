@@ -12,7 +12,6 @@ elif [ -n "$ZSH_VERSION" ]; then
     : # Intentionally left blank.
 fi
 
-
 if command_exists convert; then  # from ImageMagick.
     if [ -n "$BASH_VERSION" ]; then
         _assert_sourced "../../vendor/oh-my-zsh/plugins/catimg/catimg.sh" || source "../../vendor/oh-my-zsh/plugins/catimg/catimg.sh" || return $?
@@ -22,7 +21,15 @@ if command_exists convert; then  # from ImageMagick.
         )
     fi
 else
-    append_profile_suggestions "# TODO: 📽️ Add \`convert\` (from ImageMagick) to your PATH."
+    append_profile_suggestions "# TODO: ⚙️ Add \`convert\` (from ImageMagick) to your PATH."
+fi
+
+if ! command_exists catimg; then
+    append_profile_suggestions "# TODO: 🖼️ Install \`catimg\`. See: https://github.com/posva/catimg#installation."
+fi
+
+if ! command_exists asciinema; then
+    append_profile_suggestions "# TODO: 📽️ Install \`asciinema\`. See: https://github.com/asciinema/asciinema#quick-intro."
 fi
 
 if [ -n "$BASH_VERSION" ]; then
