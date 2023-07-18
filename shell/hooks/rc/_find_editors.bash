@@ -4,13 +4,13 @@
 # First, the major binaries.
 VSCODE="$(find_binary "code")" || VSCODE=''
 if [ -z "$VSCODE" ]; then
-    append_profile_suggestions "# TODO: 🧑‍💻 Add \`code\` to your PATH."
+    append_profile_suggestions "# TODO: 🧑‍💻 Install VSCode. See: https://code.visualstudio.com/docs/setup/linux."
     unset VSCODE;
 else export VSCODE; fi
 
 NANO="$(find_binary "nano")" || NANO=''
 if [ -z "$NANO" ]; then
-    append_profile_suggestions "# TODO: ⌨️ Add \`nano\` to your PATH."
+    append_profile_suggestions "# TODO: ⌨️ Install \`nano\`."
     unset NANO;
 else export NANO; fi
 

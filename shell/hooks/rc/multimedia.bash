@@ -44,7 +44,7 @@ elif [ -n "$ZSH_VERSION" ]; then
             append_profile_suggestions "# TODO: 🔎 Install \`fzf\`. See: https://github.com/junegunn/fzf#installation."
         fi
     else
-        append_profile_suggestions "# TODO: ➿ Install \`jq\`. See: https://jqlang.github.io/jq/download/."
+        append_profile_suggestions "# TODO: 📝 Install \`jq\`. See: https://jqlang.github.io/jq/download/."
     fi
 fi
 
@@ -58,4 +58,8 @@ if command_exists fzf; then
     fi
 elif ! command_exists jq; then
     append_profile_suggestions "# TODO: 🔎 Install \`fzf\`. See: https://github.com/junegunn/fzf#installation."
+fi
+
+if command_exists jq && ! command_exists yq; then
+    append_profile_suggestions "# TODO: 📝 Install \`yq\`. See: https://github.com/mikefarah/yq#install."
 fi

@@ -22,7 +22,7 @@ if command_exists git; then
     if binary_exists python3 && binary_exists ruby; then
         if [ -n "$ZSH_VERSION" ]; then
             plugins+=(
-                git-extra-command  # https://github.com/unixorn/git-extra-commands
+                git-extra-commands  # https://github.com/unixorn/git-extra-commands
             )
         else
             path_prepend "$PWD/../../vendor/zsh-custom/plugins/git-extra-commands/bin"; export PATH

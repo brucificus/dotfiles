@@ -20,7 +20,7 @@ if command_exists kubectl; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(kubectl)  # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/kubectl/README.md
     fi
-else
+elif command_exists docker; then
     append_profile_suggestions "# TODO: ⛵️ Install \`kubectl\`. See: https://kubernetes.io/docs/tasks/tools/."
 fi
 
@@ -30,7 +30,7 @@ if command_exists kubectx; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(kubectx)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/kubectx
     fi
-else
+elif command_exists kubectl || command_exists minikube; then
     append_profile_suggestions "# TODO: ⛵️ Install \`kubectx\`. See: https://github.com/ahmetb/kubectx#installation."
 fi
 
@@ -40,7 +40,7 @@ if command_exists minikube; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(minikube)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/minikube
     fi
-else
+elif command_exists docker || command_exists kubectl; then
     append_profile_suggestions "# TODO: ⛵ Install \`minikube\`. See: https://kubernetes.io/docs/tasks/tools/."
 fi
 
@@ -50,6 +50,6 @@ if command_exists helm; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(helm)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/helm
     fi
-else
+elif command_exists kubectl || command_exists minikube; then
     append_profile_suggestions "# TODO: 🛞 Install \`helm\`. See: https://helm.sh/docs/intro/install/."
 fi

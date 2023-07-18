@@ -6,14 +6,14 @@
 #
 HEXDUMP="$(find_binary "hexdump")" || HEXDUMP=''
 if [ -z "$HEXDUMP" ]; then
-    append_profile_suggestions "# TODO: 🔢 Add \`hexdump\` to your PATH."
+    append_profile_suggestions "# TODO: 🔢 Install \`hexdump\`."
     unset HEXDUMP;
 else export HEXDUMP; fi
 
 BATCAT="$(find_binary "batcat")" || BATCAT=''
 if [ -z "$BATCAT" ]; then BATCAT="$(find_binary "bat")" || BATCAT=''; fi
 if [ -z "$BATCAT" ]; then
-    append_profile_suggestions "# TODO: 🦇🐈 Add \`batcat\` to your PATH."
+    append_profile_suggestions "# TODO: 🦇🐈 Install \`batcat\`."
     unset BATCAT;
 else export BATCAT; fi
 

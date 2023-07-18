@@ -21,6 +21,6 @@ if command_exists docker-compose; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(docker-compose)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker-compose
     fi
-else
+elif command_exists docker; then
     append_profile_suggestions "# TODO: 💡 Add \`docker-compose\` to your PATH."
 fi

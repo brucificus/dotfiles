@@ -27,7 +27,7 @@ if command_exists packer; then
     elif [ -n "$ZSH_VERSION" ]; then
         : # 🙁
     fi
-else
+elif command_exists aws || command_exists az || command_exists vagrant || command_exists docker || command_exists vboxmanage; then
     append_profile_suggestions "# TODO: 📦 Install \`packer\`. See: https://developer.hashicorp.com/packer/downloads."
 fi
 
@@ -40,8 +40,8 @@ if command_exists terraform; then
             terraform  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/terraform
         )
     fi
-else
-    append_profile_suggestions "# TODO: 🪖 Install \`terraform\`. See: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli."
+elif command_exists az || command_exists aws; then
+    append_profile_suggestions "# TODO: ☄️ Install \`terraform\`. See: https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli."
 fi
 
 if command_exists terragrunt; then
@@ -50,7 +50,7 @@ if command_exists terragrunt; then
     elif [ -n "$ZSH_VERSION" ]; then
         : # 🙁
     fi
-else
+elif command_exists terraform; then
     append_profile_suggestions "# TODO: 🪖 Install \`terragrunt\`. See: https://terragrunt.gruntwork.io/docs/getting-started/install/."
 fi
 
@@ -61,7 +61,7 @@ if command_exists vagrant; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(vagrant)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vagrant
     fi
-else
+elif command_exists packer || command_exists vboxmanage; then
     append_profile_suggestions "# TODO: ⛺ Install \`vagrant\`. See: https://developer.hashicorp.com/vagrant/downloads."
 fi
 
@@ -72,6 +72,6 @@ if command_exists vault; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(vault)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vault
     fi
-else
-    append_profile_suggestions "# TODO: 🔐 Install \`vault\`. See: https://developer.hashicorp.com/vault/docs/install."
+# else
+#     append_profile_suggestions "# TODO: 🔐 Install \`vault\`. See: https://developer.hashicorp.com/vault/docs/install."
 fi

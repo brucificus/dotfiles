@@ -12,7 +12,7 @@ if [ -z "$PYTHON3" ]; then
             ;;
     esac
     if [ -z "$PYTHON3" ]; then
-        append_profile_suggestions "# TODO: 🐍 Add \`python3\` to your PATH."
+        append_profile_suggestions "# TODO: 🐍 Install \`python3\`."
         return 0
     fi
 fi
@@ -30,7 +30,7 @@ if [ -z "$PIP3" ]; then
             ;;
     esac
     if [ -z "$PIP3" ]; then
-        append_profile_suggestions "# TODO: 🐍 Add \`pip3\` to your PATH."
+        append_profile_suggestions "# TODO: 🐍 Install \`pip3\`."
         return 0
     fi
 fi

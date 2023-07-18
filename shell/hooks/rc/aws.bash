@@ -14,6 +14,6 @@ if command_exists aws; then
             aws  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/aws
         )
     fi
-else
-    append_profile_suggestions "# TODO: ☁️ Add \`aws\` to your PATH."
+elif command_exists terraform || command_exists packer; then
+    append_profile_suggestions "# TODO: ☁️ Install the AWS CLI. See: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html."
 fi

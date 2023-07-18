@@ -20,5 +20,5 @@ if command_exists curl; then
         : # 🙁
     fi
 else
-    append_profile_suggestions "# TODO: 🌐 Add \`curl\` to your PATH."
+    append_profile_suggestions "# TODO: 🌐 Install \`curl\`."
 fi

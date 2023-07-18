@@ -20,5 +20,5 @@ if command_exists uuid || command_exists uuidgen; then
         : # 🙁
     fi
 else
-    append_profile_suggestions "# TODO: 🔨 Add \`uuid\` or \`uuidgen\` to your PATH."
+    append_profile_suggestions "# TODO: 🔨 Install \`uuid\` or \`uuidgen\`."
 fi

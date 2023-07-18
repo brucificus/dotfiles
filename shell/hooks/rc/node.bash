@@ -20,8 +20,8 @@ if command_exists node; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(node)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/node
     fi
-else
-    append_profile_suggestions "# TODO: 🔨 Add \`node\` to your PATH."
+elif command_exists nvm; then
+    append_profile_suggestions "# TODO: 🔨 Add \`node\` to your PATH. (Have you run NVM yet?)"
 fi
 
 if command_exists npm; then
@@ -31,10 +31,10 @@ if command_exists npm; then
         plugins+=(
             npm  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/npm
             zsh-better-npm-completion  # https://github.com/lukechilds/zsh-better-npm-completion
-        )  
+        )
     fi
-else
-    append_profile_suggestions "# TODO: 🔨 Add \`npm\` to your PATH."
+elif command_exists nvm; then
+    append_profile_suggestions "# TODO: 🔨 Add \`npm\` to your PATH. (Have you run NVM yet?)"
 fi
 
 NVM_COMPLETION=true; export NVM_COMPLETION
@@ -86,5 +86,5 @@ if command_exists yarn; then
         )
     fi
 else
-    append_profile_suggestions "# TODO: 🔨 Add \`yarn\` to your PATH."
+    append_profile_suggestions "# TODO: 🧶 Install \`yarn\`. See: https://yarnpkg.com/getting-started/install/."
 fi

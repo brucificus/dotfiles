@@ -21,6 +21,6 @@ if command_exists hub; then
             github  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/github
         )
     fi
-else
+elif command_exists git; then
     append_profile_suggestions "# TODO: 🐙 Install \`hub\`. See: https://github.com/mislav/hub#installation."
 fi

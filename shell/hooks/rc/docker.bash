@@ -21,6 +21,4 @@ if command_exists docker; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(docker)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
     fi
-else
-    append_profile_suggestions "# TODO: 🐋 Install \`docker\`. See: https://docs.docker.com/desktop/install/linux-install/."
 fi

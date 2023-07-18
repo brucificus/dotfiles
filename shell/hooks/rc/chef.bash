@@ -5,9 +5,9 @@
 # shellcheck source-path=SCRIPTDIR/../../vendor/bash-it/plugins/available
 
 
-if ! command_exists knife || ! command_exists chef || ! command_exists chef-client; then
-    append_profile_suggestions "# TODO: 🧑‍🍳 Install \`chef\`. See: https://docs.chef.io/install_omnibus."
-fi
+# if ! command_exists knife || ! command_exists chef || ! command_exists chef-client; then
+#     append_profile_suggestions "# TODO: 🧑‍🍳 Install \`chef\`. See: https://docs.chef.io/install_omnibus."
+# fi
 
 if command_exists knife; then
     if [ -n "$BASH_VERSION" ]; then

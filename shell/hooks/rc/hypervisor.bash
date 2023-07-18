@@ -19,6 +19,6 @@ if command_exists vboxmanage; then
     elif [ -n "$ZSH_VERSION" ]; then
         : # 🙁
     fi
-else
+elif command_exists packer || command_exists vagrant; then
     append_profile_suggestions "# TODO: 📦 Install VirtualBox. See: https://www.virtualbox.org/wiki/Downloads."
 fi

@@ -19,7 +19,7 @@ if command_exists pg_config; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(postgres)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/postgres
     fi
-else
-    append_profile_suggestions "# TODO: 💽 Install PostgresSQL. See: https://www.postgresql.org/download/."
+# else
+#     append_profile_suggestions "# TODO: 💽 Install PostgresSQL. See: https://www.postgresql.org/download/."
 fi
 

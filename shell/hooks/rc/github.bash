@@ -18,6 +18,6 @@ if command_exists gh; then
             gh  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gh
         )
     fi
-else
+elif command_exists git; then
     append_profile_suggestions "# TODO: 🐱 Install \`gh\`. See: https://github.com/cli/cli#installation."
 fi

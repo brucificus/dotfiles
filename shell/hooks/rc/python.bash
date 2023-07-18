@@ -70,7 +70,7 @@ if command_exists pipenv; then
         )
     fi
 else
-    append_profile_suggestions "# TODO: 🐍 Add \`pipenv\` to your PATH."
+    append_profile_suggestions "# TODO: 🐍 Install \`pipenv\`. See: https://github.com/pypa/pipenv#installation."
 fi
 
 if command_exists pyenv || command_exists virtualenvwrapper.sh; then
@@ -84,7 +84,7 @@ if command_exists pyenv || command_exists virtualenvwrapper.sh; then
         )
     fi
 else
-    append_profile_suggestions "# TODO: 🐍 Add \`pyenv\` to your PATH."
+    append_profile_suggestions "# TODO: 🐍 Install \`pyenv\` See: https://github.com/pyenv/pyenv#installation."
 fi
 
 if command_exists conda; then
@@ -94,7 +94,7 @@ if command_exists conda; then
         : # 🙁
     fi
 else
-    append_profile_suggestions "# TODO: 🐍 Add \`conda\` to your PATH."
+    append_profile_suggestions "# TODO: 🐍 Install \`conda\`. See: https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html."
 fi
 
 if command_exists pylint; then
@@ -106,7 +106,7 @@ if command_exists pylint; then
         )
     fi
 else
-    append_profile_suggestions "# TODO: 🐍 Add \`pylint\` to your PATH."
+    append_profile_suggestions "# TODO: 🐍 Install \`pylint\`. See: https://pylint.org/#install."
 fi
 
 

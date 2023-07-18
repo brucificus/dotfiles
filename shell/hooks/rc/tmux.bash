@@ -24,5 +24,5 @@ if command_exists tmux; then
         )
     fi
 else
-    append_profile_suggestions "# TODO: ⚡ Add \`tmux\` to your PATH."
+    append_profile_suggestions "# TODO: ⚡ Install \`tmux\`."
 fi

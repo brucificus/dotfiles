@@ -20,5 +20,5 @@ if command_exists nginx; then
         : # 🙁
     fi
 else
-    append_profile_suggestions "# TODO: 🌐 Add \`nginx\` to your PATH."
+    append_profile_suggestions "# TODO: 🌐 Install \`nginx\`."
 fi

@@ -29,7 +29,7 @@ if command_exists maven; then
     elif [ -n "$ZSH_VERSION" ]; then
         : # 🙁
     fi
-else
+elif command_exists java; then
     append_profile_suggestions "# TODO: ☕ Install Apache Maven. See: https://maven.apache.org/install.html."
 fi
 
@@ -40,7 +40,7 @@ if command_exists gradle; then
     elif [ -n "$ZSH_VERSION" ]; then
         : # 🙁
     fi
-else
+elif command_exists java; then
     append_profile_suggestions "# TODO: 🐘 Install \`gradle\`. See: https://gradle.org/install/."
 fi
 

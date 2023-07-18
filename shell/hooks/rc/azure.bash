@@ -10,6 +10,6 @@ if command_exists az; then
             azure  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/azure
         )
     fi
-else
-    append_profile_suggestions "# TODO: ☁️ Add \`az\` to your PATH."
+elif command_exists terraform || command_exists packer; then
+    append_profile_suggestions "# TODO: ☁️ Install the Azure CLI. See: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli."
 fi

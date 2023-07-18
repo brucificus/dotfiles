@@ -12,7 +12,7 @@ if command_exists xclip; then
         : # Intentionally left blank.
     fi
 else
-    append_profile_suggestions "# TODO: 💡 Add \`xclip\` to your PATH."
+    append_profile_suggestions "# TODO: 💡 Install \`xclip\`."
 fi
 
 if [ -n "$ZSH_VERSION" ]; then

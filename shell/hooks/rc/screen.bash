@@ -10,7 +10,7 @@ elif [ -n "$ZSH_VERSION" ]; then
 fi
 
 if ! command_exists screen; then
-    append_profile_suggestions "# TODO: ⚡ Add \`screen\` to your PATH."
+    append_profile_suggestions "# TODO: ⚡ Install \`screen\`."
     return 0;
 fi
 

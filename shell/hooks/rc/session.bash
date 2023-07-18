@@ -21,7 +21,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
     if command_exists wsl-notify-send.exe; then
         alias notify-send="wsl-notify-send.exe --category \"$WSL_DISTRO_NAME\""
     else
-        append_profile_suggestions "# TODO: 🛎️ Install \`wsl-notify-send\` (on your Windows host). See: https://github.com/stuartleeks/wsl-notify-send."
+        append_profile_suggestions "# TODO: 🛎️ Add \`wsl-notify-send\` to your path. See: https://github.com/stuartleeks/wsl-notify-send."
     fi
 fi
 

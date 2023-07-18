@@ -10,7 +10,14 @@ if [ -z "$DOCKER" ]; then
             ;;
     esac
     if [ -z "$DOCKER" ]; then
-        append_profile_suggestions "# TODO: 🐋 Add \`docker\` to your PATH."
+        if [ -n "$WSL_DISTRO_NAME" ]; then
+            if ! command_exists docker.exe; then
+                append_profile_suggestions "# TODO: 🐋 Install \`Docker Desktop\` on your Windows host. See: https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers."
+            fi
+            append_profile_suggestions "# TODO: 🐋 ⬆️ *Then* install Linux-native \`docker\` for this WSL-contained Linux instance. See: https://docs.docker.com/engine/install/."
+        else
+            append_profile_suggestions "# TODO: 🐋 Install \`docker\`. See: https://docs.docker.com/engine/install/."
+        fi
         unset DOCKER;
     else
         export DOCKER;
