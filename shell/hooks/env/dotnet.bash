@@ -18,7 +18,7 @@ if command_exists dotnet; then
     if [ -z "${NUGET_PACKAGES}" ]; then
         # The global packages folder.
         export NUGET_PACKAGES="${XDG_CACHE_HOME}/nuget-packages"
-        mkdir -p "$NUGET_PACKAGES" > /dev/null 2>&1 || return 1
+        mkdir -p "$NUGET_PACKAGES" > /dev/null 2>&1
 
         old_profile_nuget_packages_location="$HOME/.nuget/packages"
         if [ -d "$old_profile_nuget_packages_location" ] && [ ! -L "$old_profile_nuget_packages_location" ]; then
