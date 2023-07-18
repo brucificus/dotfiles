@@ -14,9 +14,8 @@ function Test-ReparsePoint([string]$path) {
 Set-Location $BASEDIR
 git submodule update --quiet --init --force --checkout --depth 1 --recursive "${DOTBOT_DIR}"
 
-folders_to_relink = @(
-)
-folders_to_relink | Where-Object { -not (Test-ReparsePoint $_) } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
+# folders_to_relink = @()
+# folders_to_relink | Where-Object { -not (Test-ReparsePoint $_) } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 
 foreach ($PYTHON in ('python', 'python3', 'python2')) {
     # Python redirects to Microsoft Store in Windows 10 when not installed
