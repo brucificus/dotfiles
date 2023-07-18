@@ -55,3 +55,4 @@ if [ -d "$old_profile_pip_cache_location" ] && [ ! -L "$old_profile_pip_cache_lo
     rmdir "$old_profile_pip_cache_location" > /dev/null 2>&1 || return 1
     ln -s "$PIP_DOWNLOAD_CACHE" "$old_profile_pip_cache_location" > /dev/null 2>&1 || return 1
 fi
+unset old_profile_pip_cache_location
