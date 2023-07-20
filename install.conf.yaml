@@ -3,7 +3,16 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.bash', '~/.zsh', '~/.oh-my-zsh', '~/.config/powershell/profile.ps1', '~/.oh-my-zsh/custom/plugins', 'shell/vendor/oh-my-zsh/custom/plugins']
+- clean:
+    - '~'
+    - '~/.bash'
+    - '~/.zsh'
+    - '~/.oh-my-zsh'
+    - '~/.oh-my-zsh/custom/plugins'
+    - 'shell/vendor/oh-my-zsh/custom/plugins'
+    - '~/.config/powershell/profile.ps1'
+    - '~/.config/powershell/Microsoft.PowerShell_profile.ps1'
+    - '~/.config/powershell/powershell/Microsoft.VSCode_profile.ps1'
 
 - link:
     ~/.dotfiles: ''
@@ -11,6 +20,9 @@
     ~/.bash_logout: shell/bash_logout
     ~/.bash_profile: shell/bash_profile
     ~/.bashrc: shell/bashrc
+    ~/.config/powershell/profile.ps1: powershell/profile.ps1
+    ~/.config/powershell/Microsoft.PowerShell_profile.ps1: powershell/Microsoft.PowerShell_profile.ps1
+    ~/.config/powershell/powershell/Microsoft.VSCode_profile.ps1: powershell/Microsoft.VSCode_profile.ps1
     ~/.pythonrc:
     ~/.zlogin: shell/zlogin
     ~/.zlogout: shell/zlogout
@@ -23,7 +35,6 @@
     ~/.ipython/profile_default/startup/disable_warnings.py: ipython/disable_warnings.py
     ~/.jupyter/jupyter_notebook_config.py: jupyter/jupyter_notebook_config.py
     ~/.jupyter/nbconfig/notebook.json: jupyter/notebook.json
-    ~/.config/powershell/profile.ps1: config/powershell/profile.ps1
     ~/bin/:
       glob: true
       path: bin/*

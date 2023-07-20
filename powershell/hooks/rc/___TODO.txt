@@ -1,0 +1,3 @@
+ - [ ] Helpers for AWS. (See oh-my-zsh for examples.)
+ - [ ] Suggest aliases on command return. (Such as in `zsh-you-should-use`.)
+ - [ ] Helpers for Chef, Knife, et al. (Such as in `knife.plugins.zsh`, knife_ssh.plugins.zsh`, and `kitchen.plugins.zsh`.)

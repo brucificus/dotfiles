@@ -5,9 +5,8 @@ Param(
     [switch] $SkipUpdate = $null
 )
 
-if ($Env:WSL_DISTRO_NAME -and (-not $SkipWslCheck)) {
-    Write-Error "WSL detected. Run from Windows for most compatibility, or re-run with '-SkipWslCheck'."
-    return
+if (($IsWSL -or $Env:WSL_DISTRO_NAME) -and (-not $SkipWslCheck)) {
+    throw "WSL detected. Run from Windows for most compatibility, or re-run with '-SkipWslCheck'."
 }
 
 if ( `
@@ -23,6 +22,5 @@ if ($IsWindows) {
 } elseif ($IsLinux) {
     ~/.dotfiles/installers/oh-my-posh/install-for-nix-with-wget.ps1
 } else {
-    Write-Error "Unable to decide installation modality because unable to detect current platform."
-    return
+    throw "Unable to decide installation modality because unable to detect current platform."
 }

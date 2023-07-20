@@ -2,15 +2,10 @@
 
 
 #
-# Find the python3 executable, make sure it isn't the Windows one from within WSL.
+# Find the python3 executable.
 #
 if [ -z "$PYTHON3" ]; then
     PYTHON3="$(find_binary "python3")"
-    case "$PYTHON3" in
-        "/mnt/"*)
-            PYTHON3=""
-            ;;
-    esac
     if [ -z "$PYTHON3" ]; then
         append_profile_suggestions "# TODO: 🐍 Install \`python3\`."
         return 0
@@ -20,15 +15,10 @@ export PYTHON3
 
 
 #
-# Find the pip3 executable, make sure it isn't the Windows one from within WSL.
+# Find the pip3 executable.
 #
 if [ -z "$PIP3" ]; then
     PIP3="$(find_binary "pip3")"
-    case "$PIP3" in
-        "/mnt/"*)
-            PIP3=""
-            ;;
-    esac
     if [ -z "$PIP3" ]; then
         append_profile_suggestions "# TODO: 🐍 Install \`pip3\`."
         return 0

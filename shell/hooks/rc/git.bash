@@ -53,7 +53,7 @@ if command_exists git; then
         append_profile_suggestions "# TODO: 🐙 Install \`git-lfs\`. See: https://github.com/git-lfs/git-lfs#installing."
     elif [ -n "$BASH_VERSION" ]; then
         : # 🙁
-    elif [ -n "$ZSH_VERSION" ]; then
+    elif [ -n "$ZSH_VERSION" ] && command_exists git-lfs; then
         plugins+=(
             git-lfs  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-lfs
         )
@@ -73,7 +73,7 @@ if command_exists git; then
         append_profile_suggestions "# TODO: 🔎 Install \`fzf\`. See: https://github.com/junegunn/fzf#installation."
     elif [ -n "$BASH_VERSION" ]; then
         : # 🙁
-    elif [ -n "$ZSH_VERSION" ]; then
+    elif [ -n "$ZSH_VERSION" ] && command_exists forgit; then
         plugins+=(
             forgit  # https://github.com/wfxr/forgit
         )

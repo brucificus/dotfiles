@@ -5,13 +5,11 @@ Param(
 )
 
 if (-not $IsWindows) {
-    Write-Error "Windows is required."
-    return
+    throw "Windows is required."
 }
 
 if (-not (Get-Command "scoop" -ErrorAction SilentlyContinue)) {
-    Write-Error "Scoop is required for installing 'oh-my-posh' on Windows."
-    return
+    throw "Scoop is required for installing 'oh-my-posh' on Windows."
 }
 
 if (-not (Get-Command "oh-my-posh" -ErrorAction SilentlyContinue)) {
