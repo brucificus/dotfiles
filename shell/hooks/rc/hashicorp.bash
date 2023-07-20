@@ -75,3 +75,11 @@ if command_exists vault; then
 # else
 #     append_profile_suggestions "# TODO: 🔐 Install \`vault\`. See: https://developer.hashicorp.com/vault/docs/install."
 fi
+
+if command_exists nomad; then
+    if ! command_exists damon; then
+        append_profile_suggestions "# TODO: 🧑‍💻 Install \`damon\`. See: https://github.com/hashicorp/damon#installation."
+    fi
+elif command_exists docker || command_exists kubectl || command_exists minikube || command_exists helm; then
+    append_profile_suggestions "# TODO: ⛺ Install \`nomad\`. See: https://developer.hashicorp.com/nomad/downloads."
+fi

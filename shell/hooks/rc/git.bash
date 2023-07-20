@@ -78,6 +78,10 @@ if command_exists git; then
             forgit  # https://github.com/wfxr/forgit
         )
     fi
+
+    if ! command_exists lazygit; then
+        append_profile_suggestions "# TODO: 🧑‍💻 Install \`lazygit\`. See: https://github.com/jesseduffield/lazygit#installation."
+    fi
 else
     append_profile_suggestions "# TODO: 🐙 Install \`git\`. See: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git."
 fi
