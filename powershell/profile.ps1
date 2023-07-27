@@ -29,6 +29,7 @@ Import-Module -Name $PSScriptRoot\personal-modules\NavigationHelpers.psm1 -Disab
 Import-Module -Name $PSScriptRoot\personal-modules\ProjectHelpers.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\PSReadLineConfigurator.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\ReflectionHelpers.psm1 -DisableNameChecking
+Import-Module -Name $PSScriptRoot\personal-modules\Devenv.psm1 -DisableNameChecking
 
 
 function Set-PoshPromptPortably([string] $themePath) {
