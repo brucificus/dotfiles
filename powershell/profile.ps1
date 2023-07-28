@@ -30,6 +30,7 @@ Import-Module -Name $PSScriptRoot\personal-modules\ProjectHelpers.psm1 -DisableN
 Import-Module -Name $PSScriptRoot\personal-modules\PSReadLineConfigurator.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\ReflectionHelpers.psm1 -DisableNameChecking
 Import-Module -Name $PSScriptRoot\personal-modules\Devenv.psm1 -DisableNameChecking
+. $PSScriptRoot\personal-modules\zoxide.ps1
 
 
 function Set-PoshPromptPortably([string] $themePath) {
