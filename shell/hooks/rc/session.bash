@@ -51,3 +51,7 @@ if [ -n "$BASH_VERSION" ]; then
 elif [ -n "$ZSH_VERSION" ]; then
     setopt notify
 fi
+
+if ! command_exists btop; then
+    append_profile_suggestions "# TODO: 📊 Install \`btop\`. See: https://github.com/aristocratos/btop#installation."
+fi

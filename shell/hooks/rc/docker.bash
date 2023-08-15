@@ -21,4 +21,8 @@ if command_exists docker; then
     elif [ -n "$ZSH_VERSION" ]; then
         plugins+=(docker)  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/docker
     fi
+
+    if ! command_exists lazydocker; then
+        append_profile_suggestions "# TODO: 🧑‍💻 Install \`lazydocker\`. See: https://github.com/jesseduffield/lazydocker#installation."
+    fi
 fi
