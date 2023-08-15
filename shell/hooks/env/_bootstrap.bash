@@ -3,8 +3,8 @@
 
 
 # For user-specific executable files.
-path_prepend "$HOME/.local/bin"  # This is an XDG default, actually. (It just doesn't have a dedicated variable name.)
 path_prepend "$HOME/.dotfiles/bin"
+path_prepend "$HOME/.local/bin"  # This is an XDG default, actually. (It just doesn't have a dedicated variable name.)
 
 
 PROFILE_SUGGESTIONS=''; export PROFILE_SUGGESTIONS

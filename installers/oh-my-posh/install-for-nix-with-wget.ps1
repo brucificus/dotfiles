@@ -5,18 +5,15 @@ Param(
 )
 
 if (-not $IsLinux) {
-    Write-Error "*nix is required."
-    return
+    throw "*nix is required."
 }
 
 if (-not (Get-Command "wget" -ErrorAction SilentlyContinue)) {
-    Write-Error "Wget is required for installing 'oh-my-posh' on *nix."
-    return
+    throw "Wget is required for installing 'oh-my-posh' on *nix."
 }
 
 if ((id -u) -ne 0) {
-    Write-Error "Root is required for installing 'oh-my-posh' on *nix."
-    return
+    throw "Root is required for installing 'oh-my-posh' on *nix."
 }
 
 [string] $ohmyposhPlatform
@@ -26,8 +23,7 @@ if ($Env:HOSTTYPE -ceq "x86_64") {
 } elseif ($Env:HOSTTYPE -like "*arm*") {
     $ohmyposhPlatform = "arm"
 } else {
-    Write-Error "Unable to select 'oh-my-posh' package platform for current platform."
-    return
+    throw "Unable to select 'oh-my-posh' package platform for current platform."
 }
 
 [string] $ohmyposhUrl = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-" + $ohmyposhPlatform

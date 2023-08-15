@@ -4,11 +4,6 @@
 # Find the Docker executable, make sure it isn't the Windows one from within WSL.
 if [ -z "$DOCKER" ]; then
     DOCKER="$(find_binary "docker")"
-    case "$DOCKER" in
-        "/mnt/"*)
-            DOCKER=""
-            ;;
-    esac
     if [ -z "$DOCKER" ]; then
         if [ -n "$WSL_DISTRO_NAME" ]; then
             if ! command_exists docker.exe; then

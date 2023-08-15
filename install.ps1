@@ -1,29 +1,51 @@
+#!/usr/bin/env pwsh
 $ErrorActionPreference = "Stop"
+Set-StrictMode -Version Latest
 
-$CONFIG = "install.conf.yaml"
-$DOTBOT_DIR = "dotbot"
 
-$DOTBOT_BIN = "bin/dotbot"
-$BASEDIR = $PSScriptRoot
+. "$PSScriptRoot/powershell/internal-modules/poshy-misc-funcs/Test-ReparsePoint.ps1"
+. "$PSScriptRoot/powershell/internal-modules/poshy-misc-funcs/Test-LinkCapability.ps1"
 
-function Test-ReparsePoint([string]$path) {
-    $file = Get-Item $path -Force -ea SilentlyContinue
-    return [bool]($file.Attributes -band [IO.FileAttributes]::ReparsePoint)
+if (-not (Test-LinkCapability)) {
+    if ($IsWindows) {
+        Write-Error "This script requires filesystem link capabilities. Please run this script in an elevated PowerShell session, or enable Developer Mode in Windows Settings."
+    } else {
+        Write-Error "This script requires filesystem link capabilities. Please run this script in an elevated PowerShell session."
+    }
+    return
 }
 
-Set-Location $BASEDIR
-git submodule update --quiet --init --force --checkout --depth 1 --recursive "${DOTBOT_DIR}"
+Set-Location $PSScriptRoot
+
+$dotbot_dir = "dotbot"
+git submodule update --quiet --init --force --checkout --depth 1 --recursive $dotbot_dir
 
 # folders_to_relink = @()
 # folders_to_relink | Where-Object { -not (Test-ReparsePoint $_) } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 
-foreach ($PYTHON in ('python', 'python3', 'python2')) {
-    # Python redirects to Microsoft Store in Windows 10 when not installed
-    if (& { $ErrorActionPreference = "SilentlyContinue"
-            ![string]::IsNullOrEmpty((&$PYTHON -V))
-            $ErrorActionPreference = "Stop" }) {
-        &$PYTHON $(Join-Path $BASEDIR -ChildPath $DOTBOT_DIR | Join-Path -ChildPath $DOTBOT_BIN) -d $BASEDIR -c $CONFIG $Args
-        return
+function run_dotbot {
+    param(
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string] $config_file
+    )
+    foreach ($python in ('python', 'python3', 'python2')) {
+        # Python redirects to Microsoft Store in Windows 10 when not installed
+        if (& { $ErrorActionPreference = "SilentlyContinue"
+                ![string]::IsNullOrEmpty((&$python -V))
+                $ErrorActionPreference = "Stop" }) {
+            $python_bin = $python
+            break
+        }
     }
+    if (-not $python_bin) {
+        throw "Cannot find Python."
+    }
+    $ds = [System.IO.Path]::DirectorySeparatorChar
+    $dotbot_bin = "$PSScriptRoot${ds}${dotbot_dir}${ds}bin${ds}dotbot"
+    &$python $dotbot_bin -d $PSScriptRoot -c $config_file
 }
-Write-Error "Error: Cannot find Python."
+
+run_dotbot "install.conf.yaml"
+if ($IsWindows) {
+    run_dotbot "install.win.conf.yaml"
+}
