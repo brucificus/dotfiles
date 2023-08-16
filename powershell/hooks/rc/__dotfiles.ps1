@@ -7,7 +7,7 @@ Import-Module poshy-misc-funcs
 
 Set-Alias -Name dfu -Value Update-Dotfiles
 
-if (Test-Path ~/dotfiles_local -ErrorAction SilentlyContinue) {
+if (Test-Path ~/.dotfiles_local -ErrorAction SilentlyContinue) {
     function Update-LocalDotfiles {
         [CmdletBinding()]
         param(
