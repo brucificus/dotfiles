@@ -3,8 +3,7 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
-[bool] $VSCODE_HOSTING = $Env:TERM_PROGRAM -eq "vscode"
-[bool] $WT_EXISTS = $null -ne (Get-Command wt -ErrorAction SilentlyContinue)
+[bool] $WT_EXISTS = (Test-Command wt)
 [bool] $WT_HOSTING = $WT_EXISTS ? ($null -ne $Env:WT_SESSION) : $false
 
 
@@ -22,8 +21,6 @@ if ($WT_EXISTS)
         }
     }
 }
-
-Set-Alias -Name dfu -Value dotfiles_update
 
 function q {
     if ($args) {

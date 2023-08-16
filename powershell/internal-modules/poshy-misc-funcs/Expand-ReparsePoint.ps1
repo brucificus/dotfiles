@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
-function Test-ReparsePoint {
+function Expand-ReparsePoint {
     [CmdletBinding(DefaultParameterSetName = 'Path')]
     param(
         [Parameter(Mandatory=$true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Path')]
@@ -25,5 +25,15 @@ function Test-ReparsePoint {
             $InputObject = Get-Item -LiteralPath $LiteralPath -Force:$Force
         }
     }
-    $InputObject | ForEach-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }
+    $InputObject | ForEach-Object {
+        if ($_.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+            [string] $targetPath = $_.Target
+            if (-not [System.IO.Path]::IsPathRooted($targetPath)) {
+                $targetPath = Join-Path -Path $_.FullName -ChildPath $_.Target
+            }
+            Get-Item -LiteralPath $targetPath -Force:$Force
+        } else {
+            Write-Error "Not a reparse point: $_"
+        }
+    }
 }
