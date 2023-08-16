@@ -39,10 +39,7 @@ if (Test-Path -ErrorAction SilentlyContinue "$programfiles_vs") {
             function Enter-VsDevShellDefault() {
                 Enter-VsDevShell -VsInstallPath "$programfiles_vs\$vs_year\$vs_sku" -SkipAutomaticLocation @args
             }
-            Export-ModuleMember -Function Enter-VsDevShellDefault
-
             Set-Alias -Name vsdevshell -Value Enter-VsDevShellDefault
-            Export-ModuleMember -Alias vsdevshell
 
             break
         }
