@@ -28,14 +28,14 @@ function Test-LinkCapability() {
         "SymbolicLinks" = $null
     }
 
-    $testFile = Join-Path -Path $env:TEMP -ChildPath "test-file"
-    $testDir = Join-Path -Path $env:TEMP -ChildPath "test-dir"
-    $testJunctionFile = Join-Path -Path $env:TEMP -ChildPath "test-junction-file"
-    $testJunctionDir = Join-Path -Path $env:TEMP -ChildPath "test-junction-dir"
-    $testSymlinkFile = Join-Path -Path $env:TEMP -ChildPath "test-symlink-file"
-    $testSymlinkDir = Join-Path -Path $env:TEMP -ChildPath "test-symlink-dir"
-    $testHardLinkFile = Join-Path -Path $env:TEMP -ChildPath "test-hardlink-file"
-    $testHardLinkDir = Join-Path -Path $env:TEMP -ChildPath "test-hardlink-dir"
+    $testFile = [System.IO.Path]::GetTempFileName()
+    $testDir = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath "test-dir"
+    $testJunctionFile = [System.IO.Path]::GetTempFileName()
+    $testJunctionDir = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath "test-junction-dir"
+    $testSymlinkFile = [System.IO.Path]::GetTempFileName()
+    $testSymlinkDir = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath "test-symlink-dir"
+    $testHardLinkFile = [System.IO.Path]::GetTempFileName()
+    $testHardLinkDir = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath "test-hardlink-dir"
 
     [string[]] $allPossibleArtifacts = @( $testFile, $testDir, $testJunctionFile, $testJunctionDir, $testSymlinkFile, $testSymlinkDir, $testHardLinkFile, $testHardLinkDir )
 

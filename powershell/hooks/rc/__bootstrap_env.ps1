@@ -201,7 +201,7 @@ if ($IsWindows) {
 # Defines the base directory relative to which user-specific non-essential data files should
 # be stored.
 if ($IsWindows) {
-    Set-EnvVar -Process -Name XDG_CACHE_HOME -Value $Env:TEMP
+    Set-EnvVar -Process -Name XDG_CACHE_HOME -Value ([System.IO.Path]::GetTempPath())
 } else {
     Set-EnvVar -Process -Name XDG_CACHE_HOME -Value "$HOME${ds}.cache"
 }
