@@ -7,7 +7,7 @@ Set-StrictMode -Version Latest
 
 
 # Verify if any manual user choice of VS Code exists first.
-if ($Env:VSCODE -and (-not (Test-Command code))) {
+if ($Env:VSCODE -and (-not (Test-Command $Env:VSCODE))) {
     Write-Verbose "'$Env:VSCODE' flavour of VS Code not found."
     Remove-EnvVar -Process -Name VSCODE
     return
