@@ -13,7 +13,7 @@ if (Test-Path ~/.dotfiles_local -ErrorAction SilentlyContinue) {
         param(
         )
         Update-Dotfiles @PSBoundParameters
-        Update-Dotfiles -Path ~/dotfiles_local @PSBoundParameters
+        Update-Dotfiles -Path ~/.dotfiles_local @PSBoundParameters
     }
 
     Set-Alias -Name ldfu -Value Update-LocalDotfiles
