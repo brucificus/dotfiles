@@ -26,7 +26,7 @@ function universalarchive {
         [Parameter(Mandatory=$true, ValueFromRemainingArguments=$true)]
         [ValidateCount(1, [int]::MaxValue)]
         [ValidateNotNullOrEmpty()]
-        [ValidationScript({ Test-Path $_ -PathType LeafOrContainer })]
+        [ValidateScript({ Test-Path $_ -PathType LeafOrContainer })]
         [string[]] $files
     )
     # generate output file name

@@ -60,7 +60,7 @@ function pipig {
   param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [ValidationScript({ $_ -match '^[^/]+/[^/]+$' })] # GitHub repository name
+    [ValidateScript({ $_ -match '^[^/]+/[^/]+$' })] # GitHub repository name
     [string] $ownerAndRepo
   )
   pip install "git+https://github.com/${ownerAndRepo}.git"
@@ -71,7 +71,7 @@ function pipigb {
 param(
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [ValidationScript({ $_ -match '^[^/]+/[^/]+$' })] # GitHub repository name
+    [ValidateScript({ $_ -match '^[^/]+/[^/]+$' })] # GitHub repository name
     [string] $ownerAndRepo,
 
     [Parameter(Mandatory=$true)]
@@ -86,7 +86,7 @@ function pipigp {
     param(
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
-        [ValidationScript({ $_ -match '^[^/]+/[^/]+$' })] # GitHub repository name
+        [ValidateScript({ $_ -match '^[^/]+/[^/]+$' })] # GitHub repository name
         [string] $ownerAndRepo,
 
         [Parameter(Mandatory=$true)]
