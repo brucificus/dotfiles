@@ -20,7 +20,7 @@ function Expand-ReparsePoint {
     )
     if (@($Path, $LiteralPath)) {
         if ($PSCmdlet.ParameterSetName -eq 'Path') {
-            $InputObject = Get-Item $Path -Force:$Force
+            $InputObject = Get-Item -Path $Path -Force:$Force
         } else {
             $InputObject = Get-Item -LiteralPath $LiteralPath -Force:$Force
         }

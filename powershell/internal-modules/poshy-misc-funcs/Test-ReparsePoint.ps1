@@ -25,5 +25,5 @@ function Test-ReparsePoint {
             $InputObject = Get-Item -LiteralPath $LiteralPath -Force:$Force
         }
     }
-    $InputObject | ForEach-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }
+    $InputObject | ForEach-Object { ($_.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0 }
 }

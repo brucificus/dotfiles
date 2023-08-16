@@ -25,7 +25,7 @@ function Update-Dotfiles {
         }
     }
     [System.IO.DirectoryInfo] $dotfiles_wc = Expand-ReparsePoint ~/.dotfiles -Force
-    Push-Location $dotfiles_wc -Force | Out-Null
+    Push-Location $dotfiles_wc | Out-Null
     try {
         git pull --ff-only
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
