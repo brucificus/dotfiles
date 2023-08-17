@@ -34,7 +34,7 @@ if (-not $Env:PIP3) {
 Set-EnvVar -Process -Name PIP_REQUIRE_VIRTUALENV -Value "true"
 
 # Cache pip-installed packages to avoid re-downloading
-Set-EnvVar -Process -Name PIP_DOWNLOAD_CACHE -Value "${Env:XDG_CACHE_HOME}${ds}pip"
+Set-EnvVar -Process -Name PIP_DOWNLOAD_CACHE -Value (Join-Path $Env:XDG_CACHE_HOME "pip")
 
 # Python startup file
 Set-EnvVar -Process -Name PYTHONSTARTUP -Value (Join-Path $HOME ".pythonrc")

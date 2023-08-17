@@ -80,13 +80,17 @@ if (Test-Command npm) {
 }
 
 if (-not $Env:NVM_DIR) {
-    if (Test-Path "${HOME}${ds}.nvm" -ErrorAction SilentlyContinue) {
-        Set-EnvVar -Process -Name NVM_DIR -Value "${HOME}${ds}.nvm"
-    } elseif (Test-Path "${Env:XDG_CONFIG_HOME}${ds}.config${ds}nvm" -ErrorAction SilentlyContinue) {
-        Set-EnvVar -Process -Name NVM_DIR -Value "${Env:XDG_CONFIG_HOME}${ds}.config${ds}nvm"
+    [string] $nonbrew_nvm_location1 = "${HOME}${ds}.nvm"
+    [string] $nonbrew_nvm_location2 = Join-Path -Path $Env:XDG_CONFIG_HOME -ChildPath ".config${ds}nvm"
+
+    if (Test-Path $nonbrew_nvm_location1 -ErrorAction SilentlyContinue) {
+        Set-EnvVar -Process -Name NVM_DIR -Value $nonbrew_nvm_location1
+    } elseif (Test-Path $nonbrew_nvm_location2 -ErrorAction SilentlyContinue) {
+        Set-EnvVar -Process -Name NVM_DIR -Value $nonbrew_nvm_location2
     } elseif (Test-Command brew) {
         Set-EnvVar -Process -Name HOMEBREW_PREFIX -Value (brew --prefix) -SkipOverwrite
-        Set-EnvVar -Process -Name NVM_HOMEBREW -Value "${Env:HOMEBREW_PREFIX}${ds}opt${ds}nvm" -SkipOverwrite
+        [string] $brew_nvm_location = Join-Path -Path $Env:HOMEBREW_PREFIX -ChildPath "opt${ds}nvm"
+        Set-EnvVar -Process -Name NVM_HOMEBREW -Value $brew_nvm_location -SkipOverwrite
         if (Test-Path $Env:NVM_HOMEBREW) {
             Set-EnvVar -Process -Name NVM_DIR -Value $Env:NVM_HOMEBREW
         }

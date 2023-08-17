@@ -29,7 +29,7 @@ if (Test-Command dotnet) {
             Set-EnvVar -Process -Name NUGET_PACKAGES -Value $default_nuget_packages_location
         } else {
             # The global packages folder.
-            Set-EnvVar -Process -Name NUGET_PACKAGES -Value "$Env:XDG_CACHE_HOME${ds}nuget-packages"
+            Set-EnvVar -Process -Name NUGET_PACKAGES -Value (Join-Path $Env:XDG_CACHE_HOME "nuget-packages")
             mkdir -p $Env:NUGET_PACKAGES | Out-Null
 
             if ((Test-d $default_nuget_packages_location) -and ( -not (Test-L $default_nuget_packages_location) )) {

@@ -18,11 +18,16 @@ if (Test-Command pipenv) {
     append_profile_suggestions "# TODO: 🐍 Install 'pipenv'. See: https://github.com/pypa/pipenv#installation."
 }
 
-if ((-not (Test-Command pyenv)) -and ($Env:PYENV_ROOT) -and (Test-Path "${Env:PYENV_ROOT}${ds}bin${ds}pyenv" -ErrorAction SilentlyContinue)) {
-    Add-EnvPathItem -Process -Value "${Env:PYENV_ROOT}${ds}bin"
+
+if ((-not (Test-Command pyenv)) -and $Env:PYENV_ROOT) {
+    [string] $pyenv_bin = Join-Path $Env:PYENV_ROOT "bin${ds}pyenv"
+    if (Test-Path $pyenv_bin -ErrorAction SilentlyContinue) {
+        Add-EnvPathItem -Process -Value $pyenv_bin
+    }
 }
-if ((-not (Test-Command pyenv)) -and (Test-Path "${HOME}${ds}.pyenv${ds}bin" -ErrorAction SilentlyContinue)) {
-    Add-EnvPathItem -Process -Value "${HOME}${ds}.pyenv${ds}bin"
+[string] $pyenv_bin_dir = "${HOME}${ds}.pyenv${ds}bin"
+if ((-not (Test-Command pyenv)) -and (Test-Path $pyenv_bin_dir -ErrorAction SilentlyContinue)) {
+    Add-EnvPathItem -Process -Value $pyenv_bin_dir
     Set-EnvVar -Process -Name PYENV_ROOT -Value "${HOME}${ds}.pyenv"
 }
 
