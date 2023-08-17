@@ -5,12 +5,14 @@ Set-StrictMode -Version Latest
 
 $ds = [System.IO.Path]::DirectorySeparatorChar
 
-if ((-not $Env:DOTNET_ROOT) -and ( Test-d "${HOME}${ds}.dotnet" )) {
-    Set-EnvVar -Process -Name DOTNET_ROOT -Value "${HOME}${ds}.dotnet"
-} elseif ((-not $Env:DOTNET_ROOT) -and ( Test-d "/usr/share/dotnet" )) {
-    Set-EnvVar -Process -Name DOTNET_ROOT -Value "/usr/share/dotnet"
-} elseif ((-not $Env:DOTNET_ROOT) -and ( Test-d "/usr/lib/dotnet" )) {
-    Set-EnvVar -Process -Name DOTNET_ROOT -Value "/usr/lib/dotnet"
+if (-not $IsWindows) {
+    if ((-not $Env:DOTNET_ROOT) -and ( Test-d "${HOME}${ds}.dotnet" )) {
+        Set-EnvVar -Process -Name DOTNET_ROOT -Value "${HOME}${ds}.dotnet"
+    } elseif ((-not $Env:DOTNET_ROOT) -and ( Test-d "/usr/share/dotnet" )) {
+        Set-EnvVar -Process -Name DOTNET_ROOT -Value "/usr/share/dotnet"
+    } elseif ((-not $Env:DOTNET_ROOT) -and ( Test-d "/usr/lib/dotnet" )) {
+        Set-EnvVar -Process -Name DOTNET_ROOT -Value "/usr/lib/dotnet"
+    }
 }
 
 if (($Env:DOTNET_ROOT) -and (-not (Test-Command dotnet))) {
@@ -27,7 +29,7 @@ if (Test-Command dotnet) {
             Set-EnvVar -Process -Name NUGET_PACKAGES -Value $default_nuget_packages_location
         } else {
             # The global packages folder.
-            Set-EnvVar -Process -Name NUGET_PACKAGES -Value "${Env:XDG_CACHE_HOME}/nuget-packages"
+            Set-EnvVar -Process -Name NUGET_PACKAGES -Value "$Env:XDG_CACHE_HOME${ds}nuget-packages"
             mkdir -p $Env:NUGET_PACKAGES | Out-Null
 
             if ((Test-d $default_nuget_packages_location) -and ( -not (Test-L $default_nuget_packages_location) )) {
