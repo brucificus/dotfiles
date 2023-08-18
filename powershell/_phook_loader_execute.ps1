@@ -3,7 +3,13 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+[int] $items_popped = 0
 for ($phook_loader_current = (phook_loader_pop); $phook_loader_current; $phook_loader_current = (phook_loader_pop)) {
+    $items_popped++
+    [int] $items_currently_remaining = (phook_qsize) + 1
+    [int] $items_total = $items_popped + $items_currently_remaining
+    Write-Progress -Activity "Loading" -Status "component $items_popped of $items_total" -PercentComplete (($items_popped / $items_total) * 100)
+
     # $phook_loader_current = [PSCustomObject]@{
     #    path = "<some path>"
     #    optional = < $true || $false >
@@ -31,3 +37,4 @@ for ($phook_loader_current = (phook_loader_pop); $phook_loader_current; $phook_l
         throw "Unknown kind: $($phook_loader_current.kind)"
     }
 }
+Write-Progress -Activity "Loading components" -Status "Loading component $items_popped of $items_currently_remaining" -Completed
