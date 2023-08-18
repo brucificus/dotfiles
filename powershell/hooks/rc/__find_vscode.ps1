@@ -35,6 +35,10 @@ if (-not $Env:VSCODE) {
 
 phook_enqueue_module "poshy-wrap-vscode"
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 # Check if the VS Code shell integration is already loaded.
 if (Test-Path variable:global:__VSCodeOriginalPrompt) {
     Write-Verbose "__find_vscode.ps1: VS Code shell integration already loaded."

@@ -9,6 +9,10 @@ if ($Env:CLICOLOR -eq 0) {
     return
 }
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 if (Test-Command grep) {
     function Invoke-GrepColorfully {
         grep --color=auto @args

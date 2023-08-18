@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 if ($IsWindows -and (Test-Command cht.exe)) {
     function cht.sh {
         param(

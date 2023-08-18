@@ -5,6 +5,10 @@ Set-StrictMode -Version Latest
 
 Import-Module poshy-misc-funcs
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 Set-Alias -Name dfu -Value Update-Dotfiles
 
 if (Test-Path ~/.dotfiles_local -ErrorAction SilentlyContinue) {

@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 [bool] $PSReadLineSupportsOptionPredictionSource = ($null -ne $(Get-PSReadLineOption).PredictionSource)
 
 if ($PSReadLineSupportsOptionPredictionSource) {

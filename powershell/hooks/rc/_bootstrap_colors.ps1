@@ -10,6 +10,9 @@ Set-StrictMode -Version Latest
 # Configure environment variables that control colorized output.
 # Sets 256color terminal mode if available.
 
+# NOTE: We don't skip *any* of this logic for non-interactive terminals, because non-interactive terminals are often still _visible_ to the user.
+
+# Normalize the color variables.
 if ($Env:NO_COLOR -in @(1, "true")) {
     Set-EnvVar -Process -Name "NO_COLOR" -Value 0
     Set-EnvVar -Process -Name "CLICOLOR" -Value 0
@@ -27,12 +30,24 @@ if ($Env:NO_COLOR) {
 Set-EnvVar -Process -Name "CLICOLOR" -Value 1
 Set-EnvVar -Process -Name "TERM_ITALICS" -Value 1
 
-phook_push_module "poshy-colors"
+# Special-case Windows Terminal.
+if ($Env:WT_SESSION) {
+    Write-Debug "Windows Terminal detected. Skipping 256-color terminal detection and assuming truecolor."
+    if ($Env:TERM -notlike "*-256color") {
+        Set-EnvVar -Process -Name TERM -Value "${Env:TERM}-256color"
+    }
+    if (-not $Env:COLORTERM) {
+        Set-EnvVar -Process -Name COLORTERM -Value "truecolor"
+    }
+}
 
 if ( $Env:TERM -like "*-256color" ) {
     Write-Debug "256 color terminal already set."
+    phook_push_module "poshy-colors"
     return
 }
+
+# Try a little bit harder to see if 256 color terminal is available…
 
 $TERM256="${Env:TERM}-256color"
 
@@ -42,6 +57,7 @@ if (Test-Command toe) {
     if ($toe -match "^$TERM256") {
         Write-Debug "Found $TERM256 from (n-)curses binaries."
         Set-EnvVar -Process -Name TERM -Value $TERM256
+        phook_push_module "poshy-colors"
         return
     }
 }
@@ -58,6 +74,7 @@ foreach ($termcapDescriptionFile in $termcapDescriptionFiles) {
     if ((Test-Path -Path $termcapDescriptionFile) -and ((Get-Content -Path $termcapDescriptionFile) -match "(^$TERM256|\|$TERM256)\|")) {
         Write-Debug "Found $TERM256 from $termcapDescriptionFile."
         Set-EnvVar -Process -Name TERM -Value $TERM256
+        phook_push_module "poshy-colors"
         return
     }
 }
@@ -75,6 +92,7 @@ foreach ($terminfoDescriptionFolder in $terminfoDescriptionFolders) {
         if (Get-ChildItem -Path $terminfoDescriptionFolder -Recurse -Include $TERM256 -ErrorAction SilentlyContinue) {
             Write-Debug "Found $TERM256 from $terminfoDescriptionFolder."
             Set-EnvVar -Process -Name TERM -Value $TERM256
+            phook_push_module "poshy-colors"
             return
         }
     }

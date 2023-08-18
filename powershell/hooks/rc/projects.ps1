@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 if (Test-Command direnv) {
     function _direnv_hook {
         # TODO: Amend implementation of Read-DotEnv to support this.

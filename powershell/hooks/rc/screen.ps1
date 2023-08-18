@@ -11,6 +11,10 @@ if (-not (Test-Command screen)) {
     append_profile_suggestions "# TODO: ⚡ Install 'screen'."
 }
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 
 # cd replacement for screen to track cwd (like tmux)
 function scr_cd()

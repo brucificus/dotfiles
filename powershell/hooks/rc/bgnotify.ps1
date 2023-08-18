@@ -6,6 +6,10 @@ Set-StrictMode -Version Latest
 #   - Oh-My-Zsh's bgnotify.plugin.zsh, see: https://github.com/ohmyzsh/ohmyzsh/blob/f4dc8c5be365668810783ced01a86ff8f251bfd7/plugins/bgnotify/bgnotify.plugin.zsh
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 if (-not (Get-Alias notify-send -ErrorAction SilentlyContinue)) {
     Import-Module poshy-notify-send -DisableNameChecking
 }

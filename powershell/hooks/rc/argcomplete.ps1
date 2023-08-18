@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 # This is a helper layered on top of the `argcomplete` support for PowerShell.
 # For more information about PowerShell support in `argcomplete`, see: https://github.com/kislyuk/argcomplete/tree/develop/contrib#powershell-support
 

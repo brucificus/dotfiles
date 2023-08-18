@@ -14,15 +14,15 @@ function Test-SessionInteractivity {
 
     [string[]] $pwshArgs = [Environment]::GetCommandLineArgs()
 
-    if ($pwshArgs -contains '-NonInteractive') {
+    if ($pwshArgs -icontains '-NonInteractive') {
         return $false
-    } elseif ($pwshArgs -contains '-Command') {
+    } elseif ($pwshArgs -icontains '-Command') {
         return $false
-    } elseif ($pwshArgs -contains '-EncodedCommand') {
+    } elseif ($pwshArgs -icontains '-EncodedCommand') {
         return $false
-    } elseif ($pwshArgs -contains '-File') {
+    } elseif ($pwshArgs -icontains '-File') {
         return $false
-    } elseif ($pwshArgs -contains '-NoWindow') {
+    } elseif ($pwshArgs -icontains '-NoWindow') {
         return $false
     }
 

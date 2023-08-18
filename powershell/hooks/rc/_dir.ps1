@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 function Get-ChildItemVerbosely {
     Get-ChildItem @args | Format-Table -AutoSize
 }

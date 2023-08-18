@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 if (Test-Command az -ExecutableOnly) {
     # Intentionally left blank.
 } elseif ((Test-Command terraform) -or (Test-Command packer)) {

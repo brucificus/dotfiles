@@ -9,6 +9,10 @@ if ($IsWindows) {
     return
 }
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 function prompt {
     param(
     )

@@ -30,6 +30,10 @@ function q {
     }
 }
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 if (Get-Alias notify-send -ErrorAction SilentlyContinue) {
     [string] $notify_send_implementation = (Get-Alias notify-send).Definition
     if ($notify_send_implementation -ne "notify-send-fallback") {

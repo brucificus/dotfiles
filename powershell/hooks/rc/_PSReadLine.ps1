@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 phook_push_module "PSReadLine"
 
 # https://www.powershellgallery.com/packages/PowerType

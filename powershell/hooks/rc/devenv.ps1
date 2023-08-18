@@ -7,6 +7,10 @@ if (-not $IsWindows) {
     return
 }
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 $vs_yearskus=@(
     @{year=2022;sku="Enterprise"}
     @{year=2022;sku="Professional"}

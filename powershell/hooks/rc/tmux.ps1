@@ -11,6 +11,10 @@ if (-not (Test-Command tmux)) {
     return
 }
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 phook_enqueue_module "poshy-wrap-tmux"
 
 # CONFIGURATION VARIABLES

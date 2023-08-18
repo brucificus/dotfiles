@@ -3,6 +3,10 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+if (-not (Test-SessionInteractivity)) {
+    return
+}
+
 Set-Alias -Name pbcopy -Value Set-Clipboard
 Set-Alias -Name pbpaste -Value Get-Clipboard
 Set-Alias -Name xcpy -Value Set-Clipboard
