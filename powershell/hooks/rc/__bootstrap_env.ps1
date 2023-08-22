@@ -22,11 +22,11 @@ if ((-not (Test-Path Env:\HOME -ErrorAction SilentlyContinue)) -or (-not $HOME))
 #
 
 if ($Env:WSL_DISTRO_NAME) {
-    Set-Variable -Name IsWSL -Value $true -Option AllScope
+    Set-Variable -Name IsWSL -Value $true -Option AllScope,Constant
 } elseif ($IsLinux -and (Test-Command wslpath) -and (Test-Command cmd.exe)) {
-    Set-Variable -Name IsWSL -Value $true -Option AllScope
+    Set-Variable -Name IsWSL -Value $true -Option AllScope,Constant
 } else {
-    Set-Variable -Name IsWSL -Value $false -Option AllScope
+    Set-Variable -Name IsWSL -Value $false -Option AllScope,Constant
 }
 
 
@@ -104,26 +104,14 @@ Set-Alias -Name path -Value Get-EnvPathItemProcessScoped
 # PSModulePath
 #
 
-Add-EnvVarPathItem -Process -Name "PSModulePath" -Value "$PSScriptRoot/../../modules"
-Add-EnvVarPathItem -Process -Name "PSModulePath" -Value "$PSScriptRoot/../../internal-modules"
+Add-EnvVarPathItem -Process -Name "PSModulePath" -Value (Resolve-Path "$PSScriptRoot/../../modules")
+Add-EnvVarPathItem -Process -Name "PSModulePath" -Value (Resolve-Path "$PSScriptRoot/../../internal-modules")
 
 if ($IsCoreCLR) {
-    # Remove folders from PSModulePath that are for Windows PowerShell only.
-    # We don't want those modules conflicting with our PowerShell Core modules.
-    Get-EnvVarPathItem -Process -Name "PSModulePath" | ForEach-Object {
-        if ($_ -like "*WindowsPowerShell*") {
-            Remove-EnvVarPathItem -Process -Name "PSModulePath" -Value $_
-        }
-    }
-
-    # If modules already have been loaded from the wrong folders, let's attempt to unload them.
-    # NOTE: This doesn't (can't) remove loaded assemblies, so it's not a perfect solution.
-    Get-Module | ForEach-Object {
-        if ($_.Path -like "*WindowsPowerShell*") {
-            Remove-Module -Name $_.Name -Force -ErrorAction SilentlyContinue | Out-Null
-            append_profile_suggestions "# TODO: ⚠️ Prevent module '$($_.Name)' from loading from '$($_.Path)'."
-        }
-    }
+    # Take folders from PSModulePath that are for Windows PowerShell only,
+    # and make sure they are at the _end_ of the PSModulePath.
+    [string[]] $psmoduleEntriesForWindowsPowerShell = Get-EnvVarPathItem -Process -Name "PSModulePath" | Where-Object { $_ -like "*WindowsPowerShell*" }
+    $psmoduleEntriesForWindowsPowerShell | Add-EnvVarPathItem -Process -Name "PSModulePath"
 }
 
 function Get-EnvPSModulePathItemProcessScoped {
