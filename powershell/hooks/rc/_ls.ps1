@@ -8,4 +8,4 @@ if (-not (Test-SessionInteractivity)) {
 }
 
 Remove-Alias -Name sl -Force
-phook_enqueue_module "poshy-wrap-ls"
+phook_enqueue_module "poshy-ls-isms"
