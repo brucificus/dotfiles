@@ -9,7 +9,7 @@ Set-StrictMode -Version Latest
 
 if ($WT_EXISTS)
 {
-    phook_enqueue_module poshy-wt
+    phook_enqueue_module poshy-wrap-wt
 
     if ($WT_HOSTING) {
         function New-Tab {
