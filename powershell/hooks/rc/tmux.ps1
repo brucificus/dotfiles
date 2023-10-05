@@ -51,7 +51,7 @@ if ( $Env:TERM -like "*-256color" ) {
   Set-EnvVar -Process -Name PWSHRC_TMUX_TERM -Value $Env:PWSHRC_TMUX_FIXTERM_WITH_256COLOR
 } else {
   Set-EnvVar -Process -Name PWSHRC_TMUX_TERM -Value $Env:PWSHRC_TMUX_FIXTERM_WITHOUT_256COLOR
-  export PWSHRC_TMUX_TERM=
+  Remove-EnvVar -Process -Name PWSHRC_TMUX_TERM -ErrorAction SilentlyContinue
 }
 
 # Set the correct local config file to use.
