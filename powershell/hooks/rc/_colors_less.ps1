@@ -1,4 +1,5 @@
 #!/usr/bin/env pwsh
+#Requires -Modules @{ModuleName="poshy-lucidity";ModuleVersion="0.3.16"}
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
@@ -12,7 +13,7 @@ if (-not (Test-Command "less")) {
     return
 }
 
-phook_enqueue_module poshy-x
+phook_enqueue_module poshy-ecks
 
 Set-Alias -Name ccat -Value ccat.ps1
 Set-Alias -Name cless -Value cless.ps1

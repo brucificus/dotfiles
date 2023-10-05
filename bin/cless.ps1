@@ -1,4 +1,5 @@
 #!/usr/bin/env pwsh
+#Requires -Modules @{ModuleName="poshy-lucidity";ModuleVersion="0.3.16"}
 param(
     [Parameter(Mandatory = $false, Position = 0, ValueFromRemainingArguments = $true)]
     [string[]] $rest = $null,
@@ -11,7 +12,6 @@ Set-StrictMode -Version Latest
 
 
 # First, validate colorization configuration & availability.
-. "$PSScriptRoot/../powershell/funcs/Test-Command.ps1"
 $tools = @("batcat", "pygmentize", "chroma")
 if (-not "$Env:PWSHRC_COLORIZE_TOOL") {
     foreach ($tool in $tools) {

@@ -1,4 +1,6 @@
 #!/usr/bin/env pwsh
+#Requires -Modules @{ModuleName="poshy-lucidity";ModuleVersion="0.3.16"}
+#Requires -Modules @{ModuleName="PSReadLine";ModuleVersion="2.2.6"}
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 

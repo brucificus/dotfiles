@@ -1,4 +1,8 @@
 #!/usr/bin/env pwsh
+#Requires -Modules @{ModuleName="poshy-dir-nav";ModuleVersion="0.3.13"}
+#Requires -Modules @{ModuleName="poshy-env-var";ModuleVersion="0.5.22"}
+#Requires -Modules @{ModuleName="poshy-lucidity";ModuleVersion="0.3.16"}
+#Requires -Modules @{ModuleName="PSReadLine";ModuleVersion="2.2.6"}
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
