@@ -19,7 +19,7 @@ if (Test-Command gpg-agent) {
         | Where-Object { $_.name -eq "enable-ssh-support" }
     )
     if ($enableSshSupportOption.value -eq 1) {
-        Remove-EnvVar -Process -Name SSH_AGENT_PID
+        Remove-EnvVar -Process -Name SSH_AGENT_PID -ErrorAction SilentlyContinue
 
         # The test involving the gnupg_SSH_AUTH_SOCK_by variable is for the case where
         # the agent is started as gpg-agent --daemon /bin/sh, in which case the shell
