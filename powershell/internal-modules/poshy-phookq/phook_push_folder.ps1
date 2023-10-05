@@ -6,33 +6,43 @@ Set-StrictMode -Version Latest
 function phook_push_folder() {
     param(
         [Parameter(Mandatory=$true, Position=0)]
-        [string] $path
+        [string] $path,
+
+        [Parameter(Mandatory=$false, Position=1)]
+        [switch] $Optional,
+
+        [Parameter(Mandatory=$false, Position=2)]
+        [switch] $AsFunctions
     )
 
-    $children = Get-ChildItem -Path $path -Filter "*.ps1" -File | Where-Object { $_.Name -notlike ".*" }
-    $children += (Get-ChildItem -Path $path -Filter "*.psm1" -File | Where-Object { $_.Name -notlike ".*" })
-    $children += (Get-ChildItem -Path $path -Filter "*.psd1" -File | Where-Object { $_.Name -notlike ".*" })
-    $children += (Get-ChildItem -Path $path -Directory | Where-Object { $_.Name -notlike ".*" })
-    $children = $children | Select-Object -ExpandProperty Name | Sort-Object -Unique
+    if (-not (Test-Path -Path $path -PathType Container -ErrorAction SilentlyContinue)) {
+        if (-not $Optional) {
+            throw "The path '$path' is not a folder, or it does not exist."
+        }
+        return
+    }
 
-    $folder_name = (Get-Item -Path $path).Name
+    [System.IO.FileSystemInfo[]] $children = @()
+    $children += (Get-ChildItem -Path $path -Filter "*.psd1" -File -Force)
+    $children += (Get-ChildItem -Path $path -Filter "*.psm1" -File -Force)
+    $children = ($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
 
-    # Check if the folder has a module defined.
-    if ($children -contains "${folder_name}.psd1") {
-        # If the folder has a module defined, push it.
-        phook_push_module (Join-Path $path "${folder_name}.psd1")
-    } elseif ($children -contains "${folder_name}.psm1") {
-        # If the folder has a module defined, push it.
-        phook_push_module (Join-Path $path "${folder_name}.psm1")
-    } else {
-        # If the folder does NOT have a module defined, push its files and folders.
-        foreach ($child in $children) {
-            $child_path = Join-Path $path $child
-            if (Test-Path -Path $child_path -PathType Container) {
-                phook_push_folder $child_path
-            } else {
-                phook_push_file $child_path
-            }
+    # If the folder DOES have a module defined, use it.
+    if ($children) {
+        phook_push_module $children[0].FullName
+        return
+    }
+
+    # Since the folder does NOT have a module defined, use its files and folders.
+    $children += (Get-ChildItem -Path $path -Filter "*.ps1" -File -Force)
+    $children += (Get-ChildItem -Path $path -Directory -Force)
+    $children = ($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
+
+    foreach ($child in $children) {
+        if ($child -is [System.IO.DirectoryInfo]) {
+            phook_push_folder $child.FullName -AsFunctions:$AsFunctions
+        } else {
+            phook_push_file $child.FullName
         }
     }
 }

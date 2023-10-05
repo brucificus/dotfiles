@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-colors</id>
+    <version>0.3.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-colors/tree/1731f7503d546435c4e8a774d9f9f7d075c10be1/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-colors</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Functions for generating ANSI terminal formatting sequences, including: blinking text, italic text, bold text, underlined text, strike-through text, reversed-color text, hyperlinked text, and 24-bit true color foreground and background coloring in RGB and HSL.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>ANSI blinking-text bold-text HSL hyperlinked-text italic-text poshy-colors PSCommand_bgBlack PSCommand_bgBlue PSCommand_bgBrightBlack PSCommand_bgBrightBlue PSCommand_bgBrightCyan PSCommand_bgBrightGreen PSCommand_bgBrightMagenta PSCommand_bgBrightRed PSCommand_bgBrightWhite PSCommand_bgBrightYellow PSCommand_bgColor PSCommand_bgCyan PSCommand_bgGreen PSCommand_bgHSL PSCommand_bgMagenta PSCommand_bgRed PSCommand_bgRGB PSCommand_bgWhite PSCommand_bgYellow PSCommand_ConvertTo-RGB PSCommand_fgBlack PSCommand_fgBlue PSCommand_fgBrightBlack PSCommand_fgBrightBlue PSCommand_fgBrightCyan PSCommand_fgBrightGreen PSCommand_fgBrightMagenta PSCommand_fgBrightRed PSCommand_fgBrightWhite PSCommand_fgBrightYellow PSCommand_fgColor PSCommand_fgCyan PSCommand_fgGreen PSCommand_fgHSL PSCommand_fgMagenta PSCommand_fgRed PSCommand_fgRGB PSCommand_fgWhite PSCommand_fgYellow PSCommand_fmtBlink PSCommand_fmtBlinkOff PSCommand_fmtBold PSCommand_fmtBoldOff PSCommand_fmtHidden PSCommand_fmtHiddenOff PSCommand_fmtHyperlink PSCommand_fmtItalic PSCommand_fmtItalicOff PSCommand_fmtReset PSCommand_fmtReverse PSCommand_fmtReverseOff PSCommand_fmtStrikethrough PSCommand_fmtStrikethroughOff PSCommand_fmtUnderline PSCommand_fmtUnderlineOff PSEdition_Core PSEdition_Desktop PSFunction_bgBlack PSFunction_bgBlue PSFunction_bgBrightBlack PSFunction_bgBrightBlue PSFunction_bgBrightCyan PSFunction_bgBrightGreen PSFunction_bgBrightMagenta PSFunction_bgBrightRed PSFunction_bgBrightWhite PSFunction_bgBrightYellow PSFunction_bgColor PSFunction_bgCyan PSFunction_bgGreen PSFunction_bgHSL PSFunction_bgMagenta PSFunction_bgRed PSFunction_bgRGB PSFunction_bgWhite PSFunction_bgYellow PSFunction_ConvertTo-RGB PSFunction_fgBlack PSFunction_fgBlue PSFunction_fgBrightBlack PSFunction_fgBrightBlue PSFunction_fgBrightCyan PSFunction_fgBrightGreen PSFunction_fgBrightMagenta PSFunction_fgBrightRed PSFunction_fgBrightWhite PSFunction_fgBrightYellow PSFunction_fgColor PSFunction_fgCyan PSFunction_fgGreen PSFunction_fgHSL PSFunction_fgMagenta PSFunction_fgRed PSFunction_fgRGB PSFunction_fgWhite PSFunction_fgYellow PSFunction_fmtBlink PSFunction_fmtBlinkOff PSFunction_fmtBold PSFunction_fmtBoldOff PSFunction_fmtHidden PSFunction_fmtHiddenOff PSFunction_fmtHyperlink PSFunction_fmtItalic PSFunction_fmtItalicOff PSFunction_fmtReset PSFunction_fmtReverse PSFunction_fmtReverseOff PSFunction_fmtStrikethrough PSFunction_fmtStrikethroughOff PSFunction_fmtUnderline PSFunction_fmtUnderlineOff PSIncludes_Command PSIncludes_Function PSModule pwshrc reversed-color-text RGB strikethrough-text true-color underlined-text</tags>
+  </metadata>
+</package>

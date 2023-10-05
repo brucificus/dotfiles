@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-sh-isms</id>
+    <version>0.3.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-sh-isms/tree/5ee5aa45d493b0b732ab6f1d20df6e71f6605da1/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-sh-isms</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenience functions for emulating certain shell functionality - great for helping you convert those Bash scripts over to PowerShell.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>poshy-sh-isms PSCommand_Test-d PSCommand_Test-f PSCommand_Test-O PSCommand_Test-x PSEdition_Core PSEdition_Desktop PSFunction_Test-d PSFunction_Test-f PSFunction_Test-O PSFunction_Test-x PSIncludes_Command PSIncludes_Function PSModule pwshrc shell</tags>
+  </metadata>
+</package>

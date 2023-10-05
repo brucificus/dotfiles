@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-docker-compose</id>
+    <version>0.2.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-docker-compose/tree/6b507320155bb831598d12280ccdaae27eb1f93d/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-docker-compose</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `docker-compose`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>docker-compose poshy-wrap poshy-wrap-docker-compose PSCommand_dcb PSCommand_dcdn PSCommand_dce PSCommand_dck PSCommand_dcl PSCommand_dclf PSCommand_dco PSCommand_dcofresh PSCommand_dcol PSCommand_dcou PSCommand_dcouns PSCommand_dcps PSCommand_dcpull PSCommand_dcr PSCommand_dcrestart PSCommand_dcrm PSCommand_dcstart PSCommand_dcstop PSCommand_dcup PSCommand_dcupb PSCommand_dcupbd PSCommand_dcupd PSCommand_docker-compose-fresh PSCommand_Invoke-DockerComposeBuild PSCommand_Invoke-DockerComposeDown PSCommand_Invoke-DockerComposeExec PSCommand_Invoke-DockerComposeKill PSCommand_Invoke-DockerComposeLogs PSCommand_Invoke-DockerComposeLogsFollow PSCommand_Invoke-DockerComposeLogsFollowTail PSCommand_Invoke-DockerComposePs PSCommand_Invoke-DockerComposePull PSCommand_Invoke-DockerComposeRestart PSCommand_Invoke-DockerComposeRm PSCommand_Invoke-DockerComposeRun PSCommand_Invoke-DockerComposeStart PSCommand_Invoke-DockerComposeStop PSCommand_Invoke-DockerComposeUp PSCommand_Invoke-DockerComposeUpDetached PSCommand_Invoke-DockerComposeUpDetachedWithBuild PSCommand_Invoke-DockerComposeUpNoStart PSCommand_Invoke-DockerComposeUpWithBuild PSEdition_Core PSEdition_Desktop PSFunction_docker-compose-fresh PSFunction_Invoke-DockerComposeBuild PSFunction_Invoke-DockerComposeDown PSFunction_Invoke-DockerComposeExec PSFunction_Invoke-DockerComposeKill PSFunction_Invoke-DockerComposeLogs PSFunction_Invoke-DockerComposeLogsFollow PSFunction_Invoke-DockerComposeLogsFollowTail PSFunction_Invoke-DockerComposePs PSFunction_Invoke-DockerComposePull PSFunction_Invoke-DockerComposeRestart PSFunction_Invoke-DockerComposeRm PSFunction_Invoke-DockerComposeRun PSFunction_Invoke-DockerComposeStart PSFunction_Invoke-DockerComposeStop PSFunction_Invoke-DockerComposeUp PSFunction_Invoke-DockerComposeUpDetached PSFunction_Invoke-DockerComposeUpDetachedWithBuild PSFunction_Invoke-DockerComposeUpNoStart PSFunction_Invoke-DockerComposeUpWithBuild PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

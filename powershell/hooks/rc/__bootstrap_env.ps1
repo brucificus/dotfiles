@@ -125,7 +125,7 @@ Set-Alias -Name psmodulepath -Value Get-EnvPSModulePathItemProcessScoped
 # XDG
 #
 
-Import-Module poshy-posix-isms -DisableNameChecking
+Import-Module poshy-sh-isms -DisableNameChecking
 Import-Module poshy-coreutils-ish -DisableNameChecking
 
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html

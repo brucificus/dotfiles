@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-curl</id>
+    <version>0.2.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-curl/tree/082389111d3e61980905c8fbb7963d81adfdc567/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-curl</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `curl`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>curl poshy-wrap poshy-wrap-curl PSCommand_cl PSCommand_clb PSCommand_clhead PSCommand_clo PSCommand_cloc PSCommand_clocr PSCommand_Invoke-CurlFollowingRedirects PSCommand_Invoke-CurlFollowingRedirectsDownloadAsNamed PSCommand_Invoke-CurlFollowingRedirectsDownloadAsNamedContinue PSCommand_Invoke-CurlFollowingRedirectsDownloadAsNamedContinueAndRetry PSCommand_Invoke-CurlFollowingRedirectsFetchBanner PSCommand_Invoke-CurlOnlyForGetResponseHeaders PSEdition_Core PSEdition_Desktop PSFunction_Invoke-CurlFollowingRedirects PSFunction_Invoke-CurlFollowingRedirectsDownloadAsNamed PSFunction_Invoke-CurlFollowingRedirectsDownloadAsNamedContinue PSFunction_Invoke-CurlFollowingRedirectsDownloadAsNamedContinueAndRetry PSFunction_Invoke-CurlFollowingRedirectsFetchBanner PSFunction_Invoke-CurlOnlyForGetResponseHeaders PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

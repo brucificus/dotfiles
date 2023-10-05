@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-yum</id>
+    <version>0.2.12</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-yum/tree/04e944f9bc8e79c02d3282be4eb739756316413d/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-yum</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `yum`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- :arrow_up: Bump pwshrc/actions-review-dependabot from 0.6.0 to 0.6.1
+   - PR: #0
+- :arrow_up: Bump pwshrc/actions-invoke-lib-dependent-pwsh
+   - PR: #0
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>poshy-wrap poshy-wrap-yum PSCommand_Invoke-YumCleanAll PSCommand_Invoke-YumGroupinstall PSCommand_Invoke-YumGroupremove PSCommand_Invoke-YumInfo PSCommand_Invoke-YumInstall PSCommand_Invoke-YumList PSCommand_Invoke-YumListInstalled PSCommand_Invoke-YumMakecache PSCommand_Invoke-YumRemove PSCommand_Invoke-YumRemoveLeaves PSCommand_Invoke-YumSearch PSCommand_Invoke-YumUpdate PSCommand_InvokeYumGrouplist PSCommand_yc PSCommand_ygi PSCommand_ygl PSCommand_ygr PSCommand_yi PSCommand_yl PSCommand_yli PSCommand_ymc PSCommand_yp PSCommand_yr PSCommand_yrl PSCommand_ys PSCommand_yu PSEdition_Core PSEdition_Desktop PSFunction_Invoke-YumCleanAll PSFunction_Invoke-YumGroupinstall PSFunction_Invoke-YumGroupremove PSFunction_Invoke-YumInfo PSFunction_Invoke-YumInstall PSFunction_Invoke-YumList PSFunction_Invoke-YumListInstalled PSFunction_Invoke-YumMakecache PSFunction_Invoke-YumRemove PSFunction_Invoke-YumRemoveLeaves PSFunction_Invoke-YumSearch PSFunction_Invoke-YumUpdate PSFunction_InvokeYumGrouplist PSIncludes_Command PSIncludes_Function PSModule pwshrc yum</tags>
+  </metadata>
+</package>

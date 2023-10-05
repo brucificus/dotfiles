@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-gem</id>
+    <version>0.2.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-gem/tree/418a5c91821f9bffa2cdee5f34b662b83c262843/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-gem</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `gem`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>gem poshy-wrap poshy-wrap-gem PSCommand_geca PSCommand_gecb PSCommand_geclup PSCommand_gecr PSCommand_gegi PSCommand_geh PSCommand_gei PSCommand_geiall PSCommand_gein PSCommand_gel PSCommand_geli PSCommand_geo PSCommand_geoe PSCommand_geun PSCommand_Invoke-GemCertAdd PSCommand_Invoke-GemCertBuild PSCommand_Invoke-GemCertRemove PSCommand_Invoke-GemCleanupNo PSCommand_Invoke-GemGenerateIndex PSCommand_Invoke-GemHelp PSCommand_Invoke-GemInfo PSCommand_Invoke-GemInfoAll PSCommand_Invoke-GemInstall PSCommand_Invoke-GemList PSCommand_Invoke-GemLock PSCommand_Invoke-GemOpen PSCommand_Invoke-GemOpenEditor PSCommand_Invoke-GemRemoveByPattern PSCommand_Invoke-GemSystem PSCommand_Invoke-GemUninstall PSCommand_remove_gem PSCommand_sgem PSEdition_Core PSEdition_Desktop PSFunction_Invoke-GemCertAdd PSFunction_Invoke-GemCertBuild PSFunction_Invoke-GemCertRemove PSFunction_Invoke-GemCleanupNo PSFunction_Invoke-GemGenerateIndex PSFunction_Invoke-GemHelp PSFunction_Invoke-GemInfo PSFunction_Invoke-GemInfoAll PSFunction_Invoke-GemInstall PSFunction_Invoke-GemList PSFunction_Invoke-GemLock PSFunction_Invoke-GemOpen PSFunction_Invoke-GemOpenEditor PSFunction_Invoke-GemRemoveByPattern PSFunction_Invoke-GemSystem PSFunction_Invoke-GemUninstall PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

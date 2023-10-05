@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-gh</id>
+    <version>0.2.2</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-gh/tree/382e9dfaa312fa2c5ba1ebda68bcd468d72bd3a1/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-gh</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets which wrap the GitHub CLI `gh`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- :arrow_up: Bump pwshrc/actions-review-dependabot from 0.6.0 to 0.6.1
+   - PR: #0
+- :arrow_up: Bump pwshrc/actions-invoke-lib-dependent-pwsh
+   - PR: #0
+- :arrow_up: Bump actions/checkout from 3 to 4
+   - PR: #0
+- :arrow_up: Bump pwshrc/actions-review-dependabot from 0.6.1 to 0.6.2
+   - PR: #0
+- :arrow_up: Bump pwshrc/actions-determine-version from 0.8.5 to 0.8.6
+   - PR: #0
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>gh github poshy-wrap-gh PSCommand_Invoke-GitHubApi PSCommand_Invoke-GitHubApi-BodyEmpty PSCommand_Invoke-GitHubApi-BodyFields PSCommand_Invoke-GitHubApi-BodyFile PSCommand_Invoke-GitHubApi-BodyJson PSCommand_Invoke-GitHubApi-BodyRaw PSEdition_Core PSEdition_Desktop PSFunction_Invoke-GitHubApi PSFunction_Invoke-GitHubApi-BodyEmpty PSFunction_Invoke-GitHubApi-BodyFields PSFunction_Invoke-GitHubApi-BodyFile PSFunction_Invoke-GitHubApi-BodyJson PSFunction_Invoke-GitHubApi-BodyRaw PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

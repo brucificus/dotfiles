@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-ecks</id>
+    <version>0.5.21</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-ecks/tree/4aa51ccd56917ecd19ca7522b230b6189434568c/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-ecks</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets for executing arbitrary commands under exotic circumstances, including temporarily-altered environment variables and working directories.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- ♻ Makes Module Exports Explicit (#31)
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>env Environment EnvironmentVariable poshy-ecks PSCommand_Format-ViewerInvocationSh PSCommand_New-ViewerInvocationFunction PSCommand_xin PSCommand_xwith PSEdition_Core PSEdition_Desktop PSFunction_Format-ViewerInvocationSh PSFunction_New-ViewerInvocationFunction PSFunction_xin PSFunction_xwith PSIncludes_Command PSIncludes_Function PSModule pwshrc xin xwith</tags>
+  </metadata>
+</package>

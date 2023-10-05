@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-dir-nav</id>
+    <version>0.3.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-dir-nav/tree/450d5d0fbd16ce740d33f4752d7272b66da0d121/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-dir-nav</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient functions and aliases for changing the current directory in various ways.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>cd-back cd-forward cd-up jump mcd poshy-dir-nav PSCommand_-- PSCommand_.. PSCommand_... PSCommand_.... PSCommand_..... PSCommand_...... PSCommand_++ PSCommand_1 PSCommand_2 PSCommand_3 PSCommand_4 PSCommand_5 PSCommand_6 PSCommand_7 PSCommand_8 PSCommand_9 PSCommand_cd- PSCommand_cd.. PSCommand_cd+ PSCommand_d PSCommand_jump PSCommand_mcd PSCommand_Set-LocationBack1 PSCommand_Set-LocationBack2 PSCommand_Set-LocationBack3 PSCommand_Set-LocationBack4 PSCommand_Set-LocationBack5 PSCommand_Set-LocationBack6 PSCommand_Set-LocationBack7 PSCommand_Set-LocationBack8 PSCommand_Set-LocationBack9 PSCommand_Set-LocationDown1 PSCommand_Set-LocationForward1 PSCommand_Set-LocationNewDirectory PSCommand_Set-LocationUp PSCommand_Set-LocationUp1 PSCommand_Set-LocationUp2 PSCommand_Set-LocationUp3 PSCommand_Set-LocationUp4 PSCommand_Set-LocationUp5 PSEdition_Core PSEdition_Desktop PSFunction_d PSFunction_jump PSFunction_Set-LocationBack1 PSFunction_Set-LocationBack2 PSFunction_Set-LocationBack3 PSFunction_Set-LocationBack4 PSFunction_Set-LocationBack5 PSFunction_Set-LocationBack6 PSFunction_Set-LocationBack7 PSFunction_Set-LocationBack8 PSFunction_Set-LocationBack9 PSFunction_Set-LocationDown1 PSFunction_Set-LocationForward1 PSFunction_Set-LocationNewDirectory PSFunction_Set-LocationUp PSFunction_Set-LocationUp1 PSFunction_Set-LocationUp2 PSFunction_Set-LocationUp3 PSFunction_Set-LocationUp4 PSFunction_Set-LocationUp5 PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-dotnet</id>
+    <version>0.2.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-dotnet/tree/96bb99f0fbd214f368596ec0823ae55161b0112f/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-dotnet</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `dotnet`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>dotnet poshy-wrap poshy-wrap-dotnet PSCommand_dotnet-add PSCommand_dotnet-build PSCommand_dotnet-new PSCommand_dotnet-nuget PSCommand_dotnet-pack PSCommand_dotnet-run PSCommand_dotnet-sln PSCommand_dotnet-test PSCommand_dotnet-tool-list-global PSCommand_dotnet-tool-list-local PSCommand_dotnet-tool-update-all-global PSCommand_dotnet-watch PSCommand_dotnet-watch-run PSCommand_dotnet-watch-test PSEdition_Core PSEdition_Desktop PSFunction_dotnet-add PSFunction_dotnet-build PSFunction_dotnet-new PSFunction_dotnet-nuget PSFunction_dotnet-pack PSFunction_dotnet-run PSFunction_dotnet-sln PSFunction_dotnet-test PSFunction_dotnet-tool-list-global PSFunction_dotnet-tool-list-local PSFunction_dotnet-tool-update-all-global PSFunction_dotnet-watch PSFunction_dotnet-watch-run PSFunction_dotnet-watch-test PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

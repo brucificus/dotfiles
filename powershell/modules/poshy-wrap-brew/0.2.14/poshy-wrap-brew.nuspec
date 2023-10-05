@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-brew</id>
+    <version>0.2.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-brew/tree/9a61c7ac438aefd40f2017a22c7f27c52f968c3f/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-brew</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `brew`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>brew poshy-wrap poshy-wrap-brew PSCommand_bcubc PSCommand_bcubo PSCommand_bfu PSCommand_brewp PSCommand_brewsp PSCommand_bubc PSCommand_bubo PSCommand_bubu PSCommand_bubug PSCommand_bugbc PSCommand_buz PSCommand_Invoke-BrewListPinned PSCommand_Invoke-BrewPin PSCommand_Invoke-BrewUninstallZap PSCommand_Invoke-BrewUpdateAndOutdated PSCommand_Invoke-BrewUpdateAndOutdatedAndUpgradeAndCleanup PSCommand_Invoke-BrewUpdateAndOutdatedAndUpgradeGreedyAndCleanup PSCommand_Invoke-BrewUpdateAndOutdatedCask PSCommand_Invoke-BrewUpgradeAndCleanup PSCommand_Invoke-BrewUpgradeCaskAndCleanup PSCommand_Invoke-BrewUpgradeFormula PSCommand_Invoke-BrewUpgradeGreedyAndCleanup PSEdition_Core PSEdition_Desktop PSFunction_Invoke-BrewListPinned PSFunction_Invoke-BrewPin PSFunction_Invoke-BrewUninstallZap PSFunction_Invoke-BrewUpdateAndOutdated PSFunction_Invoke-BrewUpdateAndOutdatedAndUpgradeAndCleanup PSFunction_Invoke-BrewUpdateAndOutdatedAndUpgradeGreedyAndCleanup PSFunction_Invoke-BrewUpdateAndOutdatedCask PSFunction_Invoke-BrewUpgradeAndCleanup PSFunction_Invoke-BrewUpgradeCaskAndCleanup PSFunction_Invoke-BrewUpgradeFormula PSFunction_Invoke-BrewUpgradeGreedyAndCleanup PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

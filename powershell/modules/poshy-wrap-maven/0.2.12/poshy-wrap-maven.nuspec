@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-maven</id>
+    <version>0.2.12</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-maven/tree/aefe540690acd2788fbbeb1e27b88abdff0f74e2/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-maven</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `maven`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>maven poshy-wrap poshy-wrap-maven PSCommand_Invoke-MavenCleanInstall PSCommand_Invoke-MavenCleanInstallSkipTests PSCommand_Invoke-MavenCleanPackage PSCommand_Invoke-MavenCleanPackageSkipTests PSCommand_Invoke-MavenDependencyTree PSCommand_Invoke-MavenHelpEffectivePom PSCommand_Invoke-MavenInstall PSCommand_Invoke-MavenPackage PSCommand_Invoke-MavenReleasePerform PSCommand_Invoke-MavenReleasePrepare PSCommand_Invoke-MavenReleaseRollback PSCommand_mci PSCommand_mcisk PSCommand_mcp PSCommand_mcpsk PSCommand_mdep PSCommand_mi PSCommand_mp PSCommand_mpom PSCommand_mrperf PSCommand_mrprep PSCommand_mrrb PSEdition_Core PSEdition_Desktop PSFunction_Invoke-MavenCleanInstall PSFunction_Invoke-MavenCleanInstallSkipTests PSFunction_Invoke-MavenCleanPackage PSFunction_Invoke-MavenCleanPackageSkipTests PSFunction_Invoke-MavenDependencyTree PSFunction_Invoke-MavenHelpEffectivePom PSFunction_Invoke-MavenInstall PSFunction_Invoke-MavenPackage PSFunction_Invoke-MavenReleasePerform PSFunction_Invoke-MavenReleasePrepare PSFunction_Invoke-MavenReleaseRollback PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

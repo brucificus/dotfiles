@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-env-proxy</id>
+    <version>0.5.12</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-env-proxy/tree/7186589a32f02da0aae22d4fdd343b362b218418/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-env-proxy</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets for enabling, disabling, and configuring HTTP/HTTPS proxy usage - in both environment variables and configuration files for various applications.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- ♻ Makes Module Exports Explicit (#32)
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>env Environment EnvironmentVariable git-proxy HTTP_PROXY HTTPS_PROXY NoProxy npm-proxy poshy-env-proxy proxy PSCommand_disable-proxy PSCommand_enable-proxy PSCommand_git-disable-proxy PSCommand_git-enable-proxy PSCommand_git-global-disable-proxy PSCommand_git-global-enable-proxy PSCommand_git-global-show-proxy PSCommand_git-show-proxy PSCommand_npm-disable-proxy PSCommand_npm-enable-proxy PSCommand_npm-show-proxy PSCommand_proxy-help PSCommand_pwshrc-show-proxy PSCommand_show-proxy PSCommand_ssh-disable-proxy PSCommand_ssh-enable-proxy PSCommand_ssh-show-proxy PSEdition_Core PSEdition_Desktop PSFunction_disable-proxy PSFunction_enable-proxy PSFunction_git-disable-proxy PSFunction_git-enable-proxy PSFunction_git-global-disable-proxy PSFunction_git-global-enable-proxy PSFunction_git-global-show-proxy PSFunction_git-show-proxy PSFunction_npm-disable-proxy PSFunction_npm-enable-proxy PSFunction_npm-show-proxy PSFunction_proxy-help PSFunction_pwshrc-show-proxy PSFunction_show-proxy PSFunction_ssh-disable-proxy PSFunction_ssh-enable-proxy PSFunction_ssh-show-proxy PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

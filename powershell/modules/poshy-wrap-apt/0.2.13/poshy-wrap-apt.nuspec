@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-apt</id>
+    <version>0.2.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-apt/tree/7ef787ef43a7d0ea1c07c1ecd0591ee78f3209b2/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-apt</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap the `apt-get`, `apt`, and `aptitude` package managers.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- ♻ Makes Module Exports Explicit (#27)
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>apt apt-get aptitude poshy-wrap poshy-wrap-apt PSCommand_aar PSCommand_acp PSCommand_acse PSCommand_acsp PSCommand_afs PSCommand_age PSCommand_agli PSCommand_aglu PSCommand_allpkgs PSCommand_app PSCommand_apt-history PSCommand_apt-list-packages PSCommand_asrc PSCommand_Get-AptInstalledPackages PSCommand_Invoke-AptCachePolicy PSCommand_Invoke-AptCacheSearch PSCommand_Invoke-AptCacheShowpkg PSCommand_Invoke-AptFileSearchByRegex PSCommand_Invoke-AptGetSource PSCommand_Invoke-AptListInstalled PSCommand_Invoke-AptListUpgradable PSCommand_Invoke-AptPreferred PSCommand_kerndeb PSEdition_Core PSEdition_Desktop PSFunction_aar PSFunction_apt-history PSFunction_apt-list-packages PSFunction_Get-AptInstalledPackages PSFunction_Invoke-AptCachePolicy PSFunction_Invoke-AptCacheSearch PSFunction_Invoke-AptCacheShowpkg PSFunction_Invoke-AptFileSearchByRegex PSFunction_Invoke-AptGetSource PSFunction_Invoke-AptListInstalled PSFunction_Invoke-AptListUpgradable PSFunction_Invoke-AptPreferred PSFunction_kerndeb PSIncludes_Command PSIncludes_Function PSModule</tags>
+  </metadata>
+</package>

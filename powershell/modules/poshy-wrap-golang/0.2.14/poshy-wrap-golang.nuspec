@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-golang</id>
+    <version>0.2.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-golang/tree/6048ba59a717dc8735f355f215c787f307a5fa9a/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-golang</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `go`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- ♻ Makes Module Exports Explicit (#25)
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>go golang poshy-wrap poshy-wrap-golang PSCommand_gob PSCommand_goc PSCommand_god PSCommand_goe PSCommand_gof PSCommand_gofa PSCommand_gofx PSCommand_gog PSCommand_goga PSCommand_goi PSCommand_gol PSCommand_gom PSCommand_gopa PSCommand_gopb PSCommand_gops PSCommand_gor PSCommand_got PSCommand_gota PSCommand_goto PSCommand_gotoc PSCommand_gotod PSCommand_gotofx PSCommand_gov PSCommand_gove PSCommand_gow PSCommand_Invoke-GoBuild PSCommand_Invoke-GoClean PSCommand_Invoke-GoDoc PSCommand_Invoke-GoEnv PSCommand_Invoke-GoFix PSCommand_Invoke-GoFmt PSCommand_Invoke-GoFmtEllipsis PSCommand_Invoke-GoGet PSCommand_Invoke-GoGetEllipsis PSCommand_Invoke-GoInstall PSCommand_Invoke-GoList PSCommand_Invoke-GoMod PSCommand_Invoke-GoRun PSCommand_Invoke-GoTest PSCommand_Invoke-GoTestEllipsis PSCommand_Invoke-GoTool PSCommand_Invoke-GoToolCompile PSCommand_Invoke-GoToolDist PSCommand_Invoke-GoToolFix PSCommand_Invoke-GoVersion PSCommand_Invoke-GoVet PSCommand_Invoke-GoWork PSCommand_Set-LocationGoPath PSCommand_Set-LocationGoPathBin PSCommand_Set-LocationGoPathSrc PSEdition_Core PSEdition_Desktop PSFunction_Invoke-GoBuild PSFunction_Invoke-GoClean PSFunction_Invoke-GoDoc PSFunction_Invoke-GoEnv PSFunction_Invoke-GoFix PSFunction_Invoke-GoFmt PSFunction_Invoke-GoFmtEllipsis PSFunction_Invoke-GoGet PSFunction_Invoke-GoGetEllipsis PSFunction_Invoke-GoInstall PSFunction_Invoke-GoList PSFunction_Invoke-GoMod PSFunction_Invoke-GoRun PSFunction_Invoke-GoTest PSFunction_Invoke-GoTestEllipsis PSFunction_Invoke-GoTool PSFunction_Invoke-GoToolCompile PSFunction_Invoke-GoToolDist PSFunction_Invoke-GoToolFix PSFunction_Invoke-GoVersion PSFunction_Invoke-GoVet PSFunction_Invoke-GoWork PSFunction_Set-LocationGoPath PSFunction_Set-LocationGoPathBin PSFunction_Set-LocationGoPathSrc PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

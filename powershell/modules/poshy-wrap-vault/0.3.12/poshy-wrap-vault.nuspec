@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-vault</id>
+    <version>0.3.12</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-vault/tree/329737c1ee8fd890741a03de1e482a438b63feda/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-vault</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `vault`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>poshy-wrap poshy-wrap-vault PSCommand_Invoke-VaultDelete PSCommand_Invoke-VaultList PSCommand_Invoke-VaultLoginViaGithub PSCommand_Invoke-VaultRead PSCommand_Invoke-VaultReadFieldValue PSCommand_Invoke-VaultRenew PSCommand_Invoke-VaultRevoke PSCommand_Invoke-VaultServer PSCommand_Invoke-VaultStatus PSCommand_Invoke-VaultVersion PSCommand_Invoke-VaultWrite PSCommand_vad PSCommand_vag PSCommand_val PSCommand_var PSCommand_varn PSCommand_varv PSCommand_vas PSCommand_vasrv PSCommand_vav PSCommand_vaw PSEdition_Core PSEdition_Desktop PSFunction_Invoke-VaultDelete PSFunction_Invoke-VaultList PSFunction_Invoke-VaultLoginViaGithub PSFunction_Invoke-VaultRead PSFunction_Invoke-VaultReadFieldValue PSFunction_Invoke-VaultRenew PSFunction_Invoke-VaultRevoke PSFunction_Invoke-VaultServer PSFunction_Invoke-VaultStatus PSFunction_Invoke-VaultVersion PSFunction_Invoke-VaultWrite PSIncludes_Command PSIncludes_Function PSModule pwshrc vault</tags>
+  </metadata>
+</package>

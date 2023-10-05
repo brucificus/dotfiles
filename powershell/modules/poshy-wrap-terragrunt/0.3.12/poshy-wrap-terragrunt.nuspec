@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-terragrunt</id>
+    <version>0.3.12</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-terragrunt/tree/24ed247d91838d41e5d0135bb08aaa7c2c6fce2a/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-terragrunt</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `terragrunt`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>poshy-wrap poshy-wrap-terragrunt PSCommand_Invoke-Terragrunt PSCommand_Invoke-TerragruntApply PSCommand_Invoke-TerragruntApplyAll PSCommand_Invoke-TerragruntDestroy PSCommand_Invoke-TerragruntDestroyAll PSCommand_Invoke-TerragruntPlan PSCommand_Invoke-TerragruntPlanAll PSCommand_Invoke-TerragruntValidate PSCommand_Invoke-TerragruntValidateAll PSCommand_tg PSCommand_tga PSCommand_tgaa PSCommand_tgd PSCommand_tgda PSCommand_tgp PSCommand_tgpa PSCommand_tgv PSCommand_tgva PSEdition_Core PSEdition_Desktop PSFunction_Invoke-Terragrunt PSFunction_Invoke-TerragruntApply PSFunction_Invoke-TerragruntApplyAll PSFunction_Invoke-TerragruntDestroy PSFunction_Invoke-TerragruntDestroyAll PSFunction_Invoke-TerragruntPlan PSFunction_Invoke-TerragruntPlanAll PSFunction_Invoke-TerragruntValidate PSFunction_Invoke-TerragruntValidateAll PSIncludes_Command PSIncludes_Function PSModule pwshrc terraform terragrunt</tags>
+  </metadata>
+</package>

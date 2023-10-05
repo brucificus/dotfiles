@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-git-hf</id>
+    <version>0.2.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-git-hf/tree/c195ce43e2cdfa0c9da1508483579ba5b2dab527/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-git-hf</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `git-hf`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>git git-hf git-hubflow hubflow poshy-wrap poshy-wrap-git-hf PSCommand_ghf PSCommand_ghff PSCommand_ghfh PSCommand_ghfr PSCommand_ghfs PSCommand_ghfu PSCommand_Invoke-GitHubflow PSCommand_Invoke-GitHubflowFeature PSCommand_Invoke-GitHubflowHotfix PSCommand_Invoke-GitHubflowRelease PSCommand_Invoke-GitHubflowSupport PSCommand_Invoke-GitHubflowUpdate PSEdition_Core PSEdition_Desktop PSFunction_Invoke-GitHubflow PSFunction_Invoke-GitHubflowFeature PSFunction_Invoke-GitHubflowHotfix PSFunction_Invoke-GitHubflowRelease PSFunction_Invoke-GitHubflowSupport PSFunction_Invoke-GitHubflowUpdate PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

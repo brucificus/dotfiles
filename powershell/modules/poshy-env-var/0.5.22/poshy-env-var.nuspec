@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-env-var</id>
+    <version>0.5.22</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-env-var/tree/d81c3761e7f2c67fc97bff1a89b31cc5ac21c324/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-env-var</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Ergonomic cmdlets for assigning, retrieving, and deleting environment variables - including path-munging for arbitrary PATH variables.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- ♻ Makes Module Exports Explicit (#34)
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>dotenv Environment EnvironmentVariable Path poshy-env-var PSCommand_Add-EnvPathItem PSCommand_Add-EnvVarPathItem PSCommand_Get-EnvPathItem PSCommand_Get-EnvVar PSCommand_Get-EnvVarPathItem PSCommand_Measure-EnvVarChanges PSCommand_Read-DotEnv PSCommand_Remove-EnvPathItem PSCommand_Remove-EnvVar PSCommand_Remove-EnvVarPathItem PSCommand_Set-EnvVar PSEdition_Core PSEdition_Desktop PSFunction_Add-EnvPathItem PSFunction_Add-EnvVarPathItem PSFunction_Get-EnvPathItem PSFunction_Get-EnvVar PSFunction_Get-EnvVarPathItem PSFunction_Measure-EnvVarChanges PSFunction_Read-DotEnv PSFunction_Remove-EnvPathItem PSFunction_Remove-EnvVar PSFunction_Remove-EnvVarPathItem PSFunction_Set-EnvVar PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

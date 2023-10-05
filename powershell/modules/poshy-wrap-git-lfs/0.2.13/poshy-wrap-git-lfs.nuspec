@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-git-lfs</id>
+    <version>0.2.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-git-lfs/tree/89e00c224be10a23d8b5e9d5244c6115c75ebd02/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-git-lfs</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `git-lfs`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>git git-lfs poshy-wrap poshy-wrap-git-lfs PSCommand_Add-GitLfsTrackedFiles PSCommand_Get-GitLfsTrackedFiles PSCommand_glfsi PSCommand_glfsls PSCommand_glfsmi PSCommand_glfst PSCommand_gplfs PSCommand_Invoke-GitLfsInstall PSCommand_Invoke-GitLfsMigrateImport PSEdition_Core PSEdition_Desktop PSFunction_Add-GitLfsTrackedFiles PSFunction_Get-GitLfsTrackedFiles PSFunction_gplfs PSFunction_Invoke-GitLfsInstall PSFunction_Invoke-GitLfsMigrateImport PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>PowerType</id>
+    <version>0.1.0</version>
+    <authors>Peter Andersson</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/AnderssonPeter/PowerType/blob/main/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/AnderssonPeter/PowerType/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/AnderssonPeter/PowerType/main/Icon.svg</iconUrl>
+    <description>Module providing recommendations for common tools - This module requires PowerShell 7.2 and PSReadLine 2.2.0.
+
+Suggestions must be activated:
+- Enable-PowerType:        Activate the suggestions
+- Disable-PowerType:       Disable the suggestions
+- Get-PowerTypeStatus      Gets the status of PowerType, this is useful for troubleshooting issues
+- Get-PowerTypeHistory     Gets the prediction history of PowerType, this is useful for troubleshooting issues
+
+For more information on PowerType, please visit the following: https://github.com/AnderssonPeter/PowerType</description>
+    <releaseNotes>New feature: the dynamic items like git branches now support refresh when certain commands are executed.
+This should hopefully solve the display of outdated suggestions.</releaseNotes>
+    <copyright>Peter Andersson. All rights reserved.</copyright>
+    <tags>PowerShell Prediction Recommendation Predictor PSModule PSIncludes_Cmdlet PSCmdlet_Enable-PowerType PSCmdlet_Disable-PowerType PSCmdlet_Get-PowerTypeStatus PSCmdlet_Get-PowerTypeHistory PSCommand_Enable-PowerType PSCommand_Disable-PowerType PSCommand_Get-PowerTypeStatus PSCommand_Get-PowerTypeHistory</tags>
+  </metadata>
+</package>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-coreutils-ish</id>
+    <version>0.3.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-coreutils-ish/tree/024386165998c19ecbc015c2f966b6ec1fa8b6a4/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-coreutils-ish</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Cmdlets that are semantically equivalent to GNU coreutils - useful when converting shell scripts to PowerShell.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>arch basename chmod coreutils dirname poshy-coreutils-ish PSCommand_arch PSCommand_basename PSCommand_dirname PSCommand_Get-ItemNixMode PSCommand_hostname PSCommand_Set-ItemNixMode PSCommand_shuf PSEdition_Core PSEdition_Desktop PSFunction_arch PSFunction_basename PSFunction_dirname PSFunction_Get-ItemNixMode PSFunction_hostname PSFunction_Set-ItemNixMode PSFunction_shuf PSIncludes_Command PSIncludes_Function PSModule pwshrc shuf</tags>
+  </metadata>
+</package>

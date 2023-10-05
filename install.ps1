@@ -1,10 +1,8 @@
 #!/usr/bin/env pwsh
+#Requires -Modules @{ModuleName="poshy-lucidity";ModuleVersion="0.3.16"}
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
-
-. "$PSScriptRoot/powershell/internal-modules/poshy-misc-funcs/Test-ReparsePoint.ps1"
-. "$PSScriptRoot/powershell/internal-modules/poshy-misc-funcs/Test-LinkCapability.ps1"
 
 if (-not (Test-LinkCapability)) {
     if ($IsWindows) {

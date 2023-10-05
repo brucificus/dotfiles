@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Graphical</id>
+    <version>1.0.2</version>
+    <authors>Prateek Singh</authors>
+    <owners>Prateek Singh</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/PrateekKumarSingh/Graphical</projectUrl>
+    <description>Consumes data points as input and plots them on a 2D graph in the Powershell console
+
+- Independent of PowerShell version, and Works on PowerShell Core (Windows\Linux)
+- Color-coded output depending upon the Value of data point
+- Colors codes can be customized by passing a color-map hash table
+- Custom X an Y-Axis labels
+- Graph in console is independent and fully customizable, not like Task Manager (Performance Tab)
+- Could be incorporated in Powershell scripts
+- Can consume data points generated during script run or Pre stored data like in a file or database.</description>
+    <releaseNotes>Fixed erro when drawing graph with less than 3 data points</releaseNotes>
+    <copyright>(c) 2018 Prateek Singh All rights reserved.</copyright>
+    <tags>graph console bar scatter line plot ASCII PSCore Core Terminal PSModule PSIncludes_Function PSFunction_Show-Graph PSCommand_Show-Graph PSCommand_Graph</tags>
+  </metadata>
+</package>

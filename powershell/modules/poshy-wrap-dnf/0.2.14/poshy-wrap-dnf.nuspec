@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-dnf</id>
+    <version>0.2.14</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-dnf/tree/30b5a3be9e10a62cf6add63c01a11db75503e269/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-dnf</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `dnf`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>dnf poshy-wrap poshy-wrap-dnf PSCommand_dnfc PSCommand_dnfgi PSCommand_dnfgl PSCommand_dnfgr PSCommand_dnfi PSCommand_dnfl PSCommand_dnfli PSCommand_dnfmc PSCommand_dnfp PSCommand_dnfr PSCommand_dnfri PSCommand_dnfs PSCommand_dnfu PSCommand_Invoke-DnfCleanAll PSCommand_Invoke-DnfGrouplist PSCommand_Invoke-DnfGrouppinstall PSCommand_Invoke-DnfGroupremove PSCommand_Invoke-DnfInfo PSCommand_Invoke-DnfInstall PSCommand_Invoke-DnfList PSCommand_Invoke-DnfListInstalled PSCommand_Invoke-DnfMakecache PSCommand_Invoke-DnfReinstall PSCommand_Invoke-DnfRemove PSCommand_Invoke-DnfSearch PSCommand_Invoke-DnfUpgrade PSEdition_Core PSEdition_Desktop PSFunction_Invoke-DnfCleanAll PSFunction_Invoke-DnfGrouplist PSFunction_Invoke-DnfGrouppinstall PSFunction_Invoke-DnfGroupremove PSFunction_Invoke-DnfInfo PSFunction_Invoke-DnfInstall PSFunction_Invoke-DnfList PSFunction_Invoke-DnfListInstalled PSFunction_Invoke-DnfMakecache PSFunction_Invoke-DnfReinstall PSFunction_Invoke-DnfRemove PSFunction_Invoke-DnfSearch PSFunction_Invoke-DnfUpgrade PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>

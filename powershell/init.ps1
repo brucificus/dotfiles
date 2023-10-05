@@ -6,7 +6,7 @@ Set-StrictMode -Version Latest
 $InformationPreference = "Continue"
 
 Import-Module -Name "$PSScriptRoot/internal-modules/poshy-phookq/" -DisableNameChecking
-phook_enqueue_folder "$PSScriptRoot/internal-modules/poshy-env-var/" -AsFunctions
+phook_enqueue_folder "$PSScriptRoot/modules/poshy-env-var/" -AsFunctions
 phook_enqueue_folder "$PSScriptRoot/internal-modules/poshy-misc-funcs/" -AsFunctions
 
 ./_phook_enqueue_local_before.ps1

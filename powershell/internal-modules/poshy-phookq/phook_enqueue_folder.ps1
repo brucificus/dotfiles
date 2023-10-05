@@ -22,48 +22,27 @@ function phook_enqueue_folder() {
         return
     }
 
-    [System.IO.FileSystemInfo[]] $children_files = (
-        Get-ChildItem -Path $path `
-        | Where-Object { $_.Name -notlike ".*" } `
-        | Where-Object { ($_.Name -like "*.ps1") -or ($_.Name -like "*.psm1") -or ($_.Name -like "*.psd1") -or ($_.PSIsContainer) }
-        | Sort-Object -Property Name -Unique
-    )
-    [string[]] $children = $children_files | Select-Object -ExpandProperty Name
+    [System.IO.FileSystemInfo[]] $children = @()
+    $children += (Get-ChildItem -Path $path -Filter "*.psd1" -File -Force)
+    $children += (Get-ChildItem -Path $path -Filter "*.psm1" -File -Force)
+    $children = ($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
 
-    $folder_name = (Get-Item -Path $path).Name
-
-    # Check if the folder has a module defined.
-    [string] $folderModule = $null
-    if ($children -contains "${folder_name}.psd1") {
-        $folderModule = "${folder_name}.psd1"
-    } elseif ($children -contains "${folder_name}.psm1") {
-        $folderModule = "${folder_name}.psm1"
+    # If the folder DOES have a module defined, use it.
+    if ($children) {
+        phook_enqueue_module $children[0].FullName
+        return
     }
 
-    if ($folderModule) {
-        # If the folder has a module defined, enqueue it.
-        # Unless it's already loaded.
-        [string] $folderModulePath = Join-Path $path $folderModule
-        $folderModulePath = Resolve-Path -Path $folderModulePath
-        if (Get-Module | Where-Object { $_.Path -eq $folderModulePath }) {
-            return
-        }
-        phook_enqueue_module $folderModulePath
-    } else {
-        # If the folder does NOT have a module defined, enqueue its files and folders.
-        foreach ($child in $children) {
-            $child_path = Join-Path $path $child
-            if (Test-Path -Path $child_path -PathType Container) {
-                phook_enqueue_folder $child_path -AsFunctions:$AsFunctions
-            } else {
-                if ($AsFunctions) {
-                    [string] $expectedFunctionName = $child.Replace(".ps1", "")
-                    if (Get-Command $expectedFunctionName -ErrorAction SilentlyContinue) {
-                        continue
-                    }
-                }
-                phook_enqueue_file $child_path
-            }
+    # Since the folder does NOT have a module defined, use its files and folders.
+    $children += (Get-ChildItem -Path $path -Filter "*.ps1" -File -Force)
+    $children += (Get-ChildItem -Path $path -Directory -Force)
+    $children = ($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
+
+    foreach ($child in $children) {
+        if ($child -is [System.IO.DirectoryInfo]) {
+            phook_enqueue_folder $child.FullName -AsFunctions:$AsFunctions
+        } else {
+            phook_enqueue_file $child.FullName
         }
     }
 }

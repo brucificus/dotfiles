@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>poshy-wrap-nmap</id>
+    <version>0.2.13</version>
+    <authors>Pwshrc Maintainers</authors>
+    <owners>Pwshrc Maintainers</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/pwshrc/poshy-wrap-nmap/tree/2e7b70af9b7b475f14b9e1bf34a246825fd509c7/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/pwshrc/poshy-wrap-nmap</projectUrl>
+    <iconUrl>https://en.gravatar.com/userimage/238766323/a23519bf4769d01f4e880ce1a538785f.jpeg?size=256</iconUrl>
+    <description>Convenient cmdlets and aliases which wrap `nmap`.</description>
+    <releaseNotes>## 📦 Uncategorized
+
+- 👷 Updates Build Scripts
+   - PR: #0
+- 👷 Updates Validation Workflow
+   - PR: #0
+- 👷 Updates Publish Workflow
+   - PR: #0
+- 👷 Updates Dependabot PR Review Workflow
+   - PR: #0</releaseNotes>
+    <copyright>Copyright ©️ 2023 Bruce Markham, All rights reserved.</copyright>
+    <tags>nmap poshy-wrap poshy-wrap-nmap PSCommand_nmap_check_for_firewall PSCommand_nmap_check_for_vulns PSCommand_nmap_detect_versions PSCommand_nmap_fast PSCommand_nmap_fin PSCommand_nmap_full PSCommand_nmap_full_udp PSCommand_nmap_full_with_scripts PSCommand_nmap_list_interfaces PSCommand_nmap_open_ports PSCommand_nmap_ping_scan PSCommand_nmap_ping_through_firewall PSCommand_nmap_slow PSCommand_nmap_traceroute PSCommand_nmap_web_safe_osscan PSEdition_Core PSEdition_Desktop PSFunction_nmap_check_for_firewall PSFunction_nmap_check_for_vulns PSFunction_nmap_detect_versions PSFunction_nmap_fast PSFunction_nmap_fin PSFunction_nmap_full PSFunction_nmap_full_udp PSFunction_nmap_full_with_scripts PSFunction_nmap_list_interfaces PSFunction_nmap_open_ports PSFunction_nmap_ping_scan PSFunction_nmap_ping_through_firewall PSFunction_nmap_slow PSFunction_nmap_traceroute PSFunction_nmap_web_safe_osscan PSIncludes_Command PSIncludes_Function PSModule pwshrc</tags>
+  </metadata>
+</package>
