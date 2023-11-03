@@ -13,10 +13,6 @@
 *.yaml          text=auto
 *.yml           text=auto
 *.zsh           text eol=lf
-bash_completion text eol=lf
-bash_profile    text eol=lf
-bashrc          text eol=lf
 gitconfig*      text=auto
 pythonrc        text eol=lf
-zshenv          text eol=lf
-zshrc           text eol=lf
+shell/**        text eol=lf

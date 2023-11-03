@@ -6,7 +6,7 @@ funcs_dir="${1:?}"
 if [ -n "$ZSH_VERSION" ]; then
     for func_file in "$funcs_dir"/*; do
         expected_func_name="${func_file##*/}"
-        autoload -Uz "$expected_func_name"       
+        autoload -Uz "$expected_func_name"
 
         unset expected_func_name
     done

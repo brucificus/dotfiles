@@ -35,7 +35,7 @@ strlist_prepend() {
         fi
     else
         echo "Unknown shell: '$SHELL'." >&2
-        
+
         unset strlist_var_name
         unset strlist_separator
         unset value
