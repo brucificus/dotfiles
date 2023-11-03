@@ -10,6 +10,6 @@ function Set-PoshPromptPortably([string] $themePath) {
     elseif (Get-Command "oh-my-posh" -ErrorAction SilentlyContinue) {
         Invoke-Expression (oh-my-posh --init --shell pwsh --config $themePath)
     } else {
-        Set-PoshPrompt -Theme $themePath
+        Write-Warning "oh-my-posh not found."
     }
 }
