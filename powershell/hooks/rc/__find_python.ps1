@@ -9,8 +9,9 @@ try {
     #
     # Find the python3 executable.
     #
-    if (-not $Env:PYTHON3) {
-        Set-EnvVar -Process -Name PYTHON3 -Value (Search-CommandPath "python3")
+    [string] $python3 = Search-CommandPath "python3"
+    if (-not $Env:PYTHON3 -and $python3) {
+        Set-EnvVar -Process -Name PYTHON3 -Value $python3
         if (-not $Env:PYTHON3) {
             append_profile_suggestions "# TODO: 🐍 Install 'python3'."
             return
@@ -22,14 +23,14 @@ try {
     #
     # Find the pip3 executable.
     #
-    if (-not $Env:PIP3) {
-        Set-EnvVar -Process -Name PIP3 -Value (Search-CommandPath "pip3")
+    [string] $pip3 = Search-CommandPath "pip3"
+    if (-not $Env:PIP3 -and $pip3) {
+        Set-EnvVar -Process -Name PIP3 -Value $pip3
         if (-not $Env:PIP3) {
             append_profile_suggestions "# TODO: 🐍 Install 'pip3'."
             return
         }
     }
-
 
     # pip should only run if there is a virtualenv currently activated
     Set-EnvVar -Process -Name PIP_REQUIRE_VIRTUALENV -Value "true"
@@ -51,6 +52,8 @@ try {
         ln -s $Env:PIP_DOWNLOAD_CACHE $old_profile_pip_cache_location | Out-Null
     }
 } finally {
-    Remove-Variable -Name old_profile_pip_cache_location -ErrorAction SilentlyContinue
     Remove-Variable -Name ds -ErrorAction SilentlyContinue
+    Remove-Variable -Name old_profile_pip_cache_location -ErrorAction SilentlyContinue
+    Remove-Variable -Name pip3 -ErrorAction SilentlyContinue
+    Remove-Variable -Name python3 -ErrorAction SilentlyContinue
 }

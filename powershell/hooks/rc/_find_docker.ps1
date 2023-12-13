@@ -7,8 +7,13 @@ Set-StrictMode -Version Latest
 
 # Find the Docker executable, make sure it isn't the Windows one from within WSL.
 
-if (-not $Env:DOCKER) {
-    Set-EnvVar -Process -Name DOCKER -Value (Search-CommandPath "docker")
+if ($Env:DOCKER) {
+    return
+}
+
+try {
+    [string] $docker = Search-CommandPath "docker"
+    Set-EnvVar -Process -Name DOCKER -Value $docker
     if (-not $Env:DOCKER) {
         if ($IsWSL) {
             if (-not (Test-Command docker.exe)) {
@@ -18,6 +23,7 @@ if (-not $Env:DOCKER) {
         } else {
             append_profile_suggestions "# TODO: 🐋 Install 'docker'. See: https://docs.docker.com/engine/install/."
         }
-        Remove-EnvVar -Process -Name DOCKER
     }
+} finally {
+    Remove-Variable -Name docker -ErrorAction SilentlyContinue
 }
