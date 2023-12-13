@@ -66,40 +66,44 @@ if (Test-Command toe) {
 
 # Search through termcap descriptions, if binaries are not installed.
 $ds = [System.IO.Path]::DirectorySeparatorChar
-[string[]] $termcapDescriptionFiles = @(
-    $Env:TERMCAP
-    "${Env:HOME}${ds}.termcap"
-    "/etc/termcap"
-    "/etc/termcap.small"
-)
-foreach ($termcapDescriptionFile in $termcapDescriptionFiles) {
-    if ((Test-Path -Path $termcapDescriptionFile) -and ((Get-Content -Path $termcapDescriptionFile) -match "(^$TERM256|\|$TERM256)\|")) {
-        Write-Debug "Found $TERM256 from $termcapDescriptionFile."
-        Set-EnvVar -Process -Name TERM -Value $TERM256
-        phook_push_module "poshy-colors"
-        return
-    }
-}
-
-# Search through terminfo descriptions, if binaries are not installed.
-[string[]] $terminfoDescriptionFolders = @(
-    $Env:TERMINFO
-    "${Env:HOME}${ds}.terminfo"
-    "/etc/terminfo"
-    "/lib/terminfo"
-    "/usr/share/terminfo"
-)
-foreach ($terminfoDescriptionFolder in $terminfoDescriptionFolders) {
-    if (Test-Path -Path $terminfoDescriptionFolder) {
-        if (Get-ChildItem -Path $terminfoDescriptionFolder -Recurse -Include $TERM256 -ErrorAction SilentlyContinue) {
-            Write-Debug "Found $TERM256 from $terminfoDescriptionFolder."
+try {
+    [string[]] $termcapDescriptionFiles = @(
+        $Env:TERMCAP
+        "${Env:HOME}${ds}.termcap"
+        "/etc/termcap"
+        "/etc/termcap.small"
+    )
+    foreach ($termcapDescriptionFile in $termcapDescriptionFiles) {
+        if ((Test-Path -Path $termcapDescriptionFile) -and ((Get-Content -Path $termcapDescriptionFile) -match "(^$TERM256|\|$TERM256)\|")) {
+            Write-Debug "Found $TERM256 from $termcapDescriptionFile."
             Set-EnvVar -Process -Name TERM -Value $TERM256
             phook_push_module "poshy-colors"
             return
         }
     }
-}
 
+    # Search through terminfo descriptions, if binaries are not installed.
+    [string[]] $terminfoDescriptionFolders = @(
+        $Env:TERMINFO
+        "${Env:HOME}${ds}.terminfo"
+        "/etc/terminfo"
+        "/lib/terminfo"
+        "/usr/share/terminfo"
+    )
+    foreach ($terminfoDescriptionFolder in $terminfoDescriptionFolders) {
+        if (Test-Path -Path $terminfoDescriptionFolder) {
+            if (Get-ChildItem -Path $terminfoDescriptionFolder -Recurse -Include $TERM256 -ErrorAction SilentlyContinue) {
+                Write-Debug "Found $TERM256 from $terminfoDescriptionFolder."
+                Set-EnvVar -Process -Name TERM -Value $TERM256
+                phook_push_module "poshy-colors"
+                return
+            }
+        }
+    }
+}
+finally {
+    Remove-Variable -Name ds
+}
 
 # The MIT License (MIT)
 # Copyright ©️ 2014-2019 Christian Ludwig

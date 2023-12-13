@@ -6,7 +6,6 @@ Set-StrictMode -Version Latest
 
 
 $ds=[System.IO.Path]::DirectorySeparatorChar
-$ps=[System.IO.Path]::PathSeparator
 
 #
 # HOME
@@ -48,7 +47,9 @@ if ($IsWSL) {
     Set-EnvVar -Process -Name WINDOWS_ProgramW6432 -Value (wslpath -u (cmd.exe /c echo "%ProgramW6432%" 2> $null).Trim())
 
     Set-EnvVar -Process -Name WINDOWS_Path -Value (cmd.exe /c echo "%Path%" 2> $null).Trim()
+    $ps=[System.IO.Path]::PathSeparator
     Set-EnvVar -Process -Name WINDOWS_Path -Value (@(@($Env:WINDOWS_Path -split ";") | ForEach-Object { wslpath -u $_ }) -join $ps)
+    Remove-Variable -Name ps
 }
 
 
@@ -114,6 +115,7 @@ if ($IsCoreCLR) {
     # and make sure they are at the _end_ of the PSModulePath.
     [string[]] $psmoduleEntriesForWindowsPowerShell = Get-EnvVarPathItem -Process -Name "PSModulePath" | Where-Object { $_ -like "*WindowsPowerShell*" }
     $psmoduleEntriesForWindowsPowerShell | Add-EnvVarPathItem -Process -Name "PSModulePath"
+    Remove-Variable -Name psmoduleEntriesForWindowsPowerShell
 }
 
 function Get-EnvPSModulePathItemProcessScoped {
@@ -250,3 +252,6 @@ $psgalleryRepository = Get-PSRepository PSGallery -ErrorAction SilentlyContinue
 if ($psgalleryRepository -and $psgalleryRepository.InstallationPolicy -ne "Trusted") {
     append_profile_suggestions "# TODO: ⚠️ ``Set-PSRepository -Name PSGallery -InstallationPolicy Trusted``."
 }
+Remove-Variable -Name psgalleryRepository
+
+Remove-Variable -Name ds

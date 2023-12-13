@@ -41,6 +41,7 @@ function run_dotbot {
     $ds = [System.IO.Path]::DirectorySeparatorChar
     $dotbot_bin = "$PSScriptRoot${ds}${dotbot_dir}${ds}bin${ds}dotbot"
     &$python $dotbot_bin -d $PSScriptRoot -c $config_file
+    Remove-Variable -Name ds
 }
 
 run_dotbot "install.conf.yaml"

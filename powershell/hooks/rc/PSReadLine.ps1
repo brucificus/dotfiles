@@ -28,4 +28,7 @@ if ($PSReadLineSupportsOptionPredictionSource) {
     if ($PSReadLineSupportsOptionPredictionViewStyle) {
         Set-PSReadLineOption -PredictionViewStyle InlineView
     }
+
+    Remove-Variable -Name PSReadLineSupportsOptionPredictionViewStyle
 }
+Remove-Variable -Name PSReadLineSupportsOptionPredictionSource

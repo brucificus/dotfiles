@@ -36,5 +36,6 @@ finally {
     Set-Location $PSScriptRoot
     Remove-Variable -Name SCRIPT -ErrorAction SilentlyContinue
     Remove-Variable -Name SCRIPT_0 -ErrorAction SilentlyContinue
+    Remove-Variable -Name SCRIPT_ARGS -ErrorAction SilentlyContinue
     Remove-Variable -Name SCRIPT_DIR -ErrorAction SilentlyContinue
 }

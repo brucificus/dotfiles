@@ -37,4 +37,8 @@ for ($phook_loader_current = (phook_loader_pop); $phook_loader_current; $phook_l
         throw "Unknown kind: $($phook_loader_current.kind)"
     }
 }
+Remove-Variable -Name items_total
+Remove-Variable -Name phook_loader_current
 Write-Progress -Activity "Loading components" -Status "Loading component $items_popped of $items_currently_remaining" -Completed
+Remove-Variable -Name items_currently_remaining
+Remove-Variable -Name items_popped

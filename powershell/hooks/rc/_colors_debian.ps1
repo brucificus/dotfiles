@@ -48,4 +48,5 @@ function prompt {
     } else {
         return "${debian_chroot_for_prompt}${env:USERNAME}@${hn}${ps}$(Get-Location)$ "
     }
+    Remove-Variable -Name ps
 }
