@@ -13,6 +13,9 @@ Set-StrictMode -Version Latest
 # Sets 256color terminal mode if available.
 
 # NOTE: We don't skip *any* of this logic for non-interactive terminals, because non-interactive terminals are often still _visible_ to the user.
+#       We also always load the poshy-colors module, because its functions may be referenced regardless as to color availability.
+
+phook_push_module "poshy-colors"
 
 # Normalize the color variables.
 if ($Env:NO_COLOR -in @(1, "true")) {
@@ -45,7 +48,6 @@ if ($Env:WT_SESSION) {
 
 if ( $Env:TERM -like "*-256color" ) {
     Write-Debug "256 color terminal already set."
-    phook_push_module "poshy-colors"
     return
 }
 
@@ -59,7 +61,6 @@ if (Test-Command toe) {
     if ($toe -match "^$TERM256") {
         Write-Debug "Found $TERM256 from (n-)curses binaries."
         Set-EnvVar -Process -Name TERM -Value $TERM256
-        phook_push_module "poshy-colors"
         return
     }
 }
@@ -77,7 +78,6 @@ try {
         if ((Test-Path -Path $termcapDescriptionFile) -and ((Get-Content -Path $termcapDescriptionFile) -match "(^$TERM256|\|$TERM256)\|")) {
             Write-Debug "Found $TERM256 from $termcapDescriptionFile."
             Set-EnvVar -Process -Name TERM -Value $TERM256
-            phook_push_module "poshy-colors"
             return
         }
     }
@@ -95,7 +95,6 @@ try {
             if (Get-ChildItem -Path $terminfoDescriptionFolder -Recurse -Include $TERM256 -ErrorAction SilentlyContinue) {
                 Write-Debug "Found $TERM256 from $terminfoDescriptionFolder."
                 Set-EnvVar -Process -Name TERM -Value $TERM256
-                phook_push_module "poshy-colors"
                 return
             }
         }
