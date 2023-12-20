@@ -15,6 +15,8 @@ try {
             $packagesConfig.Save($packagesConfigFile.FullName)
         }
     }
+
+    ./restore.ps1
 }
 finally {
     Pop-Location
