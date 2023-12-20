@@ -42,14 +42,20 @@ done
 SUPPORTED_TARGETS="linux-amd64 linux-arm linux-arm64 darwin-amd64 darwin-arm64"
 
 validate_dependency() {
-    if ! command -v $1 >/dev/null; then
-        error "$1 is required to install Oh My Posh. Please install $1 and try again.\n"
+    if [ -z "$2" ]; then
+        if ! command -v $1 >/dev/null; then
+            error "$1 is required to install Oh My Posh. Please install $1 and try again.\n"
+        fi
+    else
+        if ! command -v $1 && ! command -v $2 >/dev/null; then
+            error "$1 or $2 is required to install Oh My Posh. Please install $1 or $2 and try again.\n"
+        fi
     fi
 }
 
 validate_dependencies() {
     validate_dependency curl
-    validate_dependency unzip
+    validate_dependency unzip 7z
     validate_dependency realpath
     validate_dependency dirname
 }
@@ -100,6 +106,34 @@ validate_install_directory() {
     fi
 }
 
+do_unzip() {
+    file=$1
+    dir=$2
+    if [ -f "$file" ]; then
+        unzip_err=""
+        unzip_exitcode=0
+        if command -v 7z >/dev/null; then
+            unzip_err="$(7z x "$file" -o"$dir" 2>&1 >/dev/null)"
+            unzip_exitcode=$?
+            if [ -n "$unzip_err" ]; then
+                error "Error using 7z to extract '$file': $unzip_err"
+            elif [ $unzip_exitcode -ne 0 ]; then
+                error "Error using 7z to extract '$file', exited with code $unzip_exitcode."
+            fi
+        else
+            unzip_err="$(unzip -o -q "$file" -d "$dir" 2>&1 >/dev/null)"
+            unzip_exitcode=$?
+            if [ -n "$unzip_err" ]; then
+                error "Error using unzip to extract '$file': $unzip_err"
+            elif [ $unzip_exitcode -ne 0 ]; then
+                error "Error using unzip to extract '$file', exited with code $unzip_exitcode."
+            fi
+        fi
+    else
+        error "File does not exist: $file"
+    fi
+}
+
 install() {
     arch=$(detect_arch)
     platform=$(detect_platform)
@@ -137,9 +171,9 @@ install() {
     theme_dir="${cache_dir}/themes"
     mkdir -p $theme_dir
     curl -s -L https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -o ${cache_dir}/themes.zip
-    unzip -o -q ${cache_dir}/themes.zip -d $theme_dir
+    do_unzip "${cache_dir}/themes.zip" "$theme_dir"
     chmod u+rw ${theme_dir}/*.omp.*
-    rm ${cache_dir}/themes.zip
+    rm "${cache_dir}/themes.zip"
 
     info "🚀 Installation complete.\n\nYou can follow the instructions at https://ohmyposh.dev/docs/installation/prompt"
     info "to setup your shell to use oh-my-posh.\n"
