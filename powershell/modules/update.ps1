@@ -1,3 +1,7 @@
+if (-not (Get-Command nuget -ErrorAction SilentlyContinue)) {
+    throw "NuGet is not installed. Please install it from https://www.nuget.org/downloads."
+}
+
 Push-Location "$PSScriptRoot"
 try {
     [System.IO.FileInfo] $packagesConfigFile = Get-Item "packages.config"
