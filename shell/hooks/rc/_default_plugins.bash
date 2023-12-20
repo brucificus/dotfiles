@@ -16,12 +16,16 @@ _assert_sourced "_bashit_loader.bash" || source "_bashit_loader.bash" || return 
 # More are loaded in later hooks.
 
 # Load before other completions.
-source "$BASHIT_COMPLETIONS_AVAILABLE"/system.completion.bash
+if test_session_interactivity; then
+    source "$BASHIT_COMPLETIONS_AVAILABLE"/system.completion.bash
+fi
 
 source "$BASHIT_PLUGINS_AVAILABLE"/base.plugin.bash  # https://github.com/Bash-it/bash-it/blob/master/plugins/available/base.plugin.bash
 source "$BASHIT_PLUGINS_AVAILABLE"/cht-sh.plugin.bash  # https://github.com/Bash-it/bash-it/blob/master/plugins/available/cht-sh.plugin.bash
 source "$BASHIT_PLUGINS_AVAILABLE"/explain.plugin.bash  # https://github.com/Bash-it/bash-it/blob/master/plugins/available/explain.plugin.bash
-source "$BASHIT_PLUGINS_AVAILABLE"/sudo.plugin.bash  # https://github.com/Bash-it/bash-it/blob/master/plugins/available/sudo.plugin.bash
+if test_session_interactivity; then
+    source "$BASHIT_PLUGINS_AVAILABLE"/sudo.plugin.bash  # https://github.com/Bash-it/bash-it/blob/master/plugins/available/sudo.plugin.bash
+fi
 source "$BASHIT_COMPLETIONS_AVAILABLE"/defaults.completion.bash
 source "$BASHIT_COMPLETIONS_AVAILABLE"/invoke.completion.bash
 # source "$BASHIT_ALIASES_AVAILABLE"/bash-it.aliases.bash
