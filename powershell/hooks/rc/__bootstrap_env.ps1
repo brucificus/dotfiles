@@ -22,12 +22,23 @@ if ((-not (Test-Path Env:\HOME -ErrorAction SilentlyContinue)) -or (-not $HOME))
 # IsWSL
 #
 
-if ($Env:WSL_DISTRO_NAME) {
-    Set-Variable -Name IsWSL -Value $true -Option AllScope,Constant
-} elseif ($IsLinux -and (Test-Command wslpath) -and (Test-Command cmd.exe)) {
-    Set-Variable -Name IsWSL -Value $true -Option AllScope,Constant
-} else {
-    Set-Variable -Name IsWSL -Value $false -Option AllScope,Constant
+if (-not (Get-Variable -Name IsWSL -ErrorAction SilentlyContinue)) {
+    if ($Env:WSL_DISTRO_NAME) {
+        Set-Variable -Name IsWSL -Value $true -Option AllScope,Constant
+    } elseif ($IsLinux -and (Test-Command wslpath) -and (Test-Command cmd.exe)) {
+        Set-Variable -Name IsWSL -Value $true -Option AllScope,Constant
+    } else {
+        Set-Variable -Name IsWSL -Value $false -Option AllScope,Constant
+    }
+}
+
+
+#
+# TEMP
+#
+
+if (-not $Env:TEMP) {
+    Set-EnvVar -Process -Name TEMP -Value ([System.IO.Path]::GetTempPath())
 }
 
 
@@ -47,9 +58,7 @@ if ($IsWSL) {
     Set-EnvVar -Process -Name WINDOWS_ProgramW6432 -Value (wslpath -u (cmd.exe /c echo "%ProgramW6432%" 2> $null).Trim())
 
     Set-EnvVar -Process -Name WINDOWS_Path -Value (cmd.exe /c echo "%Path%" 2> $null).Trim()
-    $ps=[System.IO.Path]::PathSeparator
-    Set-EnvVar -Process -Name WINDOWS_Path -Value (@(@($Env:WINDOWS_Path -split ";") | ForEach-Object { wslpath -u $_ }) -join $ps)
-    Remove-Variable -Name ps
+    Set-EnvVar -Process -Name WINDOWS_Path -Value (@(@($Env:WINDOWS_Path -split ";") | ForEach-Object { wslpath -u $_ }) -join [System.IO.Path]::PathSeparator)
 }
 
 
@@ -224,7 +233,8 @@ if ($IsWindows) {
             if (-not (Test-d $Env:XDG_RUNTIME_DIR)) {
                 New-Item -ItemType Directory -Name $Env:XDG_RUNTIME_DIR | Out-Null
                 if (-not $IsWindows) {
-                    Set-ItemNixMode -Path $Env:XDG_RUNTIME_DIR -Mode $expected_mode
+                    $expected_mode_octal = ConvertFrom-NixMode -Mode $expected_mode -ToOctal
+                    chmod $expected_mode_octal $Env:XDG_RUNTIME_DIR
                 }
             }
         }
