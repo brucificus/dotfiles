@@ -23,9 +23,9 @@ function phook_enqueue_folder() {
     }
 
     [System.IO.FileSystemInfo[]] $children = @()
-    $children += (Get-ChildItem -Path $path -Filter "*.psd1" -File -Force)
-    $children += (Get-ChildItem -Path $path -Filter "*.psm1" -File -Force)
-    $children = ($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
+    $children += @(Get-ChildItem -Path $path -Filter "*.psd1" -File -Force)
+    $children += @(Get-ChildItem -Path $path -Filter "*.psm1" -File -Force)
+    $children = @($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
 
     # If the folder DOES have a module defined, use it.
     if ($children) {
@@ -34,9 +34,9 @@ function phook_enqueue_folder() {
     }
 
     # Since the folder does NOT have a module defined, use its files and folders.
-    $children += (Get-ChildItem -Path $path -Filter "*.ps1" -File -Force)
-    $children += (Get-ChildItem -Path $path -Directory -Force)
-    $children = ($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
+    $children += @(Get-ChildItem -Path $path -Filter "*.ps1" -File -Force)
+    $children += @(Get-ChildItem -Path $path -Directory -Force)
+    $children = @($children | Where-Object { $_.Name -notlike ".*" } | Sort-Object -Property Name -Unique)
 
     foreach ($child in $children) {
         if ($child -is [System.IO.DirectoryInfo]) {
