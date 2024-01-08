@@ -1,0 +1,67 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/powershell
+{
+    "name": "Pwsh-ish",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "build": {
+        // Path is relative to the devcontainer.json file.
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "username": "vscode",
+            "upgradePackages": "false",
+            "nonFreePackages": "true"
+        },
+        "ghcr.io/devcontainers/features/powershell:1": {
+            "version": "latest"
+        }
+    },
+
+    "postCreateCommand": "sudo chsh vscode -s \"$(which pwsh)\"",
+
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "pwsh"
+            },
+
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "christian-kohler.path-intellisense",
+                "eamodio.gitlens",
+                "EditorConfig.EditorConfig",
+                "emilylilylime.vscode-test-explorer-diagnostics",
+                "formulahendry.code-runner",
+                "foxundermoon.shell-format",
+                "GitHub.copilot-chat",
+                "GitHub.copilot",
+                "github.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "johnpapa.vscode-peacock",
+                "mads-hartmann.bash-ide-vscode",
+                "ms-azuretools.vscode-docker",
+                "ms-vscode.powershell",
+                "ms-vscode.test-adapter-converter",
+                "pspester.pester-test",
+                "redhat.vscode-yaml",
+                "rogalmic.bash-debug",
+                "rogalmic.zsh-debug",
+                "StefanMayrhofer.shellspec-tester",
+                "timonwong.shellcheck",
+                "vscode-icons-team.vscode-icons"
+            ]
+        }
+    }
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}
