@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Pwsh Profile: Execute",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/powershell/profile.ps1",
+            "args": [],
+            "cwd": "${workspaceFolder}/powershell"
+        },
+        {
+            "name": "Pwsh Profile: Vendored Modules: Restore",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/powershell/modules/restore.ps1",
+            "args": [],
+            "cwd": "${workspaceFolder}/powershell/modules"
+        },
+        {
+            "name": "Pwsh Profile: Vendored Modules: Update & Restore",
+            "type": "PowerShell",
+            "request": "launch",
+            "script": "${workspaceFolder}/powershell/modules/update.ps1",
+            "args": [],
+            "cwd": "${workspaceFolder}/powershell/modules"
+        },
+        {
+            "name": "Shellspec: Bash: Execute",
+            "type": "bashdb",
+            "request": "launch",
+            "program": "${workspaceFolder}/run_shellspec_tests.bash",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Shellspec: (Da)sh: Execute",
+            "type": "bashdb",
+            "request": "launch",
+            "program": "${workspaceFolder}/run_shellspec_tests.sh",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Shellspec: Zsh: Execute",
+            "type": "bashdb",
+            "request": "launch",
+            "program": "${workspaceFolder}/run_shellspec_tests.zsh",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
