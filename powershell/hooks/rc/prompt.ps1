@@ -10,4 +10,4 @@ if (-not (Test-SessionInteractivity)) {
 
 Set-Alias -Name load_ohmyposh_theme -Value Set-PoshPromptPortably
 
-load_ohmyposh_theme -themePath "$PSScriptRoot/../../../theme.omp.yaml"
+Set-PoshPromptPortably -themePath "$PSScriptRoot/../../../theme.omp.yaml"

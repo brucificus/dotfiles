@@ -146,8 +146,8 @@ Example:
                     "$file_kind"
                 )
                 _log_debug "Creating spec file content with args: ${spec_file_content_creation_args[*]}"
-                spec_file_content_creation_exit_status=0                
-               
+                spec_file_content_creation_exit_status=0
+
                 spec_file_content=$(echo_shellspec_spec_content "${spec_file_content_creation_args[@]}") || spec_file_content_creation_exit_status=$?
 
                 if [ "$spec_file_content_creation_exit_status" -ne 0 ]; then

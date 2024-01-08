@@ -16,7 +16,7 @@ strlist_append() {
         unset value
         return 2
     fi
-    
+
     if [ -n "$BASH_VERSION" ]; then
         # shellcheck disable=SC3045  # We're in a Bash-only block.
         # shellcheck disable=SC3053  # We're in a Bash-only block.

@@ -1,3 +1,7 @@
+if (-not (Get-Command nuget -ErrorAction SilentlyContinue)) {
+    throw "NuGet is not installed. Please install it from https://www.nuget.org/downloads."
+}
+
 Push-Location "$PSScriptRoot"
 try {
     [System.IO.FileInfo] $packagesConfigFile = Get-Item "packages.config"
@@ -11,6 +15,8 @@ try {
             $packagesConfig.Save($packagesConfigFile.FullName)
         }
     }
+
+    ./restore.ps1
 }
 finally {
     Pop-Location

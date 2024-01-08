@@ -1,0 +1,65 @@
+services:
+  2019-buster-bash:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2019-buster-bash/Dockerfile
+
+  2019-buster-zsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2019-buster-zsh/Dockerfile
+
+  2020-focal-bash:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2020-focal-bash/Dockerfile
+
+  2020-focal-pwsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2020-focal-pwsh/Dockerfile
+
+  2020-focal-zsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2020-focal-zsh/Dockerfile
+
+  2021-bullseye-bash:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2021-bullseye-bash/Dockerfile
+
+  2021-bullseye-pwsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2021-bullseye-pwsh/Dockerfile
+
+  2021-bullseye-zsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2021-bullseye-zsh/Dockerfile
+
+  2022-jammy-bash:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2022-jammy-bash/Dockerfile
+
+  2022-jammy-pwsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2022-jammy-pwsh/Dockerfile
+
+  2022-jammy-zsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2022-jammy-zsh/Dockerfile
+
+  2023-bookworm-bash:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2023-bookworm-bash/Dockerfile
+
+  2023-bookworm-zsh:
+    build:
+      context: ../../
+      dockerfile: integration/test-profile-minimally/2023-bookworm-zsh/Dockerfile
