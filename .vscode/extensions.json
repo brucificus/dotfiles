@@ -1,0 +1,24 @@
+{
+    "recommendations": [
+        "christian-kohler.path-intellisense",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "emilylilylime.vscode-test-explorer-diagnostics",
+        "formulahendry.code-runner",
+        "foxundermoon.shell-format",
+        "GitHub.copilot-chat",
+        "GitHub.copilot",
+        "github.vscode-github-actions",
+        "GitHub.vscode-pull-request-github",
+        "mads-hartmann.bash-ide-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.powershell",
+        "ms-vscode.test-adapter-converter",
+        "pspester.pester-test",
+        "redhat.vscode-yaml",
+        "rogalmic.bash-debug",
+        "rogalmic.zsh-debug",
+        "StefanMayrhofer.shellspec-tester",
+        "timonwong.shellcheck"
+    ]
+}
