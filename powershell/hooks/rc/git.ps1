@@ -35,11 +35,7 @@ if (-not (Test-Command git-flow)) {
     phook_enqueue_module "poshy-wrap-git-flow"
 }
 
-if (-not (Test-Command git-hf)) {
-    append_profile_suggestions "# TODO: 🐙 Install 'git-hf'. See: https://github.com/datasift/gitflow#installation."
-} else {
-    phook_enqueue_module "poshy-wrap-git-hf"
-}
+# NOTE: We no longer look for Hubflow (`git-hf`) because it was archived in 2023.
 
 if (-not (Test-Command git-lfs)) {
     append_profile_suggestions "# TODO: 🐙 Install 'git-lfs'. See: https://github.com/git-lfs/git-lfs#installing."

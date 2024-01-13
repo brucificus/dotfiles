@@ -39,15 +39,7 @@ if command_exists git; then
         )
     fi
 
-    if ! command_exists git-hf; then
-        append_profile_suggestions "# TODO: 🐙 Install \`git-hf\`. See: https://github.com/datasift/gitflow#installation."
-    elif [ -n "$BASH_VERSION" ]; then
-        : # 🙁
-    elif [ -n "$ZSH_VERSION" ]; then
-        plugins+=(
-            git-hf  # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-hubflow
-        )
-    fi
+    # NOTE: We no longer look for Hubflow (`git-hf`) because it was archived in 2023.
 
     if ! command_exists git-lfs; then
         append_profile_suggestions "# TODO: 🐙 Install \`git-lfs\`. See: https://github.com/git-lfs/git-lfs#installing."
