@@ -2,7 +2,7 @@
 
 
 shell_actual() {
-    if ! ps -p $$ -o comm= 2>/dev/null ; then
+    if ! (ps -p $$ -o comm=) 2> /dev/null ; then
         #ps command failed, try Busybox ps.
         ps -o ppid,pid,comm | awk "index(\"$$\", \$2) {print \$NF}"
     fi
