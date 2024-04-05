@@ -39,7 +39,7 @@ _basestem() {
         # elif [ -n "$ZSH_VERSION" ]; then
         #     basename_value="${filename:t%suffix}"
         # else
-            basename_value="$($basename_bin --suffix="$suffix" "$filename")"
+            basename_value="$($basename_bin -s "$suffix" "$filename")"
         # fi
     else
         # if [ -n "$BASH_VERSION" ]; then

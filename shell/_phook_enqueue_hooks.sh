@@ -60,7 +60,7 @@ while strlist_popstart shell_suffix_precedence ":" current_suffix; do
         if [ -z "$higher_precedence_suffixes" ]; then
             should_enqueue=0
         else
-            hook_file_basename="$(basename --suffix="$current_suffix" "$hook_file")"
+            hook_file_basename="$(basename -s "$current_suffix" "$hook_file")"
             # shellcheck disable=SC2034  # We're using dynamically.
             suffixes_to_check="$higher_precedence_suffixes"
             possible_previous_suffix=''
