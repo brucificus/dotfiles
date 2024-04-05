@@ -97,7 +97,7 @@ unset shell_suffix_precedence
 
 # Sort the list.
 if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-    sorted_found_hook_files="$(echo "$found_hook_files" | sort --stable --unique)"
+    sorted_found_hook_files="$(echo "$found_hook_files" | sort -s -u)"
     unset IFS; while read -r hook_file; do
         phook_enqueue_file "$hook_file"
     done < <(echo "$sorted_found_hook_files")
