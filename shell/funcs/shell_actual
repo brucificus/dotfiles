@@ -2,5 +2,8 @@
 
 
 shell_actual() {
-    ps -p $$ -o comm=
+    if ! ps -p $$ -o comm= 2>/dev/null ; then
+        #ps command failed, try Busybox ps.
+        ps -o ppid,pid,comm | awk "index(\"$$\", \$2) {print \$NF}"
+    fi
 }
