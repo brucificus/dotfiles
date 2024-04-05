@@ -27,7 +27,7 @@ SCRIPT="${1:?}"
 
 
 pathing_exit_code=0
-SCRIPT="$(realpath --canonicalize-existing "$SCRIPT")" || pathing_exit_code=$?
+SCRIPT="$(realpath "$SCRIPT")" || pathing_exit_code=$?
 SCRIPT_O="$1"
 if [ "$pathing_exit_code" -ne 0 ]; then
     echo "[$phook_caller|$phook_mode] Pathing failed for '$SCRIPT_O', returned code '$pathing_exit_code'." >&2
