@@ -4,10 +4,10 @@
 # Home Assistant CLI
 if command_exists ha; then
     if [ -n "$BASH_VERSION" ]; then
-        source <(ha completion bash) && compdef _ha ha
+        source <(ha completion bash)
     elif [ -n "$ZSH_VERSION" ]; then
-        source <(ha completion zsh) && compdef _ha ha
+        source <(ha completion zsh)
     elif [ -n "$FISH_VERSION" ]; then
-        source <(ha completion fish) && complete -c ha -F _ha ha
+        source <(ha completion fish)
     fi
 fi
