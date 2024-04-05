@@ -23,6 +23,8 @@
     ~/.config/powershell/profile.ps1: powershell/profile.ps1
     ~/.config/powershell/Microsoft.PowerShell_profile.ps1: powershell/Microsoft.PowerShell_profile.ps1
     ~/.config/powershell/powershell/Microsoft.VSCode_profile.ps1: powershell/Microsoft.VSCode_profile.ps1
+    ~/.gnupg/gpg-agent.conf: config/gnupg/gpg-agent.conf
+    ~/.gnupg/sshcontrol: config/gnupg/sshcontrol
     ~/.pythonrc:
     ~/.zlogin: shell/zlogin
     ~/.zlogout: shell/zlogout
