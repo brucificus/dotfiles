@@ -1,10 +1,10 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 eval "$(shellspec - -c) exit 1"
-# shellcheck shell=zsh
+# shellcheck shell=bash
 
 
-script_under_test="../../funcs/top-history"
-Describe "funcs/top-history"
+script_under_test="../../funcs/top_history"
+Describe "funcs/top_history"
 
     ScriptUnderTestDir="$(realpath "$(dirname "$script_under_test")")"
     ScriptUnderTest="$(basename "$script_under_test")"
@@ -12,7 +12,7 @@ Describe "funcs/top-history"
     # (Use this from tests that are unsure if a script can even just be sourced.)
     function cd_into_ScriptUnderTestDir() {
         cd "$ScriptUnderTestDir" || return $?
-        : # TODO: 🔧 source those dependencies.
+        : # TODO: 🔧 Include those dependencies.
     }
 
     # Test(s) that the subject file doesn't have any major structural/syntax issues.
@@ -20,7 +20,7 @@ Describe "funcs/top-history"
         BeforeEach 'cd_into_ScriptUnderTestDir'
 
         Parameters
-            "top-history"
+            "top_history"
         End
 
         Example "$1"
@@ -35,25 +35,25 @@ Describe "funcs/top-history"
     End
 
     # (Use this from tests that assume the subject file can be loaded without major problems.)
-    function source_ScriptUnderTest() {
+    function Include_ScriptUnderTest() {
         set -e
         cd_into_ScriptUnderTestDir
-        source "$ScriptUnderTest" &> /dev/null
+        Include "$ScriptUnderTest"
         set +e
     }
 
     # More detailed test(s) of the subject file's functionality.
     Context "defines"
-        BeforeEach 'source_ScriptUnderTest'
+        BeforeEach 'Include_ScriptUnderTest'
 
-        Describe "function 'top-history', which"
+        Describe "function 'top_history', which"
             It "exists"
-                When call type "top-history"
+                When call type "top_history"
 
                 The status should be success
-                The output should include "$1 is a shell function"
+                The output should include "$1 is a function"
             End
-        End # Describe "function 'top-history'""
+        End # Describe "function 'top_history'""
 
     End # Context "defines"
 End

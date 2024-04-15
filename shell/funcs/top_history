@@ -5,7 +5,7 @@
 
 
 # Print the name and count of the most commonly run tools.
-function top-history() {
+function top_history() {
 	# - Make sure formatting doesn't interfer with our parsing
 	# - Use awk to count how many times the first command on each line has been called
 	# - Truncate to 10 lines
