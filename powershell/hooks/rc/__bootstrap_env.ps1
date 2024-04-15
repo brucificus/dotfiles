@@ -135,6 +135,34 @@ Set-Alias -Name psmodulepath -Value Get-EnvPSModulePathItemProcessScoped
 
 
 #
+# SHORT_HOST, SHORT_HOSTNAME
+#
+# These are used by tools to refer to the host without the domain name.
+# (xterm, screen, tmux, etc.)
+#
+if (-not $Env:SHORT_HOST -and ($Env:SHORT_HOSTNAME)) {
+    Set-EnvVar -Process -Name SHORT_HOST -Value $Env:SHORT_HOSTNAME
+} elseif (-not $Env:SHORT_HOSTNAME -and ($Env:SHORT_HOST)) {
+    Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
+} elseif (-not $Env:SHORT_HOST -and -not $Env:SHORT_HOSTNAME) {
+    if ($IsMacOS) {
+        # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
+        Set-EnvVar -Process -Name SHORT_HOST -Value $(scutil --get ComputerName 2>/dev/null) || SHORT_HOST="${HOST/.*/}"
+        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
+    } elseif (Test-Command hostname -ExecutableOnly) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value (hostname -s)
+        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
+    } elseif ($Env:HOST) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value ($Env:HOST -replace '\..*','')
+        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
+    } else {
+        Set-EnvVar -Process -Name SHORT_HOST -Value "localhost"
+        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
+    }
+}
+
+
+#
 # XDG
 #
 

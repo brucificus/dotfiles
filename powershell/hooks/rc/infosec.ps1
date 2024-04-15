@@ -42,11 +42,6 @@ try {
     }
 
     if (Test-Command keychain) {
-        # Define SHORT_HOST if not defined (%m = host name up to first .)
-        if (-not $Env:SHORT_HOST) {
-            Set-EnvVar -Process -Name SHORT_HOST -Value (hostname)
-        }
-
         function keychain-init {
             [string] $agents = $null
             [string[]] $identities = @()
@@ -67,11 +62,11 @@ try {
             # TODO: $options = zstyle -a :omz:plugins:keychain options options
 
             # start keychain...
-            keychain @options --agents $agents @identities --host $SHORT_HOST | Out-Null
+            keychain @options --agents $agents @identities --host $Env:SHORT_HOST | Out-Null
 
             # Get the filenames to store/lookup the environment from
-            _keychain_env_sh="$HOME/.keychain/${SHORT_HOST}-sh"
-            _keychain_env_sh_gpg="$HOME/.keychain/${SHORT_HOST}-sh-gpg"
+            $_keychain_env_sh="${Env:HOME}/.keychain/${Env:SHORT_HOST}-sh"
+            $_keychain_env_sh_gpg="${Env:HOME}/.keychain/${Env:SHORT_HOST}-sh-gpg"
 
             # Source environment settings.
             if (Test-Path -Path $_keychain_env_sh -ErrorAction SilentlyContinue) {
