@@ -4,7 +4,7 @@
 cd ~/.dotfiles/shell &> /dev/null || return 0
 profile_hook_exit_code=0
 PROFILE_STAGE="bash➡️logout"; export PROFILE_STAGE
-source init.sh "bash" "logout" || profile_hook_exit_code=$?
+source ./init.sh "bash" "logout" || profile_hook_exit_code=$?
 cd ~ &> /dev/null
 if [ ! $profile_hook_exit_code -eq 0 ]; then
     echo "[bash|logout] Profile hook failed, returned code '$profile_hook_exit_code'. (bash_logout)" >&2
