@@ -145,20 +145,17 @@ if (-not $Env:SHORT_HOST -and ($Env:SHORT_HOSTNAME)) {
 } elseif (-not $Env:SHORT_HOSTNAME -and ($Env:SHORT_HOST)) {
     Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
 } elseif (-not $Env:SHORT_HOST -and -not $Env:SHORT_HOSTNAME) {
-    if ($IsMacOS) {
+    if ($IsMacOS && ([string] $computerName = (scutil --get ComputerName 2>/dev/null))) {
         # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
-        Set-EnvVar -Process -Name SHORT_HOST -Value $(scutil --get ComputerName 2>/dev/null) || SHORT_HOST="${HOST/.*/}"
-        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
-    } elseif (Test-Command hostname -ExecutableOnly) {
-        Set-EnvVar -Process -Name SHORT_HOST -Value (hostname -s)
-        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
+        Set-EnvVar -Process -Name SHORT_HOST -Value $computerName
+    } elseif ((Test-Command hostname -ExecutableOnly) && ([string] $shortHostname = (hostname -s 2>/dev/null))) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value $shortHostname
     } elseif ($Env:HOST) {
         Set-EnvVar -Process -Name SHORT_HOST -Value ($Env:HOST -replace '\..*','')
-        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
     } else {
         Set-EnvVar -Process -Name SHORT_HOST -Value "localhost"
-        Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
     }
+    Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
 }
 
 
