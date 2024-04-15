@@ -28,8 +28,11 @@ function Update-Dotfiles {
     Push-Location $dotfiles_wc | Out-Null
     try {
         git pull --ff-only
-        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        ./install.ps1 -q
+        if ($LASTEXITCODE -eq 0) {
+            ./install.ps1 -q
+        } else {
+            Write-Error "Failed to update dotfiles: git pull failed."
+        }
     } finally {
         Pop-Location | Out-Null
     }
