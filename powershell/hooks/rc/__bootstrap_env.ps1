@@ -145,13 +145,28 @@ if (-not $Env:SHORT_HOST -and ($Env:SHORT_HOSTNAME)) {
 } elseif (-not $Env:SHORT_HOSTNAME -and ($Env:SHORT_HOST)) {
     Set-EnvVar -Process -Name SHORT_HOSTNAME -Value $Env:SHORT_HOST
 } elseif (-not $Env:SHORT_HOST -and -not $Env:SHORT_HOSTNAME) {
-    if ($IsMacOS && ([string] $computerName = (scutil --get ComputerName 2>/dev/null))) {
+    [string] $macosComputerName = $null
+    [string] $windowsHostnameCorrectlyCased = $null
+    [string] $hostnameShort = $null
+    if ($IsMacOS) {
         # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
-        Set-EnvVar -Process -Name SHORT_HOST -Value $computerName
-    } elseif ((Test-Command hostname -ExecutableOnly) && ([string] $shortHostname = (hostname -s 2>/dev/null))) {
-        Set-EnvVar -Process -Name SHORT_HOST -Value $shortHostname
+        $macosComputerName = (scutil --get ComputerName 2>/dev/null)
+    } elseif ($IsWindows) {
+        $windowsHostnameCorrectlyCased = (Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters).Hostname
+    } elseif (Test-Command hostname -ExecutableOnly) {
+        $hostnameShort = (hostname -s 2>/dev/null)
+    }
+
+    if ($macosComputerName) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value $macosComputerName
+    } elseif ($windowsHostnameCorrectlyCased) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value ($windowsHostnameCorrectlyCased -replace '\..*','')
+    } elseif ($hostnameShort) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value $hostnameShort
     } elseif ($Env:HOST) {
         Set-EnvVar -Process -Name SHORT_HOST -Value ($Env:HOST -replace '\..*','')
+    } elseif ($Env:COMPUTERNAME) {
+        Set-EnvVar -Process -Name SHORT_HOST -Value ($Env:COMPUTERNAME -replace '\..*','')
     } else {
         Set-EnvVar -Process -Name SHORT_HOST -Value "localhost"
     }
