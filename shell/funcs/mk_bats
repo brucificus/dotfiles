@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 
+if [[ ${BASH_VERSINFO[0]} -lt 5 ]]; then
+	# The `done < <(…)` construct requires Bash 5.
+    return 0
+fi
 function mk_bats() {
     # set -e
 
