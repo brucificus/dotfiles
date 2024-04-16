@@ -1,6 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
 
 install_dir=""
+themes_dir=""
+executable=""
 
 error() {
     printf "\x1b[31m$1\e[0m\n"
@@ -17,29 +20,32 @@ warn() {
 
 help() {
     # Display Help
-    echo "Installs Oh My Posh"
+    echo "Install script for Oh My Posh"
     echo
-    echo "Syntax: install.sh [-h|d]"
-    echo "options:"
-    echo "h     Print this Help."
-    echo "d     Specify the installation directory. Defaults to /usr/local/bin or the directory where oh-my-posh is installed."
+    echo "Syntax: install.sh [-h|d|t]"
+    echo "\noptions:"
+    echo "-h     Print this help."
+    echo "-d     Specify the installation directory. Defaults to /usr/local/bin or the directory where oh-my-posh is installed."
+    echo "-t     Specify the themes installation directory. Defaults to the oh-my-posh cache directory."
     echo
 }
 
-while getopts ":hd:" option; do
+while getopts ":hd:t:" option; do
    case $option in
       h) # display Help
          help
          exit;;
       d) # Enter a name
-         install_dir=$OPTARG;;
+         install_dir=${OPTARG};;
+      t) # themes directory
+         themes_dir=${OPTARG};;
      \?) # Invalid option
          echo "Invalid option command line option. Use -h for help."
          exit 1
    esac
 done
 
-SUPPORTED_TARGETS="linux-amd64 linux-arm linux-arm64 darwin-amd64 darwin-arm64"
+SUPPORTED_TARGETS="linux-386 linux-amd64 linux-arm linux-arm64 darwin-amd64 darwin-arm64 freebsd-386 freebsd-amd64 freebsd-arm freebsd-arm64"
 
 validate_dependency() {
     if [ -z "$2" ]; then
@@ -47,17 +53,26 @@ validate_dependency() {
             error "$1 is required to install Oh My Posh. Please install $1 and try again.\n"
         fi
     else
-        if ! command -v $1 && ! command -v $2 >/dev/null; then
-            error "$1 or $2 is required to install Oh My Posh. Please install $1 or $2 and try again.\n"
+        if ! (command -v $1 >/dev/null) || (command -v $2 >/dev/null); then
+            error "Either $1 or $2 is required to install Oh My Posh. Please install one and try again.\n"
         fi
     fi
+
 }
 
 validate_dependencies() {
     validate_dependency curl
-    validate_dependency unzip 7z
+    validate_dependency unzip 7zip
     validate_dependency realpath
     validate_dependency dirname
+}
+
+unzip_exec() {
+    if command -v 7z >/dev/null; then
+        7z x $1 -aoa -o$2 > /dev/null
+    else
+        unzip -o -q $1 -d $2 > /dev/null
+    fi
 }
 
 set_install_directory() {
@@ -87,7 +102,7 @@ validate_install_directory() {
 
     # check if we can write to the install directory
     if [ ! -w $install_dir ]; then
-        error "Cannot write to ${install_dir}. Please run the script with sudo and try again:\n  sudo ./install.sh"
+        error "Cannot write to ${install_dir}. Please set a different directory and try again: \n  curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {directory}"
     fi
 
     # check if the directory is in the PATH
@@ -106,31 +121,65 @@ validate_install_directory() {
     fi
 }
 
-do_unzip() {
-    file=$1
-    dir=$2
-    if [ -f "$file" ]; then
-        unzip_err=""
-        unzip_exitcode=0
-        if command -v 7z >/dev/null; then
-            unzip_err="$(7z x "$file" -o"$dir" 2>&1 >/dev/null)"
-            unzip_exitcode=$?
-            if [ -n "$unzip_err" ]; then
-                error "Error using 7z to extract '$file': $unzip_err"
-            elif [ $unzip_exitcode -ne 0 ]; then
-                error "Error using 7z to extract '$file', exited with code $unzip_exitcode."
-            fi
-        else
-            unzip_err="$(unzip -o -q "$file" -d "$dir" 2>&1 >/dev/null)"
-            unzip_exitcode=$?
-            if [ -n "$unzip_err" ]; then
-                error "Error using unzip to extract '$file': $unzip_err"
-            elif [ $unzip_exitcode -ne 0 ]; then
-                error "Error using unzip to extract '$file', exited with code $unzip_exitcode."
-            fi
+validate_themes_directory() {
+    if [ ! -d "$install_dir" ]; then
+        error "Directory ${install_dir} does not exist, set a different directory and try again."
+    fi
+
+    # check if we can write to the install directory
+    if [ ! -w $install_dir ]; then
+        error "Cannot write to ${install_dir}. Please set a different directory and try again: \n  curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {directory}"
+    fi
+
+    # check if the directory is in the PATH
+    good=$(
+        IFS=:
+        for path in $PATH; do
+        if [ "${path%/}" = "${install_dir}" ]; then
+            printf 1
+            break
         fi
+        done
+    )
+
+    if [ "${good}" != "1" ]; then
+        warn "Installation directory ${install_dir} is not in your \$PATH"
+    fi
+}
+
+install_themes() {
+    if [ -n "$themes_dir" ]; then
+        # expand directory
+        themes_dir="${themes_dir/#\~/$HOME}"
+    fi
+
+    cache_dir=$($executable cache path)
+
+    # validate if the user set the path to the themes directory
+    if [ -z "$themes_dir" ]; then
+        themes_dir="${cache_dir}/themes"
+    fi
+
+    # Validate if the themes directory exists
+    if [ ! -d "$themes_dir" ]; then
+        mkdir -p $themes_dir
+    fi
+
+    info "🎨 Installing oh-my-posh themes in ${themes_dir}\n"
+
+    zip_file="${cache_dir}/themes.zip"
+
+    url="https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip"
+
+    http_response=$(curl -s -f -L $url -o $zip_file -w "%{http_code}")
+
+    if [ $http_response == "200" ] && [ -f $zip_file ]; then
+        unzip_exec $zip_file $themes_dir
+        # make sure the files are readable and writable for all users
+        chmod a+rwX ${themes_dir}/*.omp.*
+        rm $zip_file
     else
-        error "File does not exist: $file"
+        warn "Unable to download themes at ${url}\nPlease validate your curl, connection and/or proxy settings"
     fi
 }
 
@@ -160,25 +209,22 @@ install() {
 
     info "⬇️  Downloading oh-my-posh from ${url}"
 
-    curl -s -L https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-${target} -o $executable
+    http_response=$(curl -s -f -L $url -o $executable -w "%{http_code}")
+
+    if [ $http_response != "200" ] || [ ! -f $executable ]; then
+        error "Unable to download executable at ${url}\nPlease validate your curl, connection and/or proxy settings"
+    fi
+
     chmod +x $executable
 
-    # install themes in cache
-    cache_dir=$(oh-my-posh cache path)
-
-    info "🎨 Installing oh-my-posh themes in ${cache_dir}/themes\n"
-
-    theme_dir="${cache_dir}/themes"
-    mkdir -p $theme_dir
-    curl -s -L https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -o ${cache_dir}/themes.zip
-    do_unzip "${cache_dir}/themes.zip" "$theme_dir"
-    chmod u+rw ${theme_dir}/*.omp.*
-    rm "${cache_dir}/themes.zip"
+    install_themes
 
     info "🚀 Installation complete.\n\nYou can follow the instructions at https://ohmyposh.dev/docs/installation/prompt"
-    info "to setup your shell to use oh-my-posh.\n"
-    info "If you want to use a built-in theme, you can find them in the ${theme_dir} directory:"
-    info "  oh-my-posh init {shell} --config ${theme_dir}/{theme}.omp.json\n"
+    info "to setup your shell to use oh-my-posh."
+    if [ $http_response == "200" ]; then
+        info "\nIf you want to use a built-in theme, you can find them in the ${theme_dir} directory:"
+        info "  oh-my-posh init {shell} --config ${theme_dir}/{theme}.omp.json\n"
+    fi
 }
 
 detect_arch() {
@@ -189,6 +235,7 @@ detect_arch() {
     armv*) arch="arm" ;;
     arm64) arch="arm64" ;;
     aarch64) arch="arm64" ;;
+    i686) arch="386" ;;
   esac
 
   if [ "${arch}" = "arm64" ] && [ "$(getconf LONG_BIT)" -eq 32 ]; then
