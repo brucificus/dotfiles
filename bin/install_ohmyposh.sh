@@ -102,7 +102,7 @@ validate_install_directory() {
 
     # check if we can write to the install directory
     if [ ! -w $install_dir ]; then
-        error "Cannot write to ${install_dir}. Please set a different directory and try again: \n  curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {directory}"
+        error "Cannot write to ${install_dir}. Please set a different directory and try again: \n  curl -s https://raw.githubusercontent.com/brucificus/dotfiles/main/bin/install_ohmyposh.sh | bash -s -- -d {directory}"
     fi
 
     # check if the directory is in the PATH
@@ -128,7 +128,7 @@ validate_themes_directory() {
 
     # check if we can write to the install directory
     if [ ! -w $install_dir ]; then
-        error "Cannot write to ${install_dir}. Please set a different directory and try again: \n  curl -s https://ohmyposh.dev/install.sh | bash -s -- -d {directory}"
+        error "Cannot write to ${install_dir}. Please set a different directory and try again: \n  curl -s https://raw.githubusercontent.com/brucificus/dotfiles/main/bin/install_ohmyposh.sh | bash -s -- -d {directory}"
     fi
 
     # check if the directory is in the PATH
