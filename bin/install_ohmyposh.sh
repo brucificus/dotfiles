@@ -62,7 +62,7 @@ validate_dependency() {
 
 validate_dependencies() {
     validate_dependency curl
-    validate_dependency unzip 7zip
+    validate_dependency 7z unzip
     validate_dependency realpath
     validate_dependency dirname
 }
