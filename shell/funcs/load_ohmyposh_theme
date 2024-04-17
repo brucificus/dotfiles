@@ -7,9 +7,10 @@ function load_ohmyposh_theme() {
 
     if command_exists "oh-my-posh"; then
         poshshell="$(oh-my-posh get shell)"
-        if [ "${poshshell}" == "sh" ]; then
+        if [ "${poshshell}" = "sh" ]; then
             poshshell="bash"
         fi
         eval "$(oh-my-posh init "${poshshell}" --config "${1}")"
+        unset poshshell
     fi
 }
