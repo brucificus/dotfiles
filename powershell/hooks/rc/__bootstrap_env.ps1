@@ -150,11 +150,11 @@ if (-not $Env:SHORT_HOST -and ($Env:SHORT_HOSTNAME)) {
     [string] $hostnameShort = $null
     if ($IsMacOS) {
         # macOS's $HOST changes with dhcp, etc. Use ComputerName if possible.
-        $macosComputerName = (scutil --get ComputerName 2>/dev/null)
+        $macosComputerName = (scutil --get ComputerName 2> $null)
     } elseif ($IsWindows) {
         $windowsHostnameCorrectlyCased = (Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters).Hostname
     } elseif (Test-Command hostname -ExecutableOnly) {
-        $hostnameShort = (hostname -s 2>/dev/null)
+        $hostnameShort = (hostname -s 2> $null)
     }
 
     if ($macosComputerName) {

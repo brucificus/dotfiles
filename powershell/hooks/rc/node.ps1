@@ -40,7 +40,7 @@ if (Test-Command node) {
 
             if (-not $found_nodeenv) {
                 if (Test-Command brew) {
-                    $dir = $(brew --prefix nodenv 2>/dev/null)
+                    $dir = $(brew --prefix nodenv 2> $null)
                     if (Test-Path $dir -ErrorAction SilentlyContinue) {
                         Add-EnvPathItem -Process -Value "${dir}${ds}bin"
                         $found_nodeenv = $true
