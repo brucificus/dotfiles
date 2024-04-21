@@ -25,7 +25,7 @@ try {
 
     if (-not ($Env:SSH_AUTH_SOCK) -and $IsWindows) {
         [string] $gpgAgentConfPath = "$Env:APPDATA\gnupg\gpg-agent.conf"
-        if (Test-Path $gpgAgentConfPath) {
+        if (Test-Path $gpgAgentConfPath -ErrorAction SilentlyContinue) {
             function Get-GpgAgentConf {
                 Get-Content -LiteralPath $gpgAgentConfPath | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_.Trim() }
             }
