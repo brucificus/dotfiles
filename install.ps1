@@ -4,17 +4,31 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
-if (-not (Test-LinkCapability)) {
-    if ($IsWindows) {
-        Write-Error "This script requires filesystem link capabilities. Please run this script in an elevated PowerShell session, or enable Developer Mode in Windows Settings."
-    } else {
-        Write-Error "This script requires filesystem link capabilities. Please run this script in an elevated PowerShell session."
-    }
-    return
+function Write-TerminatingError([string] $message, [object] $targetObject = $null) {
+    $errorRecord = [System.Management.Automation.ErrorRecord]::new(
+        [System.Exception]::new($message),
+        'BaselineDotfilesError',
+        'OperationStopped',
+        $targetObject
+    )
+    Write-Error $errorRecord
+    $PSCmdlet.ThrowTerminatingError($errorRecord)
 }
 
-Set-Location $PSScriptRoot
+if (-not (Test-LinkCapability)) {
+    if ($IsWindows) {
+        Write-TerminatingError "🖇️ This script requires filesystem link capabilities. Please run this script in an elevated PowerShell session, or enable Developer Mode in Windows Settings."
+    } else {
+        Write-TerminatingError "🖇️ This script requires filesystem link capabilities. Please run this script in an elevated PowerShell session."
+    }
+}
 
+Push-Location $PSScriptRoot
+trap {
+    Pop-Location
+}
+
+# Make sure dotbot is up-to-date.
 $dotbot_dir = "dotbot"
 git submodule update --quiet --init --force --checkout --depth 1 --recursive $dotbot_dir
 
@@ -36,15 +50,17 @@ function run_dotbot {
         }
     }
     if (-not $python_bin) {
-        throw "Cannot find Python."
+        Write-TerminatingError "💥 Cannot find Python."
     }
-    $ds = [System.IO.Path]::DirectorySeparatorChar
+    [string] $ds = [System.IO.Path]::DirectorySeparatorChar
     $dotbot_bin = "$PSScriptRoot${ds}${dotbot_dir}${ds}bin${ds}dotbot"
     &$python $dotbot_bin -d $PSScriptRoot -c $config_file
-    Remove-Variable -Name ds
 }
 
+# Execute dotbot.
 run_dotbot "install.conf.yaml"
-if ($IsWindows) {
+if ($IsWindows -and (Test-Path "install.win.conf.yaml" -ErrorAction SilentlyContinue)) {
     run_dotbot "install.win.conf.yaml"
+} elseif ($IsLinux -and $Env:WSL_DISTRO_NAME -and (Test-Path "install.wsl.conf.yaml" -ErrorAction SilentlyContinue)) {
+    run_dotbot "install.wsl.conf.yaml"
 }
