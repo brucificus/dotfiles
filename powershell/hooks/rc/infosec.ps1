@@ -19,40 +19,57 @@ try {
         if (-not (Test-Path $Env:SSH_AUTH_SOCK -ErrorAction SilentlyContinue)) {
             Write-Information "SSH_AUTH_SOCK points to non-existent file '$Env:SSH_AUTH_SOCK', removing it."
             Remove-EnvVar -Process -Name SSH_AUTH_SOCK
-            Remove-EnvVar -Process -Name SSH_AGENT_PID -ErrorAction SilentlyContinue
         }
     }
 
-    if (-not ($Env:SSH_AUTH_SOCK) -and $IsWindows) {
-        [string] $gpgAgentConfPath = "$Env:APPDATA\gnupg\gpg-agent.conf"
-        if (Test-Path $gpgAgentConfPath -ErrorAction SilentlyContinue) {
-            function Get-GpgAgentConf {
-                Get-Content -LiteralPath $gpgAgentConfPath | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_.Trim() }
-            }
-            [string[]] $gpgAgentConf = Get-GpgAgentConf
-            [bool] $gpgAgentConfEnableWin32OpensshSupport = 'enable-win32-openssh-support' -in $gpgAgentConf
-            [bool] $gpgAgentConfEnablePuttySupport = 'enable-putty-support' -in $gpgAgentConf
-            [bool] $gpgAgentConfEnableSshSupport = 'enable-ssh-support' -in $gpgAgentConf
-            if (-not $gpgAgentConfEnableSshSupport) {
-                append_profile_suggestions "# TODO: 🔑 Add 'enable-ssh-support' to '$gpgAgentConfPath'. See: https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html#option-_002d_002denable_002dssh_002dsupport."
-            }
-            if (-not $gpgAgentConfEnableWin32OpensshSupport) {
-                append_profile_suggestions "# TODO: 🔑 Add 'enable-win32-openssh-support' to '$gpgAgentConfPath'. See: https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html#option-_002d_002denable_002dwin32_002dopenssh_002dsupport."
-            }
-            if (-not $gpgAgentConfEnablePuttySupport) {
-                append_profile_suggestions "# TODO: 🔑 Add 'enable-putty-support' to '$gpgAgentConfPath'. See: https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html#option-_002d_002denable_002dputty_002dsupport."
-            }
-            if ($gpgAgentConfEnableWin32OpensshSupport -and $gpgAgentConfEnablePuttySupport -and $gpgAgentConfEnableSshSupport) {
-                # See https://dev.gnupg.org/T3883#183622
-                [string] $windowsGpgOpenSshAgentPipe = "\\.\pipe\openssh-ssh-agent"
-                if (Test-Path $windowsGpgOpenSshAgentPipe -ErrorAction SilentlyContinue) {
-                    Write-Information "GPG is configured to support OpenSSH on Windows, setting SSH_AUTH_SOCK to '$windowsGpgOpenSshAgentPipe'."
-                    Set-EnvVar -Process -Name SSH_AUTH_SOCK -Value $windowsGpgOpenSshAgentPipe
+    if (-not $Env:SSH_AUTH_SOCK -and $Env:SSH_AGENT_PID) {
+        Remove-EnvVar -Process -Name SSH_AGENT_PID
+    }
 
-                    append_profile_suggestions "setx /U SSH_AUTH_SOCK `"$windowsGpgOpenSshAgentPipe`" # TODO: 🔧 Set environment variable 'SSH_AUTH_SOCK' at *user* scope to path of the named pipe of the SSH agent."
-                } else {
-                    append_profile_suggestions "# TODO: 🔑 Ensure 'gpg-connect-agent' is set to start automatically."
-                }
+    # See https://dev.gnupg.org/T3883#183622
+    [string] $gpgAgentConfPath = $null
+    if ($IsWindows) {
+        $gpgAgentConfPath = "${Env:APPDATA}\gnupg\gpg-agent.conf"
+    } else {
+        $gpgAgentConfPath = "${Env:HOME}/.gnupg/gpg-agent.conf"
+    }
+    [bool] $gpgAgentConfExists = Test-Path $gpgAgentConfPath -ErrorAction SilentlyContinue
+    [Nullable[bool]] $gpgAgentConfEnableWin32OpensshSupport = $null
+    [Nullable[bool]] $gpgAgentConfEnablePuttySupport = $null
+    [Nullable[bool]] $gpgAgentConfEnableSshSupport = $null
+    if ($gpgAgentConfExists) {
+        [string[]] $gpgAgentConf = @(Get-Content -LiteralPath $gpgAgentConfPath | Where-Object { $_ -notmatch '^\s*#' } | ForEach-Object { $_.Trim() })
+        $gpgAgentConfEnableWin32OpensshSupport = 'enable-win32-openssh-support' -in $gpgAgentConf
+        $gpgAgentConfEnablePuttySupport = 'enable-putty-support' -in $gpgAgentConf
+        $gpgAgentConfEnableSshSupport = 'enable-ssh-support' -in $gpgAgentConf
+    }
+    if ($gpgAgentConfExists) {
+        if (-not $gpgAgentConfEnableSshSupport) {
+            append_profile_suggestions "# TODO: 🔧 Add 'enable-ssh-support' to '$gpgAgentConfPath'. See: https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html#option-_002d_002denable_002dssh_002dsupport."
+        }
+        if (-not $gpgAgentConfEnableWin32OpensshSupport -and $IsWindows) {
+            append_profile_suggestions "# TODO: 🔧 Add 'enable-win32-openssh-support' to '$gpgAgentConfPath'. See: https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html#option-_002d_002denable_002dwin32_002dopenssh_002dsupport."
+        } elseif ($gpgAgentConfEnableWin32OpensshSupport -and (-not $IsWindows)) {
+            append_profile_suggestions "# TODO: 🔥 Remove 'enable-win32-openssh-support' from '$gpgAgentConfPath' - it is only supported on Windows."
+        }
+        if ($gpgAgentConfEnablePuttySupport -and $IsWindows) {
+            append_profile_suggestions "# TODO: 🔥 Remove 'enable-putty-support' from '$gpgAgentConfPath' - it conflicts with other programs acting as Pageant-style agents."
+        } elseif ($gpgAgentConfEnablePuttySupport -and (-not $IsWindows)) {
+            append_profile_suggestions "# TODO: 🔥 Remove 'enable-putty-support' from '$gpgAgentConfPath' - it is only supported on Windows."
+        }
+    }
+
+    if ((-not $Env:SSH_AUTH_SOCK) -and $IsWindows) {
+        [string] $defaultWindowsGpgOpenSshAgentPipePath = "\\.\pipe\openssh-ssh-agent"
+        [bool] $defaultWindowsGpgOpenSshAgentPipeExists = Test-Path $defaultWindowsGpgOpenSshAgentPipePath -ErrorAction SilentlyContinue
+        if ($gpgAgentConfEnableSshSupport -and $gpgAgentConfEnableWin32OpensshSupport) {
+            if ($defaultWindowsGpgOpenSshAgentPipeExists) {
+                Write-Information "🔒 GPG is configured to support OpenSSH on Windows, setting SSH_AUTH_SOCK to '$defaultWindowsGpgOpenSshAgentPipePath'."
+                Set-EnvVar -Process -Name SSH_AUTH_SOCK -Value $defaultWindowsGpgOpenSshAgentPipePath
+
+                append_profile_suggestions "setx /U SSH_AUTH_SOCK `"$defaultWindowsGpgOpenSshAgentPipePath`" # TODO: 🔧 Set environment variable 'SSH_AUTH_SOCK' at *user* scope to path of the named pipe of the SSH agent."
+            } else {
+                append_profile_suggestions "# TODO: 🔧 Ensure 'gpg-connect-agent' is running and configured correctly."
             }
         }
     }
@@ -62,37 +79,18 @@ try {
     # }
 
     if (-not ($Env:SSH_AUTH_SOCK)) {
-        if (Test-Command gpgconf) {
-            function Get-GpgConfComponent {
-                gpgconf --list-components | ConvertFrom-Csv -Delimiter ":" -Header name,description,path
-                # TODO: Unescape elements.
-            }
+        if ($gpgAgentConfEnableSshSupport -and (Test-Command gpgconf -ErrorAction SilentlyContinue) -and (-not $IsWindows)) {
+            # We don't do this check on Windows because Windows OpenSSH cannot understand the pipe traffic when -not $gpgAgentConfEnableWin32OpensshSupport.
 
-            function Get-GpgConfComponentOption {
-                param(
-                    [ValidateScript({ $_ -in (Get-GpgConfComponent | Select-Object -ExpandProperty name) }, ErrorMessage="Invalid component. See: Get-GpgConfComponent")]
-                    [string] $Component
-                )
-                gpgconf --list-options $Component | ConvertFrom-Csv -Delimiter ":" -Header name,flags,level,description,type,type-alt,argname,default,argdef,value
-                # TODO: Unescape elements.
-            }
-
-            # If enable-ssh-support is set, fix ssh agent integration
-            [PSObject] $enableSshSupportOption = (Get-GpgConfComponentOption -Component 'gpg-agent' | Where-Object { $_.name -eq "enable-ssh-support" })
-
-            if ($enableSshSupportOption.value -eq 1) {
-                Remove-EnvVar -Process -Name SSH_AGENT_PID -ErrorAction SilentlyContinue
-
-                # The test involving the gnupg_SSH_AUTH_SOCK_by variable is for the case where
-                # the agent is started as gpg-agent --daemon /bin/sh, in which case the shell
-                # inherits the SSH_AUTH_SOCK variable from the parent, gpg-agent.
-                # See: https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=agent/gpg-agent.c;hb=7bca3be65e510eda40572327b87922834ebe07eb#l1307
-                if ($Env:gnupg_SSH_AUTH_SOCK_by -ne $PID) {
-                    [string] $gpgConfAgentSshSocket = (gpgconf --list-dirs agent-ssh-socket)
-                    if ($gpgConfAgentSshSocket -and (Test-Path $gpgConfAgentSshSocket -ErrorAction SilentlyContinue)) {
-                        Write-Information "GPG is configured to support SSH, setting SSH_AUTH_SOCK to '$gpgConfAgentSshSocket'."
-                        Set-EnvVar -Process -Name SSH_AUTH_SOCK -Value $gpgConfAgentSshSocket
-                    }
+            # The test involving the gnupg_SSH_AUTH_SOCK_by variable is for the case where
+            # the agent is started as gpg-agent --daemon /bin/sh, in which case the shell
+            # inherits the SSH_AUTH_SOCK variable from the parent, gpg-agent.
+            # See: https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=agent/gpg-agent.c;hb=7bca3be65e510eda40572327b87922834ebe07eb#l1307
+            if ($Env:gnupg_SSH_AUTH_SOCK_by -ne $PID) {
+                [string] $gpgConfAgentSshSocket = (gpgconf --list-dirs agent-ssh-socket)
+                if ($gpgConfAgentSshSocket -and (Test-Path $gpgConfAgentSshSocket -ErrorAction SilentlyContinue)) {
+                    Write-Information "🔒 GPG is configured to support SSH, setting SSH_AUTH_SOCK to '$gpgConfAgentSshSocket'."
+                    Set-EnvVar -Process -Name SSH_AUTH_SOCK -Value $gpgConfAgentSshSocket
                 }
             }
         }
