@@ -81,7 +81,6 @@
 
 [merge]
 	defaultToUpstream = true
-	tool = vimdiff
 
 [pull]
 	ff = only
