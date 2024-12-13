@@ -92,8 +92,40 @@ if [ -f ~/miniconda3/bin/activate ] && ! command_exists conda; then
     source ~/miniconda3/bin/activate
 fi
 
+CONDA="$HOME/miniconda3/bin/conda"
+if [ -f "$CONDA" ] && ! command_exists conda; then
+    path
+fi
+
+
 if command_exists conda; then
-    conda init --all
+    if [ -n "$BASH_VERSION" ]; then
+        # >>> conda initialize >>>
+        # !! Contents within this block are managed by 'conda init' !!
+        __conda_setup="$('conda' 'shell.bash' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            eval "$__conda_setup"
+        else
+            if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+                . "$HOME/miniconda3/etc/profile.d/conda.sh"
+            fi
+        fi
+        unset __conda_setup
+        # <<< conda initialize <<<
+    elif [ -n "$ZSH_VERSION" ]; then
+        # >>> conda initialize >>>
+        # !! Contents within this block are managed by 'conda init' !!
+        __conda_setup="$('/home/bruce/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            eval "$__conda_setup"
+        else
+            if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+                . "$HOME/miniconda3/etc/profile.d/conda.sh"
+            fi
+        fi
+        unset __conda_setup
+        # <<< conda initialize <<<
+    fi
 else
     append_profile_suggestions "# TODO: 🐍 Install \`conda\`. Run ~/.dotfiles/bin/install_miniconda3.sh"
 fi
