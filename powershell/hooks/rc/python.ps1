@@ -39,10 +39,17 @@ try {
         append_profile_suggestions "# TODO: 🐍 Install 'pyenv' See: https://github.com/pyenv/pyenv#installation."
     }
 
-    if (Test-Command conda) {
+    # TODO: Fix: spuriously spits out `False` at the beginning of each newly printed prompt.
+    # if (-not (Test-Command conda) -and (Test-Path "${HOME}${ds}miniconda3${ds}shell${ds}condabin${ds}conda-hook.ps1" -ErrorAction SilentlyContinue)) {
+    #     phook_enqueue_file "${HOME}${ds}miniconda3${ds}shell${ds}condabin${ds}conda-hook.ps1"
+    # } else {
+    #     append_profile_suggestions "# TODO: 🐍 Install 'conda'. Run: ~/.dotfiles/bin/Install-Miniconda3.ps1"
+    # }
+
+    if (Test-Command uv) {
         # Intentionally left blank.
     } else {
-        append_profile_suggestions "# TODO: 🐍 Install 'conda'. See: https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html."
+        append_profile_suggestions "# TODO: 🐍 Install 'uv'. Run: ~/.dotfiles/bin/Install-uv.ps1"
     }
 
     if (Test-Command pylint) {

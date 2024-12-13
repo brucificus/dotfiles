@@ -87,14 +87,21 @@ else
     append_profile_suggestions "# TODO: 🐍 Install \`pyenv\` See: https://github.com/pyenv/pyenv#installation."
 fi
 
+# If ~/miniconda3/bin/activate exists and `conda` is not in the PATH, source it.
+if [ -f ~/miniconda3/bin/activate ] && ! command_exists conda; then
+    source ~/miniconda3/bin/activate
+fi
+
 if command_exists conda; then
-    if [ -n "$BASH_VERSION" ]; then
-        source "$BASHIT_COMPLETIONS_AVAILABLE"/conda.completion.bash
-    elif [ -n "$ZSH_VERSION" ]; then
-        : # 🙁
-    fi
+    conda init --all
 else
-    append_profile_suggestions "# TODO: 🐍 Install \`conda\`. See: https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html."
+    append_profile_suggestions "# TODO: 🐍 Install \`conda\`. Run ~/.dotfiles/bin/install_miniconda3.sh"
+fi
+
+if command_exists uv; then
+    : # 😊
+else
+    append_profile_suggestions "# TODO: 🐍 Install \`uv\`. Run: ~/.dotfiles/bin/install_uv.sh"
 fi
 
 if command_exists pylint; then
