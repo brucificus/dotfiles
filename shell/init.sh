@@ -49,6 +49,11 @@ if [ -n "$ZSH_VERSION" ]; then
     autoload -Uz "$phook_dir/vendor/zsh-custom/plugins/zsh-defer/zsh-defer"
 fi
 
+# Our "hooks" structure relies heavily on files being sourced in a predictable order, most notably requiring that
+# underscore-prefixed files be sourced *before* their non-underscored siblings. To ensure this, we set `LC_COLLATE`
+# to "C" to ensure that the shell's sorting order is predictable.
+export LC_COLLATE=C
+
 set -- "$phook_dir/funcs"
 . "./funcs/._index" || _phook_init_final
 
