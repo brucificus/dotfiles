@@ -1,12 +1,17 @@
 #!/usr/bin/env zsh
 
 
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"; export DOTFILES;
+_OLD_PWD="$PWD"
+cd "$DOTFILES/shell" &> /dev/null || return 0
+
 if [ -z "$PROFILE_STAGE" ] || [[ ! "$PROFILE_STAGE" =~ ^zsh.* ]]; then
     export PROFILE_STAGE
     PROFILE_STAGE="zsh➡️env"; profile_hook_exit_code=0
     source init.sh "zsh" "env" || profile_hook_exit_code=$?
     if [ "$profile_hook_exit_code" -ne 0 ]; then
-        cd ~ &> /dev/null
+        cd "$_OLD_PWD" &> /dev/null
+        unset OLD_PWD
         echo "[zsh|env] Profile hook failed, returned code '$profile_hook_exit_code'. (zprofile)" >&2
         unset profile_hook_exit_code
         PROFILE_STAGE="zsh@env❌"
@@ -20,7 +25,8 @@ if [ "$PROFILE_STAGE" = "zsh@env✅" ]; then
     PROFILE_STAGE="zsh➡️login"; profile_hook_exit_code=0
     source init.sh "zsh" "login" || profile_hook_exit_code=$?
     if [ "$profile_hook_exit_code" -ne 0 ]; then
-        cd ~ &> /dev/null
+        cd "$_OLD_PWD" &> /dev/null
+        unset OLD_PWD
         echo "[zsh|login] Profile hook failed, returned code '$profile_hook_exit_code'. (zprofile)" >&2
         unset profile_hook_exit_code
         PROFILE_STAGE="zsh@login❌"
@@ -30,4 +36,5 @@ if [ "$PROFILE_STAGE" = "zsh@env✅" ]; then
     fi
 fi
 
-cd ~ &> /dev/null
+cd "$_OLD_PWD" &> /dev/null
+unset OLD_PWD

@@ -34,6 +34,15 @@ if (-not (Get-Variable -Name IsWSL -ErrorAction SilentlyContinue)) {
 
 
 #
+# PATH
+#
+
+# For user-specific executable files.
+# FYI: We rely on our Dotbot configuration to create symlinks for files from "<this repo>/bin" into "$HOME/.local/bin".
+Add-EnvPathItem -Process -Value "$HOME${ds}.local${ds}bin" -Prepend  # This is a notable location in the XDG standard, it just doesn't have a dedicated environment variable name in that spec.
+
+
+#
 # TEMP
 #
 
@@ -46,7 +55,7 @@ if (-not $Env:TEMP) {
 # WINDOWS_* (WSL only)
 #
 
-if ($IsWSL) {
+if ($IsWSL -and (-not (Get-EnvVar -Process -Name WINDOWS_Path -Value -ErrorAction SilentlyContinue))) {
     # Let's grab some helpful variables.
     Set-EnvVar -Process -Name WINDOWS_USERNAME -Value (cmd.exe /c echo "%USERNAME%" 2> $null).Trim()
     Set-EnvVar -Process -Name WINDOWS_USERPROFILE -Value (wslpath -u (cmd.exe /c echo "%USERPROFILE%" 2> $null).Trim())
@@ -59,47 +68,39 @@ if ($IsWSL) {
 
     Set-EnvVar -Process -Name WINDOWS_Path -Value (cmd.exe /c echo "%Path%" 2> $null).Trim()
     Set-EnvVar -Process -Name WINDOWS_Path -Value (@(@($Env:WINDOWS_Path -split ";") | ForEach-Object { wslpath -u $_ }) -join [System.IO.Path]::PathSeparator)
-}
 
-
-#
-# PATH
-#
-
-Add-EnvPathItem -Process -Value "$HOME${ds}.dotfiles${ds}bin" -Prepend
-Add-EnvPathItem -Process -Value "$HOME${ds}.local${ds}bin" -Prepend  # This is an XDG default, actually. (It just doesn't have a dedicated variable name.)
-
-# Clear Windows-isms from the PATH.
-# This prevents us from accidentally running the Windows versions of certain programs.
-# This also *massively* speeds up command resolution in WSL.
-if ($IsWSL) {
-    [string[]] $prefixesOfPathsToRemove = @(
-        $Env:WINDOWS_ProgramData,
-        $Env:WINDOWS_ProgramFiles,
-        $Env:WINDOWS_ProgramFiles_x86,
-        $Env:WINDOWS_SystemRoot,
-        $Env:WINDOWS_LOCALAPPDATA,
-        $Env:WINDOWS_ProgramW6432,
-        "${Env:WINDOWS_USERPROFILE}/scoop",
-        "${Env:WINDOWS_USERPROFILE}/.dotnet"
-    ) | Select-Object -Unique
-    [string[]] $allowList = @(
-        "*Microsoft VS Code*"
-    )
-    Get-EnvPathItem -Process | ForEach-Object {
-        foreach ($prefix in $prefixesOfPathsToRemove) {
-            if ($_.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) {
-                [bool] $isAllowed = $false
-                foreach ($allow in $allowList) {
-                    if ($_ -like $allow) {
-                        $isAllowed = $true
-                        break
+    # Clear Windows-isms from the PATH.
+    # This prevents us from accidentally running the Windows versions of certain programs.
+    # This also *massively* speeds up command resolution in WSL.
+    if ($IsWSL) {
+        [string[]] $prefixesOfPathsToRemove = @(
+            $Env:WINDOWS_ProgramData,
+            $Env:WINDOWS_ProgramFiles,
+            $Env:WINDOWS_ProgramFiles_x86,
+            $Env:WINDOWS_SystemRoot,
+            $Env:WINDOWS_LOCALAPPDATA,
+            $Env:WINDOWS_ProgramW6432,
+            "${Env:WINDOWS_USERPROFILE}/scoop",
+            "${Env:WINDOWS_USERPROFILE}/.dotnet"
+        ) | Select-Object -Unique
+        [string[]] $allowList = @(
+            "*Microsoft VS Code*"
+        )
+        Get-EnvPathItem -Process | ForEach-Object {
+            foreach ($prefix in $prefixesOfPathsToRemove) {
+                if ($_.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+                    [bool] $isAllowed = $false
+                    foreach ($allow in $allowList) {
+                        if ($_ -like $allow) {
+                            $isAllowed = $true
+                            break
+                        }
                     }
+                    if (-not $isAllowed) {
+                        Remove-EnvPathItem -Process -Value $_
+                    }
+                    break
                 }
-                if (-not $isAllowed) {
-                    Remove-EnvPathItem -Process -Value $_
-                }
-                break
             }
         }
     }

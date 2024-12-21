@@ -16,9 +16,9 @@ if command_exists convert; then  # from ImageMagick.
     if [ -n "$BASH_VERSION" ]; then
         function catimg() {
             if [[ -x "$(which convert)" ]]; then
-                ~/.dotfiles/shell/vendor/oh-my-zsh/plugins/catimg/catimg.sh "$@"
+                "$DOTFILES/shell/vendor/oh-my-zsh/plugins/catimg/catimg.sh" "$@"
             else
-                echo "catimg need convert (ImageMagick) to work)" >2
+                echo "catimg needs convert (from ImageMagick) to work)" >2
             fi
         }
     elif [ -n "$ZSH_VERSION" ]; then

@@ -14,8 +14,8 @@ fi
 
 
 alias dfu='dotfiles_update'
-alias q='exit'
 
+alias q='exit'
 
 if [ -n "$WSL_DISTRO_NAME" ]; then
     if command_exists wsl-notify-send.exe; then

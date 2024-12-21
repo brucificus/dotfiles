@@ -1,13 +1,16 @@
 #!/usr/bin/env zsh
 
 
-cd ~/.dotfiles/shell &> /dev/null || return 0
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"; export DOTFILES;
+_OLD_PWD="$PWD"
+cd "$DOTFILES/shell" &> /dev/null || return 0
 
 export PROFILE_STAGE
 PROFILE_STAGE="zsh➡️env"; profile_hook_exit_code=0
 source init.sh "zsh" "env" || profile_hook_exit_code=$?
 if [ "$profile_hook_exit_code" -ne 0 ]; then
-    cd ~ &> /dev/null
+    cd "$_OLD_PWD" &> /dev/null
+    unset OLD_PWD
     echo "[zsh|env] Profile hook failed, returned code '$profile_hook_exit_code'. (zshenv)" >&2
     unset profile_hook_exit_code
     PROFILE_STAGE="zsh@env❌"
@@ -16,4 +19,5 @@ else
     PROFILE_STAGE="zsh@env✅"
 fi
 
-cd ~ &> /dev/null
+cd "$_OLD_PWD" &> /dev/null
+unset OLD_PWD

@@ -4,39 +4,57 @@
       relink: true
 
 - clean:
-    - '~'
-    - '~/.bash'
-    - '~/.zsh'
-    - '~/.oh-my-zsh'
-    - '~/.oh-my-zsh/custom/plugins'
-    - 'shell/vendor/oh-my-zsh/custom/plugins'
-    - '~/.config/powershell/profile.ps1'
-    - '~/.config/powershell/Microsoft.PowerShell_profile.ps1'
-    - '~/.config/powershell/powershell/Microsoft.VSCode_profile.ps1'
+    '~':
+      recursive: false
+      force: false
+    '~/.config':
+      recursive: true
+      force: false
+    '~/.gnupg':
+      recursive: false
+      force: false
+    '~/.ipython':
+      recursive: true
+      force: false
+    '~/.jupyter':
+      recursive: false
+      force: false
+    '~/.ssh':
+      recursive: false
+      force: false
+    '~/.local/bin':
+      recursive: false
+      force: false
+    '~/bin':  # Deprecated location. We're going to start preferring `~/.local/bin` for simplicity.
+      recursive: true
+      force: true
 
 - link:
-    ~/.dotfiles: ''
-    ~/.bash_completion: shell/bash_completion
-    ~/.bash_logout: shell/bash_logout
-    ~/.bash_profile: shell/bash_profile
-    ~/.bashrc: shell/bashrc
-    ~/.config/powershell/profile.ps1: powershell/profile.ps1
-    ~/.config/powershell/Microsoft.PowerShell_profile.ps1: powershell/Microsoft.PowerShell_profile.ps1
-    ~/.config/powershell/powershell/Microsoft.VSCode_profile.ps1: powershell/Microsoft.VSCode_profile.ps1
-    ~/.gnupg/gpg-agent.conf: config/gnupg/gpg-agent.conf
-    ~/.gnupg/sshcontrol: config/gnupg/sshcontrol
-    ~/.pythonrc:
-    ~/.zlogin: shell/zlogin
-    ~/.zlogout: shell/zlogout
-    ~/.zshenv: shell/zshenv
-    ~/.zshrc: shell/zshrc
-    ~/.ssh/rc: shell/ssh_rc
-    ~/.gitconfig:
-    ~/.ipython/profile_default/ipython_config.py: ipython/ipython_config.py
-    ~/.ipython/profile_default/ipython_kernel_config.py: ipython/ipython_kernel_config.py
-    ~/.ipython/profile_default/startup/disable_warnings.py: ipython/disable_warnings.py
-    ~/.jupyter/jupyter_notebook_config.py: jupyter/jupyter_notebook_config.py
-    ~/.jupyter/nbconfig/notebook.json: jupyter/notebook.json
-    ~/bin/:
+    ~/.dotfiles: ""
+    ~/.bash_completion: "shell/bash_completion"
+    ~/.bash_logout: "shell/bash_logout"
+    ~/.bash_profile: "shell/bash_profile"
+    ~/.bashrc: "shell/bashrc"
+    ~/.config/:
       glob: true
-      path: bin/*
+      path: "config/*"
+    ~/.config/powershell/Microsoft.PowerShell_profile.ps1: "powershell/Microsoft.PowerShell_profile.ps1"
+    ~/.config/powershell/Microsoft.VSCode_profile.ps1: "powershell/Microsoft.VSCode_profile.ps1"
+    ~/.config/powershell/profile.ps1: "powershell/profile.ps1"
+    ~/.gitconfig:
+    ~/.gnupg/gpg-agent.conf: "config/gnupg/gpg-agent.conf"
+    ~/.gnupg/sshcontrol: "config/gnupg/sshcontrol"
+    ~/.ipython/profile_default/ipython_config.py: "ipython/ipython_config.py"
+    ~/.ipython/profile_default/ipython_kernel_config.py: "ipython/ipython_kernel_config.py"
+    ~/.ipython/profile_default/startup/disable_warnings.py: "ipython/disable_warnings.py"
+    ~/.jupyter/jupyter_notebook_config.py: "jupyter/jupyter_notebook_config.py"
+    ~/.jupyter/nbconfig/notebook.json: "jupyter/notebook.json"
+    ~/.pythonrc:
+    ~/.ssh/rc: "shell/ssh_rc"
+    ~/.zlogin: "shell/zlogin"
+    ~/.zlogout: "shell/zlogout"
+    ~/.zshenv: "shell/zshenv"
+    ~/.zshrc: "shell/zshrc"
+    ~/.local/bin/:
+      glob: true
+      path: "bin/*"

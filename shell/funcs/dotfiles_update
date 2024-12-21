@@ -1,9 +1,12 @@
 #!/usr/bin/env sh
 
 
-# Update dotfiles
+# Updates the `dotfiles` repo and re-runs its installer.
 dotfiles_update() {
     (
-        cd ~/.dotfiles && git pull --ff-only && ./install.sh -q
+        DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+        # TODO: TBD: Abort if target is not a symlink?
+        # TODO: Detect local changes and prompt to stash/discard them or abort.
+        cd "$DOTFILES" && git pull --ff-only && ./install.sh -q "$@"
     )
 }

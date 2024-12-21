@@ -3,10 +3,14 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 
+$Env:DOTFILES = (Get-Content Env:\DOTFILES -ErrorAction SilentlyContinue) ?? "~/.dotfiles"
+$OldLocation = Get-Location
+Set-Location -LiteralPath "${Env:DOTFILES}/powershell"
+
 $Env:PROFILE_STAGE = "pwsh➡️vscode-hosted"
 $Global:phook_caller="pwsh"
 $Global:phook_mode="vscode-hosted"
-Set-Location "~/.dotfiles/powershell"
+
 try {
     . "./init.ps1"
 }
@@ -16,7 +20,8 @@ catch {
     throw
 }
 finally {
-    Set-Location "~"
+    Set-Location -LiteralPath $OldLocation
+    Remove-Variable OldLocation
 }
 $Env:PROFILE_STAGE = "pwsh@vscode-hosted✅"
 return

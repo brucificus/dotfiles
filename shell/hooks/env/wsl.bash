@@ -3,6 +3,7 @@
 
 
 if [ -z "$WSL_DISTRO_NAME" ]; then return 0; fi
+if [ -n "$WINDOWS_Path" ]; then return 0; fi
 
 # If we're in WSL, we need to do some specific PATH patching.
 
@@ -16,7 +17,7 @@ WINDOWS_SystemRoot=$(wslpath -u "$(cmd.exe /c echo "%SystemRoot%" 2> /dev/null |
 WINDOWS_LOCALAPPDATA=$(wslpath -u "$(cmd.exe /c echo "%LOCALAPPDATA%" 2> /dev/null | tr -d '\r\n')"); export WINDOWS_LOCALAPPDATA
 WINDOWS_ProgramW6432=$(wslpath -u "$(cmd.exe /c echo "%ProgramW6432%" 2> /dev/null | tr -d '\r\n')"); export WINDOWS_ProgramW6432
 
-WINDOWS_Path=$(cmd.exe /c echo "%WINDOWS_Path%" 2> /dev/null | tr -d '\r\n')
+WINDOWS_Path=$(cmd.exe /c echo "%Path%" 2> /dev/null | tr -d '\r\n')
 WINDOWS_Path=$(echo "$WINDOWS_Path" | tr ';' '\n' | while read -r line; do wslpath -u "$line"; done | paste -sd ';')
 export WINDOWS_Path
 

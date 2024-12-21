@@ -3,8 +3,8 @@
 
 
 # For user-specific executable files.
-path_prepend "$HOME/.dotfiles/bin"
-path_prepend "$HOME/.local/bin"  # This is an XDG default, actually. (It just doesn't have a dedicated variable name.)
+# FYI: We rely on our Dotbot configuration to create symlinks for files from "<this repo>/bin" into "$HOME/.local/bin".
+path_prepend "$HOME/.local/bin"  # This is a notable location in the XDG standard, it just doesn't have a dedicated environment variable name in that spec.
 
 
 PROFILE_SUGGESTIONS=''; export PROFILE_SUGGESTIONS
