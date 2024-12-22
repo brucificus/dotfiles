@@ -4,9 +4,7 @@
       relink: true
 
 - clean:
-    - '~/Documents/PowerShell/profile.ps1'
-    - '~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1'
-    - '~/Documents/PowerShell/Microsoft.VSCode_profile.ps1'
+    "~/Documents/PowerShell/":
 
 - link:
     ~/Documents/PowerShell/Profile.ps1: powershell/profile.ps1
