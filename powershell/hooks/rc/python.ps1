@@ -39,12 +39,17 @@ try {
         append_profile_suggestions "# TODO: 🐍 Install 'pyenv' See: https://github.com/pyenv/pyenv#installation."
     }
 
-    # TODO: Fix: spuriously spits out `False` at the beginning of each newly printed prompt.
-    # if (-not (Test-Command conda) -and (Test-Path "${HOME}${ds}miniconda3${ds}shell${ds}condabin${ds}conda-hook.ps1" -ErrorAction SilentlyContinue)) {
-    #     phook_enqueue_file "${HOME}${ds}miniconda3${ds}shell${ds}condabin${ds}conda-hook.ps1"
-    # } else {
-    #     append_profile_suggestions "# TODO: 🐍 Install 'conda'. Run: ~/.dotfiles/bin/Install-Miniconda3.ps1"
-    # }
+    if (-not (Test-Command conda) -and (Test-Path "${HOME}${ds}miniconda3${ds}shell${ds}condabin${ds}Conda.psm1" -ErrorAction SilentlyContinue)) {
+        $Env:CONDA_EXE = "${HOME}/miniconda3\Scripts\conda.exe"
+        $Env:_CE_M = $null
+        $Env:_CE_CONDA = $null
+        $Env:_CONDA_ROOT = "${HOME}/miniconda3"
+        $Env:_CONDA_EXE = "${HOME}/miniconda3\Scripts\conda.exe"
+        $CondaModuleArgs = @{ChangePs1 = $False} # TODO: Fix: spuriously spits out `False` at the beginning of each newly printed prompt when set to $True.
+        Import-Module "$Env:_CONDA_ROOT\shell\condabin\Conda.psm1" -ArgumentList $CondaModuleArgs
+    } else {
+        append_profile_suggestions "# TODO: 🐍 Install 'conda'. Run: ~/.dotfiles/bin/Install-Miniconda3.ps1"
+    }
 
     if (Test-Command uv) {
         # Intentionally left blank.
