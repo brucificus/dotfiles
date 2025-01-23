@@ -3,8 +3,8 @@ eval "$(shellspec - -c) exit 1"
 # shellcheck shell=bash
 
 
-script_under_test="../../funcs/_pip3_package_location"
-Describe "funcs/_pip3_package_location"
+script_under_test="../../funcs/_pip_package_location"
+Describe "funcs/_pip_package_location"
 
     ScriptUnderTestDir="$(realpath "$(dirname "$script_under_test")")"
     ScriptUnderTest="$(basename "$script_under_test")"
@@ -20,7 +20,7 @@ Describe "funcs/_pip3_package_location"
         BeforeEach 'cd_into_ScriptUnderTestDir'
 
         Parameters
-            "_pip3_package_location"
+            "_pip_package_location"
         End
 
         Example "$1"
@@ -46,14 +46,14 @@ Describe "funcs/_pip3_package_location"
     Context "defines"
         BeforeEach 'Include_ScriptUnderTest'
 
-        Describe "function '_pip3_package_location', which"
+        Describe "function '_pip_package_location', which"
             It "exists"
-                When call type "_pip3_package_location"
+                When call type "_pip_package_location"
 
                 The status should be success
                 The output should include "$1 is a function"
             End
-        End # Describe "function '_pip3_package_location'""
+        End # Describe "function '_pip_package_location'""
 
     End # Context "defines"
 End

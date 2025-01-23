@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-
-# A way to use pip without requiring a virtualenv.
-function _syspip3() {
-    # set -e
-
-    PIP_REQUIRE_VIRTUALENV="" _pip3 "$@"
-}

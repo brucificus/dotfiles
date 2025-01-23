@@ -15,11 +15,7 @@ Describe "hooks/rc/argcomplete_init.bash"
         Include "$ScriptUnderTestDir/../../funcs/shell_actual"
         Include "$ScriptUnderTestDir/../../funcs/command_exists"
         Include "$ScriptUnderTestDir/../../funcs/find_binary"
-        Include "$ScriptUnderTestDir/../../funcs/_python3"
-        Include "$ScriptUnderTestDir/../../funcs/_pip3"
-        Include "$ScriptUnderTestDir/../../funcs/_syspip3"
-        Include "$ScriptUnderTestDir/../../funcs/_pip3_package_location"
-        Include "$ScriptUnderTestDir/../../funcs/_syspip3_package_location"
+        Include "$ScriptUnderTestDir/../../funcs/_pip_package_location"
         Include "$ScriptUnderTestDir/../../funcs/append_profile_suggestions"
     }
 

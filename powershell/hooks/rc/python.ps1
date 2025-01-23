@@ -6,14 +6,6 @@ Set-StrictMode -Version Latest
 
 
 try {
-    if (Test-Command "python3" -ExecutableOnly) {
-        phook_enqueue_module "poshy-wrap-python"
-    }
-
-    if (Test-Command "pip3" -ExecutableOnly) {
-        phook_enqueue_module "poshy-wrap-pip"
-    }
-
     if (Test-Command pipenv) {
         phook_enqueue_module "poshy-wrap-pipenv"
     } else {

@@ -14,11 +14,7 @@ Describe "hooks/rc/argcomplete_init.zsh"
         cd "$ScriptUnderTestDir" || return $?
         source "$ScriptUnderTestDir/../../funcs/command_exists" &> /dev/null
         source "$ScriptUnderTestDir/../../funcs/find_binary" &> /dev/null
-        source "$ScriptUnderTestDir/../../funcs/_python3" &> /dev/null
-        source "$ScriptUnderTestDir/../../funcs/_pip3" &> /dev/null
-        source "$ScriptUnderTestDir/../../funcs/_syspip3" &> /dev/null
-        source "$ScriptUnderTestDir/../../funcs/_pip3_package_location" &> /dev/null
-        source "$ScriptUnderTestDir/../../funcs/_syspip3_package_location" &> /dev/null
+        source "$ScriptUnderTestDir/../../funcs/_pip_package_location" &> /dev/null
         source "$ScriptUnderTestDir/../../funcs/append_profile_suggestions" &> /dev/null
         source "$ScriptUnderTestDir/../../funcs/shell_actual" &> /dev/null
         compdef() { :; } # Mock out compdef.

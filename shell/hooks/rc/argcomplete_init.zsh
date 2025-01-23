@@ -4,16 +4,15 @@
 
 compat_programs_file="$PWD/../../../config/argcomplete/compat_programs.txt"
 
-if [ -z "$PYTHON3" ]; then
+if command_exists "pip"; then
+    : # Intentionally left blank.
+else
     return
 fi
 
-argcomplete_package="$(_pip3_package_location argcomplete)"
+argcomplete_package="$(_pip_package_location argcomplete)"
 if [ -z "$argcomplete_package" ]; then
-    argcomplete_package="$(_syspip3_package_location argcomplete)"
-fi
-if [ -z "$argcomplete_package" ]; then
-    append_profile_suggestions "syspip3 install argcomplete  # 🧑‍💻 Install argcomplete."
+    append_profile_suggestions "pip install argcomplete  # 🧑‍💻 Install argcomplete."
     return
 fi
 

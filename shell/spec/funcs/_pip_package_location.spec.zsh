@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 eval "$(shellspec - -c) exit 1"
-# shellcheck shell=bash
+# shellcheck shell=zsh
 
 
-script_under_test="../../funcs/_pip3"
-Describe "funcs/_pip3"
+script_under_test="../../funcs/_pip_package_location"
+Describe "funcs/_pip_package_location"
 
     ScriptUnderTestDir="$(realpath "$(dirname "$script_under_test")")"
     ScriptUnderTest="$(basename "$script_under_test")"
@@ -12,7 +12,7 @@ Describe "funcs/_pip3"
     # (Use this from tests that are unsure if a script can even just be sourced.)
     function cd_into_ScriptUnderTestDir() {
         cd "$ScriptUnderTestDir" || return $?
-        : # TODO: 🔧 Include those dependencies.
+        : # TODO: 🔧 source those dependencies.
     }
 
     # Test(s) that the subject file doesn't have any major structural/syntax issues.
@@ -20,7 +20,7 @@ Describe "funcs/_pip3"
         BeforeEach 'cd_into_ScriptUnderTestDir'
 
         Parameters
-            "_pip3"
+            "_pip_package_location"
         End
 
         Example "$1"
@@ -35,25 +35,25 @@ Describe "funcs/_pip3"
     End
 
     # (Use this from tests that assume the subject file can be loaded without major problems.)
-    function Include_ScriptUnderTest() {
+    function source_ScriptUnderTest() {
         set -e
         cd_into_ScriptUnderTestDir
-        Include "$ScriptUnderTest"
+        source "$ScriptUnderTest" &> /dev/null
         set +e
     }
 
     # More detailed test(s) of the subject file's functionality.
     Context "defines"
-        BeforeEach 'Include_ScriptUnderTest'
+        BeforeEach 'source_ScriptUnderTest'
 
-        Describe "function '_pip3', which"
+        Describe "function '_pip_package_location', which"
             It "exists"
-                When call type "_pip3"
+                When call type "_pip_package_location"
 
                 The status should be success
-                The output should include "$1 is a function"
+                The output should include "$1 is a shell function"
             End
-        End # Describe "function '_pip3'""
+        End # Describe "function '_pip_package_location'""
 
     End # Context "defines"
 End

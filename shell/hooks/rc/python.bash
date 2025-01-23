@@ -2,33 +2,13 @@
 # shellcheck source-path=SCRIPTDIR/../../funcs
 
 
-if command_exists _python3; then
-    alias python3='_python3'
-    alias py='_python3'
+
+if command_exists python; then
+    alias py='python'
 fi
 
-if command_exists _pip3; then
-    alias pip3='_pip3'
-fi
-
-if command_exists _syspip3; then
-    alias syspip3='_syspip3'
-fi
-
-if command_exists _pip3_package_location; then
-    alias pip3_package_location='_pip3_package_location'
-fi
-
-if command_exists _syspip3_package_location; then
-    alias syspip3_package_location='_syspip3_package_location'
-fi
-
-if command_exists python3; then
-    alias py='python3'
-fi
-
-if command_exists ipython3; then
-    alias ipy='ipython3'
+if command_exists ipython; then
+    alias ipy='ipython'
 fi
 
 if command_exists pip3; then
@@ -39,19 +19,7 @@ if command_exists pip3; then
     fi
 fi
 
-if binary_exists pip2; then
-    # Use pip2 without requiring virtualenv.
-    syspip2() {
-        PIP_REQUIRE_VIRTUALENV="" pip2 "$@"
-    }
-fi
-
 if command_exists pip; then
-    # Use pip without requiring virtualenv.
-    syspip() {
-        PIP_REQUIRE_VIRTUALENV="" pip "$@"
-    }
-
     if [ -n "$BASH_VERSION" ]; then
         source "$BASHIT_COMPLETIONS_AVAILABLE"/pip.completion.bash
     elif [ -n "$ZSH_VERSION" ]; then
@@ -115,7 +83,7 @@ if command_exists conda; then
     elif [ -n "$ZSH_VERSION" ]; then
         # >>> conda initialize >>>
         # !! Contents within this block are managed by 'conda init' !!
-        __conda_setup="$('/home/bruce/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+        __conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
         if [ $? -eq 0 ]; then
             eval "$__conda_setup"
         else

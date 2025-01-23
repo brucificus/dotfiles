@@ -14,5 +14,5 @@ function Register-ArgcompleteArgumentCompleter {
     }
 
     [string] $argcompleteRegister = $argcompleteRegisterCommand.Source
-    _python3 $argcompleteRegister --shell powershell $CommandName | Out-String | Invoke-Expression
+    python $argcompleteRegister --shell powershell $CommandName | Out-String | Invoke-Expression
 }
