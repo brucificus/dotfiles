@@ -26,11 +26,11 @@ try {
 
     Write-Verbose "Deleting all package folders if they exist."
     foreach ($packageFolder in Get-ChildItem -Path $PSScriptRoot -Directory) {
-        Remove-Item $packageFolder.FullName -Recurse -Force | Out-Null
+        Remove-Item $packageFolder -Recurse -Force | Out-Null
 
         if ($gitRepoRootFullPath) {
             # Again, but with git this time.
-            [string] $packageFolderGitPath = $packageFolder.FullName -ireplace [regex]::Escape($gitRepoRootFullPath), ""
+            [string] $packageFolderGitPath = $packageFolder -ireplace [regex]::Escape($gitRepoRootFullPath), ""
             Write-Verbose "Git-deleting package folder '$packageFolderGitPath'."
             git rm -r $packageFolderGitPath 2>&1 | Out-Null
         }
@@ -84,6 +84,7 @@ try {
         [System.IO.DirectoryInfo] $packageFolder = Get-ChildItem -Path $PSScriptRoot -Directory | Where-Object { $_.Name -ieq $package.id } | Select-Object -First 1
         if (-not $packageFolder) {
             $packageFolder = [System.IO.DirectoryInfo]::new("${PSScriptRoot}${ds}${packageName}")
+            $packageFolder.Create()
         }
 
         # Move the folder around to make sure it has the correct casing.
@@ -113,13 +114,16 @@ try {
         # Move the package folder to the correct location, if needed.
         [System.IO.DirectoryInfo] $packageVersionFolder = $null
         if ($packageFolder -and $packageFolder.Exists) {
-            $packageVersionFolder = Get-ChildItem -Path $packageFolder.FullName -Directory | Where-Object { $_.Name -ieq $packageVersion } | Select-Object -First 1
+            $packageVersionFolder = Get-ChildItem -Path $packageFolder -Directory | Where-Object { $_.Name -ieq $packageVersion } | Select-Object -First 1
         } elseif ($packageFolder) {
-            $packageVersionFolder = [System.IO.DirectoryInfo]::new("${packageFolder.FullName}${ds}${packageVersion}")
+            $packageVersionFolder = [System.IO.DirectoryInfo]::new("${packageFolder}${ds}${packageVersion}")
+        } else {
+            Write-Error "Could neither find nor create the base package folder for '$packageName'."
         }
         if (-not $packageVersionFolder -or (-not $packageVersionFolder.Exists)) {
-            $packageVersionFolder = [System.IO.DirectoryInfo]::new("${packageFolder.FullName}${ds}${packageVersion}")
+            $packageVersionFolder = [System.IO.DirectoryInfo]::new("${packageFolder}${ds}${packageVersion}")
             Write-Information "Moving package version folder from the repositoryPath ('$trashPath') folder to the PowerShell module folder ('$packageFolder')."
+            Move-Item -Path $trashPackageFolder.FullName -Destination $packageVersionFolder.FullName -Force
         }
 
         # Cleanup.
