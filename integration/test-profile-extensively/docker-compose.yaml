@@ -1,14 +1,4 @@
 services:
-  2019-buster-bash:
-    build:
-      context: ../../
-      dockerfile: integration/test-profile-extensively/2019-buster-bash/Dockerfile
-
-  2019-buster-zsh:
-    build:
-      context: ../../
-      dockerfile: integration/test-profile-extensively/2019-buster-zsh/Dockerfile
-
   2020-focal-bash:
     build:
       context: ../../

@@ -1,2 +1,7 @@
 .github/**
 integration/**
+shell/vendor/bash-it/test_lib/
+shell/vendor/oh-my-zsh/plugins/per-directory-history/
+shell/vendor/oh-my-zsh/themes/
+shell/vendor/zsh-custom/plugins/forgit/
+shell/vendor/zsh-custom/plugins/git-extra-commands/
