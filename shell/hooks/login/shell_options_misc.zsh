@@ -27,6 +27,36 @@ setopt NO_CLOBBER
 
 # If we're in an interactive shell,
 if [[ $- == *i* ]]; then
-    # Enable interactive comments (# on the command line)
+    # Enable interactive comments (# on the command line).
     setopt INTERACTIVE_COMMENTS
+
+    # Enable filename expansion for arguments of the form ‘anything=expression’.
+    setopt magicequalsubst
+
+    # Hide error message if there is no match for the pattern.
+    setopt nonomatch
+
+    # Report the status of background jobs immediately.
+    setopt notify
+
+    # Sort filenames numerically when it makes sense.
+    setopt numericglobsort
+
+    # Enable command substitution in prompt.
+    setopt promptsubst
+
+
+    # Configure key keybindings.
+    bindkey -e                                        # emacs key bindings
+    bindkey ' ' magic-space                           # do history expansion on space
+    bindkey '^U' backward-kill-line                   # ctrl + U
+    bindkey '^[[3;5~' kill-word                       # ctrl + Supr
+    bindkey '^[[3~' delete-char                       # delete
+    bindkey '^[[1;5C' forward-word                    # ctrl + ->
+    bindkey '^[[1;5D' backward-word                   # ctrl + <-
+    bindkey '^[[5~' beginning-of-buffer-or-history    # page up
+    bindkey '^[[6~' end-of-buffer-or-history          # page down
+    bindkey '^[[H' beginning-of-line                  # home
+    bindkey '^[[F' end-of-line                        # end
+    bindkey '^[[Z' undo                               # shift + tab undo last action
 fi

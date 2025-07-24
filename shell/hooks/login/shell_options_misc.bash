@@ -28,4 +28,7 @@ if [[ $- == *i* ]]; then
 
     # Enable interactive comments (# on the command line).
     shopt -s interactive_comments
+
+    # Report the status of background jobs immediately.
+    shopt -s checkjobs
 fi

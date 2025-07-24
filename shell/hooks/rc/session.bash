@@ -46,12 +46,19 @@ elif [ -z "$WSL_DISTRO_NAME" ]; then
     append_profile_suggestions "# TODO: 🛎️ Install \`notify-send\`. See: https://ss64.com/bash/notify-send.html."
 fi
 
-if [ -n "$BASH_VERSION" ]; then
-    shopt -s checkjobs
-elif [ -n "$ZSH_VERSION" ]; then
-    setopt notify
+if command_exists time; then
+    # configure `time` format
+    TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'; export TIMEFMT
 fi
 
 if ! command_exists btop; then
     append_profile_suggestions "# TODO: 📊 Install \`btop\`. See: https://github.com/aristocratos/btop#installation."
+fi
+
+if [ -n "$ZSH_VERSION" ]; then
+    # Enable command-not-found if installed.
+    if [ -f /etc/zsh_command_not_found ]; then
+        # shellcheck disable=SC1091
+        . /etc/zsh_command_not_found
+    fi
 fi
