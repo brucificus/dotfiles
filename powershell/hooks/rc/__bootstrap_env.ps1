@@ -306,3 +306,11 @@ if ($psgalleryRepository -and $psgalleryRepository.InstallationPolicy -ne "Trust
 Remove-Variable -Name psgalleryRepository
 
 Remove-Variable -Name ds
+
+if ($IsWindows -and (Test-Path $env:ChocolateyInstall\helpers\chocolateyProfile.psm1 -ErrorAction SilentlyContinue) -and (-not (Get-Module chocolateyProfile))) {
+    # Load Chocolatey's PowerShell profile helpers.
+    # This is needed to get tab completion for choco, etc. - but we mainly do it for `refreshenv`.
+    phook_enqueue_module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+} elseif (-not (Test-Command 'refreshenv' -ErrorAction SilentlyContinue))  {
+    # TODO: Port a decompilation of Chocalatey's `Update-SessionEnvironment` Cmdlet in the .NET assembly `Chocolatey.PowerShell.dll`.
+}
