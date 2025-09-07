@@ -16,3 +16,4 @@
 gitconfig*      text=auto
 pythonrc        text eol=lf
 shell/**        text eol=lf
+*.png           binary
