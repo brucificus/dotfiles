@@ -84,6 +84,7 @@
 
 [pull]
 	ff = only
+	rebase = true
 
 [mergetool]
 	keepBackup = false
@@ -98,7 +99,7 @@
 	cookieFile = ~/.gitcookies
 
 [init]
-	defaultBranch = main
+	defaultbranch = main
 
 # Allow local customizations in the .gitconfig_local file
 [include]
