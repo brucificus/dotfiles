@@ -38,7 +38,7 @@ if (-not $Env:PWSHRC_COLORIZE_STYLE) {
         if ($Env:BATCAT_THEME) {
             $Env:PWSHRC_COLORIZE_STYLE=$Env:BATCAT_THEME
         } else {
-            $Env:PWSHRC_COLORIZE_STYLE="ansi-dark"
+            $Env:PWSHRC_COLORIZE_STYLE="ansi"
         }
     } else {
         # Both pygmentize & chroma support 'emacs'

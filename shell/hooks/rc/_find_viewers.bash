@@ -22,7 +22,7 @@ else export BATCAT; fi
 # Setup parameters for viewers.
 #
 if [ -n "$BATCAT" ]; then
-    BAT_THEME="ansi-dark"; export BAT_THEME
+    BAT_THEME="ansi"; export BAT_THEME
     VIEWER_BATCAT_ARGS=(); export VIEWER_BATCAT_ARGS
     VIEWERB_BATCAT_ARGS=("${VIEWER_BATCAT_ARGS[*]}""--show-all"); export VIEWERB_BATCAT_ARGS
 fi

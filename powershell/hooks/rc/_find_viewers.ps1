@@ -6,9 +6,44 @@ Set-StrictMode -Version Latest
 
 
 try {
-    # Find & configure viewers for text files and binary files on this system.
+    # TODO: If these modifications to Format-ViewerInvocationSh succeed in fixing BATCAT usage in $ENV:PAGER on FactiveFlype, push upstream to poshy-ecks.
+    function Format-ViewerInvocationSh {
+        param(
+            [Parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyName = $true)]
+            [ValidateNotNullOrEmpty()]
+            [string] $Bin,
 
-    Set-EnvVar -Process -Name BAT_THEME -Value "ansi-dark"
+            [Parameter(Mandatory = $false, Position = 1, ValueFromPipelineByPropertyName = $true)]
+            [string[]] $BinArgs = @()
+        )
+        Write-Debug "Format-ViewerInvocationSh: `$Bin: $($Bin)"
+        Write-Debug "Format-ViewerInvocationSh: `$BinArgs: $($BinArgs)"
+        [System.Text.StringBuilder] $result = [System.Text.StringBuilder]::new()
+        if ($Bin -like "* *") {
+            $result.Append("'") | Out-Null
+            $result.Append($Bin) | Out-Null
+            $result.Append("'") | Out-Null
+        } elseif ($Bin -like "?:\") {
+            $result.Append("`"") | Out-Null
+            $result.Append($Bin) | Out-Null
+            $result.Append("`"") | Out-Null
+        } else {
+            $result.Append($Bin) | Out-Null
+        }
+        foreach ($arg in $BinArgs) {
+            $result.Append(" ") | Out-Null
+            if ($arg -like "* *") {
+                $result.Append("'") | Out-Null
+                $result.Append($arg) | Out-Null
+                $result.Append("'") | Out-Null
+            } else {
+                $result.Append($arg) | Out-Null
+            }
+        }
+        $result.ToString()
+        Write-Debug "Format-ViewerInvocationSh: Result: $($result.ToString())"
+        $result.Clear() | Out-Null
+    }
 
 
     #
@@ -34,6 +69,8 @@ try {
 
     if ($text_viewer_bins -notcontains "batcat") {
         append_profile_suggestions "# TODO: 🦇🐈 Install 'batcat'."
+    } else {
+        Set-EnvVar -Process -Name BAT_THEME -Value "ansi"
     }
 
     if ($text_viewer_bins -notcontains "pygmentize") {
