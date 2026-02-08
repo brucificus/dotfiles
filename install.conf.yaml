@@ -18,8 +18,6 @@
       recursive: false
     '~/.local/bin':
       recursive: false
-    '~/bin':  # Deprecated location. We're going to start preferring `~/.local/bin` for simplicity.
-      recursive: true
 
 - create:
     ~/.config/:

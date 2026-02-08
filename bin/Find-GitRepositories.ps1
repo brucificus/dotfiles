@@ -26,7 +26,7 @@ if (-not $interestingChildren) {
 
     if ($stemChildren) {
         foreach ($stemChild in $stemChildren) {
-            $leafChildren += (&"~/bin/Find-GitRepositories.ps1" -root $stemChild)
+            $leafChildren += (&"~/.local/bin/Find-GitRepositories.ps1" -root $stemChild)
         }
     }
 
