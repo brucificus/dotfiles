@@ -1,4 +1,5 @@
 .shellspec-local
 .shellspec-quick.log
 .trash
+.vscode/settings.json
 /theme.omp.yaml.bak
