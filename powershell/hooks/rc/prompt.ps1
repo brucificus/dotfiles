@@ -39,7 +39,9 @@ if (-not (Test-Command "oh-my-posh")) {
         return " "
     }
 } else {
-    Set-Alias -Name load_ohmyposh_theme -Value Set-PoshPromptPortably
+    function load_ohmyposh_theme([string] $themePath) {
+        Invoke-Expression (oh-my-posh --init --shell pwsh --config $themePath)
+    }
 
-    Set-PoshPromptPortably -themePath "$PSScriptRoot/../../../theme.omp.yaml"
+    load_ohmyposh_theme "$PSScriptRoot/../../../theme.omp.yaml"
 }
