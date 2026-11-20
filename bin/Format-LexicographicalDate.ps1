@@ -4,13 +4,13 @@
 <#
 .EXAMPLE
     Format-LexicographicalDate "2025-03-06"
-    Output: "Y2025 W10 03-06 Thu (D065)"
+    Output: "Y2025 W10 03-06 Thursday (D065)"
 .EXAMPLE
     Format-LexicographicalDate "2024-10-13"
-    Output: "Y2024 W41 10-13 Sun (D287)"
+    Output: "Y2024 W41 10-13 Sunday (D287)"
 .EXAMPLE
     Format-LexicographicalDate "2023-10-11"
-    Output: "Y2023 W41 10-11 Wed (D284)"
+    Output: "Y2023 W41 10-11 Wednesday (D284)"
 #>
 Param (
     [Parameter(Mandatory = $true, Position = 0, ParameterSetName = "DateTime")]
@@ -39,14 +39,14 @@ Begin {
 }
 
 Process {
-    # output example: "Y2025 W10 03-06 Thu (D065)"
+    # output example: "Y2025 W10 03-06 Thursday (D065)"
 
     $year = $date.Year
     # ISO 8601: week 1 is the first week with 4 or more days in the year, weeks start on Monday
     $week = [System.Globalization.CultureInfo]::InvariantCulture.Calendar.GetWeekOfYear($date, [System.Globalization.CalendarWeekRule]::FirstFourDayWeek, [System.DayOfWeek]::Monday)
     $weekPadded = $week.ToString("D2")
     $dayOfYear = $date.DayOfYear
-    $dayOfWeek = $date.ToString("ddd", [System.Globalization.CultureInfo]::InvariantCulture)
+    $dayOfWeek = $date.ToString("dddd", [System.Globalization.CultureInfo]::InvariantCulture)
     $dayOfYearPadded = $dayOfYear.ToString("D3")
     $monthPadded = $date.Month.ToString("D2")
     $dayPadded = $date.Day.ToString("D2")
